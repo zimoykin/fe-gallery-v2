@@ -1,0 +1,4 @@
+.app-container-palitra:hover {
+  scale: 1.1;
+  transition: scale 0.3s ease;
+}

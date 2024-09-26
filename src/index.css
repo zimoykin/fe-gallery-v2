@@ -44,6 +44,21 @@
   --primary-bg-light: #8ff6bf;
   --primary-cl-light: #000000;
 
+
+
+  --color-1: #fd5900;
+  --color-1-2: #fb925a;
+  --color-2: #f78105;
+  --color-2-2: #fac58b;
+  --color-3: #faab35;
+  --color-3-2: #ffefd6;
+  --color-4: #249ea1;
+  --color-4-2: #67dddf;
+  --color-5: #008083;
+  --color-5-2: #34c1c4;
+  --color-6: #005f61;
+  --color-6-2: #039597;
+
 }
 
 body {

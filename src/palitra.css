@@ -1,0 +1,107 @@
+.palitra-1 {
+  background-color: var(--color-1);
+}
+
+.light .palitra-1 {
+  background-color: var(--color-1-2);
+}
+
+.palitra-2 {
+  background-color: var(--color-2);
+}
+
+.light .palitra-2 {
+  background-color: var(--color-2-2);
+}
+
+.palitra-3 {
+  background-color: var(--color-3);
+}
+
+.light .palitra-3 {
+  background-color: var(--color-3-2);
+}
+
+.palitra-4 {
+  background-color: var(--color-4);
+}
+
+.light .palitra-4 {
+  background-color: var(--color-4-2);
+}
+
+.palitra-5 {
+  background-color: var(--color-5);
+}
+
+.light .palitra-5 {
+  background-color: var(--color-5-2);
+}
+
+.palitra-6 {
+  background-color: var(--color-6);
+}
+
+.light .palitra-6 {
+  background-color: var(--color-6-2);
+}
+
+.palitra-color-1 {
+  color: var(--color-1);
+}
+
+.palitra-color-2 {
+  color: var(--color-2);
+}
+
+.palitra-color-3 {
+  color: var(--color-3);
+}
+
+.palitra-color-4 {
+  color: var(--color-4);
+}
+
+.palitra-color-5 {
+  color: var(--color-5);
+}
+
+.palitra-color-6 {
+  color: var(--color-6);
+}
+
+.palitra-tab {
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
+  background-color: transparent;
+  color: #005f61;
+}
+
+.palitra-tab-active {
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
+  background-color: #249ea1;
+  color: #f78105;
+}
+
+.dark .palitra-tab {
+  background-color: transparent;
+  color: #faab35 !important;
+}
+
+.dark .palitra-tab-active {
+  background-color: #f78105;
+  color: #005f61 !important;
+}
+
+.light .palitra-tab {
+  background-color: transparent;
+  color: #005f61 !important;
+}
+
+.light .palitra-tab-active {
+  background-color: #005f61;
+  color: #f78105 !important;
+}

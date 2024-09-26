@@ -30,13 +30,13 @@ const ProfilePage: React.FC = () => {
         className='flex w-full shadow-lg h-full md:flex-row flex-col justify-start items-center md:p-1 md:gap-2'
     >
         {/* left side */}
-        <div className='h-full md:w-1/3 w-full bg-main-bg p-1 shadow-2xl md:rounded-xl'>
+        <div className='h-full md:w-1/3 w-full bg-main-bg p-2 shadow-2xl md:rounded-xl'>
             <Avatar url={profile?.url} />
             {profile && <ProfileInfoComponent profile={profile} />}
         </div>
 
         {/* right side */}
-        <div className='h-full md:w-2/3 w-full bg-secondary-bg shadow-2xl md:rounded-xl'>
+        <div className='h-full md:w-2/3 w-full bg-secondary-bg-75 shadow-2xl md:rounded-xl'>
 
         </div>
 

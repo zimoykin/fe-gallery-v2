@@ -6,6 +6,7 @@ import FooterComponent from './components/footer.component';
 import UnavailablePage from './pages/unavailable.page';
 import BackgroundWithImage from './components/background/background.component';
 import ProfilePage from './pages/profile.page';
+import LoginPage from './pages/login.page';
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
                 />
                 <Route
                   path='/login'
-                  element={<UnavailablePage />}
+                  element={<LoginPage />}
                 />
                 <Route
                   path='/register'

@@ -6,6 +6,7 @@ import { ThemeProvider } from './contexts/theme/theme-context';
 import store, { persistor } from './store';
 import App from './App';
 import './index.css';
+import './palitra.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
