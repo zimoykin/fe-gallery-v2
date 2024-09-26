@@ -1,0 +1,83 @@
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  animation: fadeIn 1s ease-in-out;
+  z-index: 999;
+}
+
+.spinner {
+  display: flex;
+  animation:
+    shot 1s ease-out infinite,
+    rotate 1s ease-in-out reverse infinite;
+}
+
+.petal {
+  --petal-rotation: 0deg;
+  --petal-scale: 1;
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  background-color: lightblue;
+  clip-path: polygon(0% 0%, 100% 0%, 80% 50%, 50% 100%);
+  transform-origin: 100% 100%;
+  transform: rotate(var(--petal-rotation));
+}
+
+.petal:nth-child(1) {
+  --petal-rotation: 0deg;
+  border-radius: 50%;
+  background-color: #ff6666;
+}
+
+.petal:nth-child(2) {
+  --petal-rotation: 60deg;
+  border-radius: 50%;
+  background-color: #ffbd55;
+}
+
+.petal:nth-child(3) {
+  --petal-rotation: 120deg;
+  border-radius: 50%;
+  background-color: #ffff66;
+}
+
+.petal:nth-child(4) {
+  --petal-rotation: 180deg;
+  border-radius: 50%;
+  background-color: #90ee90;
+}
+
+.petal:nth-child(5) {
+  --petal-rotation: 240deg;
+  border-radius: 50%;
+  background-color: #557c51;
+}
+
+.petal:nth-child(6) {
+  --petal-rotation: 300deg;
+  border-radius: 50%;
+  background-color: #23aeae;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shot {
+  0% {
+    scale: 0.8;
+  }
+
+  50% {
+    scale: 1.1;
+  }
+
+  100% {
+    scale: 0.8;
+  }
+}

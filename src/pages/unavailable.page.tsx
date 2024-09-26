@@ -1,5 +1,6 @@
 
 import React from "react";
+import CameraSpinner from "../components/camera-spinner/camera-spinner.component";
 
 const UnavailablePage: React.FC = () => {
 

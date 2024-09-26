@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import PalitraComponent from "../components/palitra/palitra.component";
+import CameraSpinner from "../components/camera-spinner/camera-spinner.component";
+import { validatePassword } from "../helpers/password-validate.helper";
 
 const LoginPage: React.FC = () => {
 
@@ -8,9 +10,22 @@ const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        toast.info('Login...');
+        e.preventDefault();
+
+        if (email === '' || password === '') {
+            toast.error('Please fill in all fields!', { toastId: 'login' });
+            return;
+        }
+
+        setIsLoading(true);
+        //TODO: implement login logic
+        setTimeout(() => {
+            setIsLoading(false);
+            toast.info ('unfortunately, this feature is not available! 🤪', { toastId: 'login' });
+        }, 2000);
     };
 
     return (
@@ -25,22 +40,27 @@ const LoginPage: React.FC = () => {
             <div className="w-full md:w-1/3 h-full bg-secondary-bg-75">
                 <div className="w-full h-full flex flex-col gap-1 justify-center items-center">
                     <h1 className="md:hidden text-secondary-col font-bold">WELCOME!</h1>
-                    <form
-                        onSubmit={handleSubmit}
-                        className='w-full flex flex-col gap-1 justify-center items-center' action="">
-                        <input type="email"
-                            placeholder="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="p-3 w-2/3 rounded-lg bg-main-bg text-main-col" />
+                    {isLoading
+                        ?
+                        <CameraSpinner size="medium" />
+                        :
+                        <form
+                            onSubmit={handleSubmit}
+                            className='w-full flex flex-col gap-1 justify-center items-center' action="">
+                            <input type="email"
+                                placeholder="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="p-3 w-2/3 rounded-lg bg-main-bg text-main-col" />
 
-                        <input type="password"
-                            placeholder="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="p-3 w-2/3 rounded-lg bg-main-bg text-main-col" />
-                        <button className="w-2/3 p-3 bg-primary-bg rounded-lg" >Login</button>
-                    </form>
+                            <input type="password"
+                                placeholder="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="p-3 w-2/3 rounded-lg bg-main-bg text-main-col" />
+                            <button className="w-2/3 p-3 bg-primary-bg rounded-lg" >Login</button>
+                        </form>
+                    }
                     <br />
                     <span>
                         or sign up with <a
