@@ -54,13 +54,13 @@ const ToggleThemeComponent: React.FC = () => {
     };
 
     return (
-        <div className='p-5 flex flex-col justify-center'
+        <div className='p-1 flex flex-row justify-end items-center hover:scale-105 cursor-pointer'
             onClick={toggleTheme}
         >
-            <h1 className='p-5 border-2 transition ease-in-out delay-75 hover:bg-secondary-bg hover:text-main-col hover:scale-110 uppercase'> {theme} </h1>
-            <span className="text-center">
-                {`click to switch to ${getNextThemeName()}`}
-            </span>
+            {theme === 'light' ? <i className="p-1 fa-solid fa-sun" /> : null}
+            {theme === 'dark' ? <i className="p-1 fa-solid fa-moon" /> : null}
+            {theme === 'system' ? <span>💻</span> : null}
+            <span className="uppercase">{theme}</span>
         </div>
     );
 

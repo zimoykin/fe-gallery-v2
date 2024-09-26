@@ -1,0 +1,36 @@
+.avatar-container-person {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+}
+
+.avatar-container-person-img {
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  transition: width 0.3s ease;
+  background-color: gray;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 10rem;
+  height: 10rem;
+  aspect-ratio: 1 / 1;
+}
+
+@media (min-width: 960px) {
+  .avatar-container-person-img {
+    width: 15rem;
+    height: 15rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .avatar-container-person-img {
+    width: 17rem;
+    height: 17rem;
+  }
+}

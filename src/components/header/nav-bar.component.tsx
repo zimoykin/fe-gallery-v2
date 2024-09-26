@@ -8,7 +8,7 @@ const NavBarComponent: React.FC = () => {
         setIsOpen(!isOpen);
     };
     return (
-        <nav className='w-full flex flex-row max-w-normal-screen bg-main-bg gap-3'>
+        <nav className='p-1 w-full flex flex-row max-w-normal-screen bg-main-bg gap-3'>
             {/* mobile view */}
             <div className='w-full block justify-start gap-2 md:hidden'
             >
@@ -38,7 +38,9 @@ const NavBarComponent: React.FC = () => {
                         />
                         <div className='absolute z-20 left-0 top-0 h-screen w-1/3 bg-main-bg'>
                             <div className='p-3'>
-                                <MenuBtnsComponent />
+                                <MenuBtnsComponent
+                                    onClick={toggleMenu}
+                                />
                             </div>
                         </div>
                     </div>
@@ -47,7 +49,7 @@ const NavBarComponent: React.FC = () => {
 
             {/* desktop view */}
             <div className="hidden md:flex space-x-4">
-                <MenuBtnsComponent />
+                <MenuBtnsComponent onClick={toggleMenu} />
             </div>
         </nav>
     );
