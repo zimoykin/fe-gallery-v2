@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Tektur, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  line-height: 1.5;
+  font-weight: 100;
+
+  color-scheme: light dark;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --background-dark: #535151;
+  --background-light: #ffffff;
+
+  --text-dark: #ffefd6;
+  --text-light: #005f61;
+
+  --main-bg-dark: #039597;
+  --main-cl-dark: #ffbf9c;
+
+  --main-bg-light: #b0f8f9;
+  --main-cl-light: #000000;
+
+  --secondary-bg-dark: #249ea1;
+  --secondary-cl-dark: #f78105;
+
+  --secondary-bg-light: #84ced0;
+  --secondary-cl-light: #fd5900;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 16px;
+}
+
+body.light {
+  background-color: var(--background-light);
+  color: var(--text-light);
+
+  --main-bg: var(--main-bg-light);
+  --main-cl: var(--main-cl-light);
+  --secondary-bg: var(--secondary-bg-light);
+  --secondary-cl: var(--secondary-cl-light);
+}
+
+body.dark {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+
+  --main-bg: var(--main-bg-dark);
+  --main-cl: var(--main-cl-dark);
+  --secondary-bg: var(--secondary-bg-dark);
+  --secondary-cl: var(--secondary-cl-dark);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+
+
+@media (prefers-color-scheme: light) {
+  :root {
+    background-color: var(--background-light);
+    color: var(--text-light);
+
+    --main-bg: var(--main-bg-light);
+    --main-cl: var(--main-cl-light);
+    --secondary-bg: var(--secondary-bg-light);
+    --secondary-cl: var(--secondary-cl-light);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+
+    --main-bg: var(--main-bg-dark);
+    --main-cl: var(--main-cl-dark);
+    --secondary-bg: var(--secondary-bg-dark);
+    --secondary-cl: var(--secondary-cl-dark);
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 12px;
+  }
+}
