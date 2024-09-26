@@ -1,8 +1,8 @@
 {
-  "name": "react-template",
+  "name": "Gallery",
   "version": "1.0.0",
   "private": true,
-  "description": "it is a template for React ts + vite + tailwind",
+  "description": "This app helps you to make your photo gallery",
   "license": "UNLICENSED",
   "author": "Dmitrii Zimoikin",
   "type": "module",

@@ -22,16 +22,28 @@
   --text-light: #005f61;
 
   --main-bg-dark: #039597;
+  --main-bg-dark-75: #039497b3;
   --main-cl-dark: #ffbf9c;
 
   --main-bg-light: #b0f8f9;
   --main-cl-light: #000000;
 
+  --main-bg-light-75: #b0f8f9b1;
+
   --secondary-bg-dark: #249ea1;
   --secondary-cl-dark: #f78105;
+  --secondary-bg-dark-75: #249fa1b0;
 
   --secondary-bg-light: #84ced0;
   --secondary-cl-light: #fd5900;
+  --secondary-bg-light-75: #84ced0be;
+
+  --primary-bg-dark: #03af75;
+  --primary-cl-dark: rgb(255, 255, 255);
+
+  --primary-bg-light: #8ff6bf;
+  --primary-cl-light: #000000;
+
 }
 
 body {
@@ -46,9 +58,15 @@ body.light {
   color: var(--text-light);
 
   --main-bg: var(--main-bg-light);
+  --main-bg-75: var(--main-bg-light-75);
   --main-cl: var(--main-cl-light);
+
   --secondary-bg: var(--secondary-bg-light);
+  --secondary-bg-75: var(--secondary-bg-light-75);
   --secondary-cl: var(--secondary-cl-light);
+
+  --primary-bg: var(--primary-bg-light);
+  --primary-cl: var(--primary-cl-light);
 }
 
 body.dark {
@@ -56,9 +74,15 @@ body.dark {
   color: var(--text-dark);
 
   --main-bg: var(--main-bg-dark);
+  --main-bg-75: var(--main-bg-dark-75);
   --main-cl: var(--main-cl-dark);
+
   --secondary-bg: var(--secondary-bg-dark);
+  --secondary-bg-75: var(--secondary-bg-dark-75);
   --secondary-cl: var(--secondary-cl-dark);
+
+  --primary-bg: var(--primary-bg-dark);
+  --primary-cl: var(--primary-cl-dark);
 }
 
 * {
@@ -81,6 +105,12 @@ h1 {
     --main-cl: var(--main-cl-light);
     --secondary-bg: var(--secondary-bg-light);
     --secondary-cl: var(--secondary-cl-light);
+
+    --primary-bg: var(--primary-bg-light);
+    --primary-cl: var(--primary-cl-light);
+
+    --main-bg-75: var(--main-bg-light-75);
+    --secondary-bg-75: var(--secondary-bg-light-75);
   }
 }
 
@@ -93,6 +123,13 @@ h1 {
     --main-cl: var(--main-cl-dark);
     --secondary-bg: var(--secondary-bg-dark);
     --secondary-cl: var(--secondary-cl-dark);
+
+    --primary-bg: var(--primary-bg-dark);
+    --primary-cl: var(--primary-cl-dark);
+
+    --main-bg-75: var(--main-bg-dark-75);
+    --secondary-bg-75: var(--secondary-bg-dark-75);
+
   }
 }
 
