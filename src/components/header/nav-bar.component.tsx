@@ -8,9 +8,11 @@ const NavBarComponent: React.FC = () => {
         setIsOpen(!isOpen);
     };
     return (
-        <nav className='p-1 w-full flex flex-row max-w-normal-screen bg-main-bg gap-3'>
+        <nav className='p-1 w-full flex flex-row max-w-screen-2xl bg-main-bg gap-3
+        '>
             {/* mobile view */}
-            <div className='w-full block justify-start gap-2 md:hidden'
+            <div className='w-full block justify-start gap-2 md:hidden
+               '
             >
                 <button
                     className="text-white block md:hidden focus:outline-none"
@@ -33,10 +35,14 @@ const NavBarComponent: React.FC = () => {
                 </button>
                 {isOpen &&
                     <div>
-                        <div className='absolute z-10 right-0 top-0 h-screen w-screen bg-secondary-bg-75 bg-opacity-40'
+                        <div className={`transition-opacity duration-1000
+                        absolute z-10 right-0 top-0 h-screen w-screen bg-secondary-bg-75
+                         ${isOpen ? 'bg-opacity-80' : 'bg-opacity-0'}`}
                             onClick={toggleMenu}
                         />
-                        <div className='absolute z-20 left-0 top-0 h-screen w-1/3 bg-main-bg'>
+                        <div className='
+    transition-opacity duration-1000
+                        absolute z-20 left-0 top-0 h-screen w-1/3 bg-main-bg'>
                             <div className='p-3'>
                                 <MenuBtnsComponent
                                     onClick={toggleMenu}
@@ -48,7 +54,7 @@ const NavBarComponent: React.FC = () => {
             </div>
 
             {/* desktop view */}
-            <div className="hidden md:flex space-x-4">
+            <div className="hidden md:flex space-x-4 transition-all ease-in-out delay-75 duration-300">
                 <MenuBtnsComponent onClick={toggleMenu} />
             </div>
         </nav>

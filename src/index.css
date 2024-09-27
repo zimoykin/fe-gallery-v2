@@ -19,8 +19,9 @@
   --background-light: #ffffff;
 
   --text-dark: #ffefd6;
-  --text-light: #005f61;
+  --text-light: #013e3f;
 
+  /* main */
   --main-bg-dark: #039597;
   --main-bg-dark-75: #039497b3;
   --main-cl-dark: #ffbf9c;
@@ -30,6 +31,7 @@
 
   --main-bg-light-75: #b0f8f9b1;
 
+  /* secondary  */
   --secondary-bg-dark: #249ea1;
   --secondary-cl-dark: #f78105;
   --secondary-bg-dark-75: #249fa1b0;
@@ -38,12 +40,25 @@
   --secondary-cl-light: #fd5900;
   --secondary-bg-light-75: #84ced0be;
 
+  /* primary, success */
+
   --primary-bg-dark: #03af75;
   --primary-cl-dark: rgb(255, 255, 255);
 
   --primary-bg-light: #8ff6bf;
   --primary-cl-light: #000000;
 
+  /* danger, failed, errors */
+
+  --danger-bg-dark: #b70e0e;
+  --danger-cl-dark: rgb(255, 255, 255);
+
+  --danger-bg-light: #f28888;
+  --danger-cl-light: #000000;
+
+  /* command panel */
+  --command-panel-bg-dark: #3b6566;
+  --command-panel-bg-light: #a0e3e4;
 
 
   --color-1: #fd5900;
@@ -82,6 +97,11 @@ body.light {
 
   --primary-bg: var(--primary-bg-light);
   --primary-cl: var(--primary-cl-light);
+
+  --danger-bg: var(--danger-bg-light);
+  --danger-cl: var(--danger-cl-light);
+
+  --command-panel-bg: var(--command-panel-bg-light);
 }
 
 body.dark {
@@ -98,6 +118,11 @@ body.dark {
 
   --primary-bg: var(--primary-bg-dark);
   --primary-cl: var(--primary-cl-dark);
+
+  --danger-bg: var(--danger-bg-dark);
+  --danger-cl: var(--danger-cl-dark);
+
+  --command-panel-bg: var(--command-panel-bg-dark);
 }
 
 * {
@@ -121,11 +146,16 @@ h1 {
     --secondary-bg: var(--secondary-bg-light);
     --secondary-cl: var(--secondary-cl-light);
 
+    --main-bg-75: var(--main-bg-light-75);
+    --secondary-bg-75: var(--secondary-bg-light-75);
+
     --primary-bg: var(--primary-bg-light);
     --primary-cl: var(--primary-cl-light);
 
-    --main-bg-75: var(--main-bg-light-75);
-    --secondary-bg-75: var(--secondary-bg-light-75);
+    --danger-bg: var(--danger-bg-light);
+    --danger-cl: var(--danger-cl-light);
+
+    --command-panel-bg: var(--command-panel-bg-light);
   }
 }
 
@@ -142,9 +172,13 @@ h1 {
     --primary-bg: var(--primary-bg-dark);
     --primary-cl: var(--primary-cl-dark);
 
+    --danger-bg: var(--danger-bg-dark);
+    --danger-cl: var(--danger-cl-dark);
+
     --main-bg-75: var(--main-bg-dark-75);
     --secondary-bg-75: var(--secondary-bg-dark-75);
 
+    --command-panel-bg: var(--command-panel-bg-dark);
   }
 }
 
@@ -152,12 +186,12 @@ h1 {
 
 @media (max-width: 768px) {
   body {
-    font-size: 14px;
+    font-size: 13px;
   }
 }
 
 @media (max-width: 480px) {
   body {
-    font-size: 12px;
+    font-size: 11px;
   }
 }

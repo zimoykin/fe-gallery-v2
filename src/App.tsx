@@ -15,8 +15,8 @@ function App() {
       <Router>
         <div className="app-container">
           <HeaderComponent />
-          <main className='h-[calc(100vh-3rem)] pt-20 w-screen flex z-30 absolute'>
-            <div className='w-full max-w-normal-screen mx-auto transition ease-in-out delay-0'>
+          <main className='h-[calc(100vh-2rem)] pt-20 w-screen flex z-30 absolute'>
+            <div className='w-full max-w-screen-2xl mx-auto transition ease-in-out delay-0'>
               <Routes>
                 <Route
                   path='/'

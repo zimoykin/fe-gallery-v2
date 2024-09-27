@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import PalitraComponent from "../components/palitra/palitra.component";
 import CameraSpinner from "../components/camera-spinner/camera-spinner.component";
-import { validatePassword } from "../helpers/password-validate.helper";
 
 const LoginPage: React.FC = () => {
 
@@ -42,7 +41,7 @@ const LoginPage: React.FC = () => {
                     <h1 className="md:hidden text-secondary-col font-bold">WELCOME!</h1>
                     {isLoading
                         ?
-                        <CameraSpinner size="medium" />
+                        <CameraSpinner size="mini" />
                         :
                         <form
                             onSubmit={handleSubmit}
