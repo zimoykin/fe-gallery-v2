@@ -6,12 +6,24 @@ import CameraSpinner from '../components/camera-spinner/camera-spinner.component
 import EquipmentsComponent from '../components/profile/equipments.component';
 import { IUserFolder } from '../interfaces/folder.interface';
 import FoldersComponent from '../components/profile/folders.component';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { useNavigate } from 'react-router-dom';
 const ProfilePage: React.FC = () => {
+
+    const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+    const navigate = useNavigate();
 
     const [profile, setProfile] = useState<IProfile | null>(null);
     const [folders, setFolders] = useState<IUserFolder[]>([]);
     const [isLoadingProfle, setIsLoadingProfile] = useState<boolean>(false);
     const [isLoadingFolders, setIsLoadingFolders] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/login');
+        }
+    }, [isAuthenticated]);
 
     useEffect(() => {
         setIsLoadingProfile(true);
