@@ -62,6 +62,26 @@
   background-color: #23aeae;
 }
 
+.spinner .mini {
+  min-width: 3rem;
+  min-height: 3rem;
+}
+
+.spinner .small {
+  min-width: 5rem;
+  min-height: 5rem;
+}
+
+.spinner .medium {
+  min-width: 10rem;
+  min-height: 10rem;
+}
+
+.spinner .large {
+  min-width: 12rem;
+  min-height: 12rem;
+}
+
 @keyframes rotate {
   to {
     transform: rotate(360deg);

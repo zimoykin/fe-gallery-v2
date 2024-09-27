@@ -6,18 +6,10 @@ interface Props {
 }
 
 const CameraSpinner: React.FC<Props> = ({ size = 'mini' }) => {
-
-  const SizesMap = {
-    mini: '10',
-    small: '20',
-    medium: '28',
-    large: '44'
-  } as const;
-
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center z-30">
       <div className="spinner">
-        <div className={`min-h-${SizesMap[size]}  min-w-${SizesMap[size]}`}>
+        <div className={size}>
           <div className="petal"></div>
           <div className="petal"></div>
           <div className="petal"></div>
