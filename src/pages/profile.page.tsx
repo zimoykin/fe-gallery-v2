@@ -36,9 +36,9 @@ const ProfilePage: React.FC = () => {
         }, 2000);
     }, []);
 
-
     useEffect(() => {
         setIsLoadingFolders(true);
+        document.title = `Profile ${profile?.name ?? 'unknown'} | Gallery | React`;
         setTimeout(() => {
             setIsLoadingFolders(false);
             setFolders([
@@ -65,14 +65,13 @@ const ProfilePage: React.FC = () => {
                 }
             ]);
         }, 3000);
-    }, []);
+    }, [profile?.name]);
 
 
     return (<div
         className='flex w-full shadow-lg h-full md:flex-row flex-col justify-start items-center md:p-1 md:gap-2 overflow-auto'
     >
         {/* left side */}
-
         <div className='relative h-full md:w-1/3 w-full bg-main-bg p-2 shadow-2xl md:rounded-xl'>
             <Avatar url={profile?.url} />
             {profile && <ProfileInfoComponent profile={profile} />}
