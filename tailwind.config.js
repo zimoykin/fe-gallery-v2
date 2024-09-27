@@ -25,7 +25,12 @@ export default {
         103: "1.03",
         104: "1.04",
       },
+      textShadow: {
+        default: "2px 2px 0 rgba(0, 0, 0, 0.7)",
+        md: "3px 3px 0 rgba(0, 0, 0, 0.7)",
+        lg: "4px 4px 0 rgba(0, 0, 0, 0.7)",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-textshadow")],
 };
