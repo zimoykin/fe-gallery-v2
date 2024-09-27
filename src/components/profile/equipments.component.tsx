@@ -40,31 +40,33 @@ const EquipmentsComponent: React.FC<Props> = ({ equipments: initial }) => {
             </div>
             {/* table */}
             <table className="w-full h-full">
-                {
-                    [...equipments]?.map((eq, index) => (
-                        <tr
-                            key={index}
-                            className="w-full  hover:scale-101 transition ease-in-out delay-75 hover:bg-primary-bg mt-4">
-                            <td className="w-4/6 p-2">
-                                <span className="p-2">{eq.name}</span>
-                            </td>
-                            <td className="w-1/6 text-center">
-                                <span>{eq.type}</span> </td>
-                            <td className="w-1/6 text-center">
-                                <span>{eq.favorite
-                                    ? <i className="p-2 fa-solid fa-star text-yellow-400 hover:bg-main-bg hover:scale-125" />
-                                    : <i className="p-2 fa-solid fa-star text-yellow-50 hover:bg-yellow-500 hover:scale-125" />}
-                                </span>
-                                <span>
-                                    <i className="p-2 fas fa-trash hover:bg-danger-bg hover:scale-125"
-                                        onClick={() => handleDeleteClick(index)}
-                                    />
-                                </span>
-                            </td>
+                <tbody>
+                    {
+                        [...equipments]?.map((eq, index) => (
+                            <tr
+                                key={index}
+                                className="w-full  hover:scale-101 transition ease-in-out delay-75 hover:bg-primary-bg mt-4">
+                                <td className="w-4/6 p-2">
+                                    <span className="p-2">{eq.name}</span>
+                                </td>
+                                <td className="w-1/6 text-center">
+                                    <span>{eq.type}</span> </td>
+                                <td className="w-1/6 text-center">
+                                    <span>{eq.favorite
+                                        ? <i className="p-2 fa-solid fa-star text-yellow-400 hover:bg-main-bg hover:scale-125" />
+                                        : <i className="p-2 fa-solid fa-star text-yellow-50 hover:bg-yellow-500 hover:scale-125" />}
+                                    </span>
+                                    <span>
+                                        <i className="p-2 fas fa-trash hover:bg-danger-bg hover:scale-125"
+                                            onClick={() => handleDeleteClick(index)}
+                                        />
+                                    </span>
+                                </td>
 
-                        </tr>
-                    ))
-                }
+                            </tr>
+                        ))
+                    }
+                </tbody>
             </table>
         </div>
     );
