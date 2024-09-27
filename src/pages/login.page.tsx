@@ -5,6 +5,7 @@ import CameraSpinner from "../components/camera-spinner/camera-spinner.component
 
 const LoginPage: React.FC = () => {
 
+    document.title = 'Login | Gallery | React';
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
