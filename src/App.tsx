@@ -7,6 +7,7 @@ import UnavailablePage from './pages/unavailable.page';
 import BackgroundWithImage from './components/background/background.component';
 import ProfilePage from './pages/profile.page';
 import LoginPage from './pages/login.page';
+import RegisterPage from './pages/register.page';
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
                 />
                 <Route
                   path='/register'
-                  element={<UnavailablePage />}
+                  element={<RegisterPage />}
                 />
                 <Route
                   path='/register/confirm'
