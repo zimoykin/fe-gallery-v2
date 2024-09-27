@@ -35,6 +35,14 @@ export default {
     orSignUpWith: "oder registrieren mit",
     doNotHaveAccount: "Haben Sie kein Konto?",
     createForFree: "Kostenlos erstellen",
+    pleaseFillYour: "Bitte füllen Sie Ihr",
+    pleaseProvideValid: "Bitte geben Sie eine gültige",
+    pleaseConfirmPassword: "Bitte bestätigen Sie Ihr Passwort!",
+    passwordsDoNotMatch: "Passwörter stimmen nicht überein!",
+    passwordRequirements:
+      "Das Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten!",
+    weWillSendEmail:
+      "Wir werden Ihnen eine E-Mail senden, um Ihre Registrierung zu bestätigen!",
   },
   en: {
     home: "Home",
@@ -72,5 +80,12 @@ export default {
     orSignUpWith: "or sign up with",
     doNotHaveAccount: "Do not have an account?",
     createForFree: "Create for free",
+    pleaseFillYour: "Please fill your",
+    pleaseProvideValid: "Please provide a valid",
+    pleaseConfirmPassword: "Please confirm your password!",
+    passwordsDoNotMatch: "Passwords do not match!",
+    passwordRequirements:
+      "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character!",
+    weWillSendEmail: "We will send you an email to confirm your registration!",
   },
 } as const;

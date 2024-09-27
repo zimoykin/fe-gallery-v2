@@ -4,10 +4,26 @@ import PalitraComponent from '../components/palitra/palitra.component';
 import CameraSpinner from '../components/camera-spinner/camera-spinner.component';
 import { validateEmail, validatePassword } from '../helpers/input-validate.helper';
 import { toast } from 'react-toastify';
+import { useLocale } from '../contexts/locale';
+import trnsl from '../contexts/locale/locale';
 
 const RegisterPage: React.FC = () => {
 
     const navigate = useNavigate();
+    const { locale } = useLocale();
+    const {
+        niceToMeetYou, email: emailTitle,
+        password: passwordTitle,
+        register,
+        name: nameTitle,
+        confirmPassword: confirmPasswordTitle,
+        pleaseFillYour,
+        pleaseProvideValid,
+        pleaseConfirmPassword,
+        passwordsDoNotMatch,
+        passwordRequirements, weWillSendEmail
+    } = trnsl[locale];
+
     const [isLoading, setIsLoading] = useState(false);
 
     const [name, setName] = useState('');
@@ -32,48 +48,48 @@ const RegisterPage: React.FC = () => {
         setIsLoading(true);
 
         if (name === '') {
-            setError('Please fill your name!');
+            setError(`${pleaseFillYour} ${nameTitle}!`);
             setIsLoading(false);
             return;
         }
         if (email === '') {
-            setError('Please fill your email!');
+            setError(`${pleaseFillYour} ${emailTitle}!`);
             setIsLoading(false);
             return;
         }
 
         if (!validateEmail(email)) {
-            setError('Please provide a valid email!');
+            setError(`${pleaseProvideValid} ${emailTitle}!`);
             setIsLoading(false);
             return;
         }
 
         if (password === '') {
-            setError('Please fill your password!');
+            setError(`${pleaseFillYour} ${passwordTitle}!`);
             setIsLoading(false);
             return;
         }
 
         if (confirmPassword === '') {
-            setError('Please confirm your password!');
+            setError(`${pleaseConfirmPassword}`);
             setIsLoading(false);
             return;
         }
 
         if (password !== confirmPassword) {
-            setError('Passwords do not match!');
+            setError(`${passwordsDoNotMatch}`);
             setIsLoading(false);
             return;
         }
         if (!validatePassword(password)) {
-            setError('Password must contain at least one uppercase letter, one lowercase letter, one number and one special character!');
+            setError(`${passwordRequirements}`);
             setIsLoading(false);
             return;
         }
 
         setTimeout(() => {
             setIsLoading(false);
-            toast.info('We will send you an email to confirm your registration! ✉️', { toastId: 'register' });
+            toast.info(`${weWillSendEmail} ✉️`, { toastId: 'register' });
             //TODO: implement register logic
             navigate('/');
         }, 4000);
@@ -85,7 +101,7 @@ const RegisterPage: React.FC = () => {
         <div className='flex flex-col justify-start items-center h-full w-full overflow-auto'>
 
             <div className='p-2 text-center bg-secondary-bg md:bg-transparent'>
-                <h1 className='text-secondary-col text-shadow-md md:text-6xl text-4xl font-bold'> Nice to meet you! </h1>
+                <h1 className='text-secondary-col text-shadow-md md:text-6xl text-4xl font-bold'> {niceToMeetYou}! </h1>
             </div>
 
             <div className='p-5 hidden md:block'>
@@ -106,25 +122,25 @@ const RegisterPage: React.FC = () => {
                         className='p-2 w-5/6 md:w-3/4 
                         bg-main-bg text-secondary-col text-lg
                         rounded-md shadow-md'
-                        type="text" placeholder='name' value={name} onChange={(e) => setName(e.target.value)} />
+                        type="text" placeholder={nameTitle} value={name} onChange={(e) => setName(e.target.value)} />
                     <input
                         className='p-2 w-5/6 md:w-3/4
                         bg-main-bg text-secondary-col text-lg
                         rounded-md shadow-md'
-                        type="email" placeholder='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+                        type="email" placeholder={emailTitle} value={email} onChange={(e) => setEmail(e.target.value)} />
                     <input
                         className='p-2 w-5/6 md:w-3/4
                         bg-main-bg text-secondary-col text-lg
                         rounded-md shadow-md'
-                        type="password" placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                        type="password" placeholder={passwordTitle} value={password} onChange={(e) => setPassword(e.target.value)} />
                     <input
                         className='p-2 w-5/6 md:w-3/4
                         bg-main-bg text-secondary-col text-lg
                         rounded-md shadow-md'
-                        type="password" placeholder='confirm password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                        type="password" placeholder={confirmPasswordTitle} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                     <button className='p-2 w-5/6 md:w-3/4
                     hover:bg-green-500 hover:scale-101 active:scale-95
-                    bg-primary-bg text-primary-col rounded-md' onClick={handleRegisterClick}> <span className='text-2xl font-bold'>Register</span> </button>
+                    bg-primary-bg text-primary-col rounded-md' onClick={handleRegisterClick}> <span className='text-2xl font-bold'>{register}</span> </button>
                 </form>}
 
                 {isLoading && <CameraSpinner size='small' />}
