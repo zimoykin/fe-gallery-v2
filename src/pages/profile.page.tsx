@@ -52,6 +52,16 @@ const ProfilePage: React.FC = () => {
                     title: 'Berlin | 2024',
                     url: '/my-photos.jpg',
                     privateAccess: 0
+                }, {
+                    bgColor: '#f5f5f5',
+                    color: '#000',
+                    description: 'From Olympics games in Paris, From Olympics games in Paris, From Olympics games in Paris, From Olympics games in Paris',
+                    id: '2',
+                    profileId: '1',
+                    sortOrder: 2,
+                    title: 'Paris Olympics | 2024',
+                    url: '/my-photos.jpg',
+                    privateAccess: 0
                 }
             ]);
         }, 3000);
@@ -76,14 +86,14 @@ const ProfilePage: React.FC = () => {
         {/* right side */}
         <div className='md:w-2/3 w-full bg-secondary-bg-75 shadow-2xl md:rounded-xl relative h-full '>
             {/* top right */}
-            <div className='w-full p-3 h-1/2 flex justify-start relative items-start overflow-y-auto'>
+            <div className='w-full  md:rounded-t-xl h-1/2 flex justify-start relative items-start overflow-y-auto'>
                 <FoldersComponent folders={folders} />
                 {isLoadingFolders && <div className='hidden w-full md:flex bg-black bg-opacity-60 justify-center items-center md:h-full absolute top-0 left-0' >
                     <CameraSpinner size='large' />
                 </div>}
             </div >
             {/* bottom right */}
-            <div className='w-full p-3 h-1/2 flex justify-start relative items-start overflow-y-auto'>
+            <div className='w-full h-1/2 flex justify-start relative items-start overflow-y-auto'>
                 <EquipmentsComponent equipments={profile?.equipment ?? []} />
                 {isLoadingProfle && <div className='hidden w-full md:flex bg-black bg-opacity-60 justify-center items-center md:h-full absolute top-0 left-0' >
                     <CameraSpinner size='large' />

@@ -17,7 +17,7 @@ export default {
         "command-panel-bg": `var(--command-panel-bg)`,
       },
       maxWidth: {
-        "normal-screen": "1280px",
+        "normal-screen": "1600px",
       },
       scale: {
         101: "1.01",
