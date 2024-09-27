@@ -12,7 +12,7 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
 
     const MenuClassName = `
                 
-                transition ease-in-out delay-0
+                transition-all ease-in-out delay-0
                 active:bg-primary-bg hover:decoration-neutral-600
                 cursor-pointer 
                 hover:scale-105
