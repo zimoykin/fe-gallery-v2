@@ -18,6 +18,10 @@ const LoginPage: React.FC = () => {
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    const handleClickCreateAccount = () => {
+        navigate('/register');
+    };
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -73,20 +77,23 @@ const LoginPage: React.FC = () => {
                         </form>
                     }
 
-                    <hr className="p-1 w-2/3 border-t-2 border-main-bg-75 my-2" />
-                    <span>
-                        or sign up with <a
-                            onClick={(e) => {
-                                e.preventDefault();
-                                toast.info('This feature is not available yet 😵‍💫', { toastId: 'unavailable' });
-                            }}
-                            className="p-1 cursor hover:bg-secondary-bg text-secondary-col" href="">Google</a>
-                    </span>
-                    <hr className="p-1 w-2/3 border-t-2 border-main-bg-75 my-2" />
-                    <span>
-                        Do not have an account? <a className="p-1 cursor hover:bg-secondary-bg text-main-col">Create for free </a>
-                    </span>
-
+                    {!isLoading && <div className="p-1 w-full flex flex-col justify-center items-center">
+                        <hr className="p-1 w-2/3 border-t-2 border-main-bg-75 my-2" />
+                        <span className="p-1 text-sm">
+                            or sign up with <a
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    toast.info('This feature is not available yet 😵‍💫', { toastId: 'unavailable' });
+                                }}
+                                className="p-1 cursor hover:bg-secondary-bg text-secondary-col" href="">Google</a>
+                        </span>
+                        <hr className="p-1 w-2/3 border-t-2 border-main-bg-75 my-2" />
+                        <span className="p-1 text-sm">
+                            Do not have an account? <br /><a
+                                onClick={handleClickCreateAccount}
+                                className="p-1 cursor hover:bg-secondary-bg text-main-col">Create for free </a>
+                        </span>
+                    </div>}
 
                 </div>
             </div>
