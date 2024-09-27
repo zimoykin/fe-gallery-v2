@@ -5,13 +5,24 @@ import CameraSpinner from "../components/camera-spinner/camera-spinner.component
 import { useDispatch } from "react-redux";
 import { login } from "../features/auth/auth-slice";
 import { useNavigate } from "react-router-dom";
+import { useLocale } from "../contexts/locale";
+import translate from "../contexts/locale/locale";
 
 const LoginPage: React.FC = () => {
 
-    document.title = 'Login | Gallery | React';
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { locale } = useLocale();
+    const { welcome,
+        doNotHaveAccount,
+        createForFree,
+        orSignUpWith,
+        gallery,
+        email: emailTitle,
+        password: passwordTitle,
+        login: loginTitle } = translate[locale];
+
+    document.title = `${loginTitle} | ${gallery} | React`;
 
     //states
     const [email, setEmail] = useState('');
@@ -44,7 +55,7 @@ const LoginPage: React.FC = () => {
         <div className="flex w-full h-full flex-row justify-center items-center">
             <div className="hidden md:block w-2/3 h-full  bg-main-bg-75">
                 <div className="w-full h-full flex flex-col justify-center items-center">
-                    <h1 className="p-3 text-secondary-col text-shadow-xl font-bold">WELCOME!</h1>
+                    <h1 className="p-3 text-secondary-col text-shadow-xl font-bold uppercase">{welcome}!</h1>
                     <PalitraComponent size="medium" />
                 </div>
             </div>
@@ -54,7 +65,7 @@ const LoginPage: React.FC = () => {
                     <div className="flex md:hidden">
                         <PalitraComponent size="mini" />
                     </div>
-                    <h1 className="md:hidden text-secondary-col text-shadow-xl font-bold">WELCOME!</h1>
+                    <h1 className="md:hidden text-secondary-col text-shadow-xl font-bold uppercase">{welcome}!</h1>
                     {isLoading
                         ?
                         <CameraSpinner size="mini" />
@@ -63,24 +74,24 @@ const LoginPage: React.FC = () => {
                             onSubmit={handleSubmit}
                             className='w-full flex flex-col gap-2 justify-center items-center' action="">
                             <input type="email"
-                                placeholder="email"
+                                placeholder={emailTitle}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="p-3 w-2/3 shadow-md rounded-lg bg-main-bg text-main-col" />
 
                             <input type="password"
-                                placeholder="password"
+                                placeholder={passwordTitle}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="p-3 w-2/3 shadow-md rounded-lg bg-main-bg text-main-col" />
-                            <button className="w-2/3 p-3 bg-primary-bg rounded-lg shadow-md active:scale-95 hover:scale-103" >Login</button>
+                            <button className="w-2/3 p-3 bg-primary-bg rounded-lg shadow-md active:scale-95 hover:scale-103" >{loginTitle}</button>
                         </form>
                     }
 
                     {!isLoading && <div className="p-1 w-full flex flex-col justify-center items-center">
                         <hr className="p-1 w-2/3 border-t-2 border-main-bg-75 my-2" />
                         <span className="p-1 text-sm">
-                            or sign up with <a
+                            {orSignUpWith} <a
                                 onClick={(e) => {
                                     e.preventDefault();
                                     toast.info('This feature is not available yet 😵‍💫', { toastId: 'unavailable' });
@@ -89,9 +100,9 @@ const LoginPage: React.FC = () => {
                         </span>
                         <hr className="p-1 w-2/3 border-t-2 border-main-bg-75 my-2" />
                         <span className="p-1 text-sm">
-                            Do not have an account? <br /><a
+                            {doNotHaveAccount} <br /><a
                                 onClick={handleClickCreateAccount}
-                                className="p-1 cursor hover:bg-secondary-bg text-main-col">Create for free </a>
+                                className="p-1 cursor hover:bg-secondary-bg text-main-col">{createForFree}</a>
                         </span>
                     </div>}
 

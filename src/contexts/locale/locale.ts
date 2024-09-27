@@ -32,6 +32,9 @@ export default {
     confirmPassword: "Passwort bestätigen",
     name: "Name",
     notification: "Benachrichtigung",
+    orSignUpWith: "oder registrieren mit",
+    doNotHaveAccount: "Haben Sie kein Konto?",
+    createForFree: "Kostenlos erstellen",
   },
   en: {
     home: "Home",
@@ -66,5 +69,8 @@ export default {
     confirmPassword: "Confirm Password",
     name: "Name",
     notification: "Notification",
+    orSignUpWith: "or sign up with",
+    doNotHaveAccount: "Do not have an account?",
+    createForFree: "Create for free",
   },
 } as const;
