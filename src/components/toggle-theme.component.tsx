@@ -3,9 +3,13 @@ import { useTheme } from "../contexts/theme/theme-context";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { toDark, toLight, toSystem } from "../features/thema/thema-slice";
+import { useLocale } from "../contexts/locale";
+import translate from '../contexts/locale/locale';
 
 const ToggleThemeComponent: React.FC = () => {
+
     const { theme, setTheme } = useTheme();
+    const { locale } = useLocale();
     const dispatch = useDispatch();
     const themaStored = useSelector((state: RootState) => state.thema.thema);
 
@@ -60,7 +64,7 @@ const ToggleThemeComponent: React.FC = () => {
             {theme === 'light' ? <i className="p-1 fa-solid fa-sun" /> : null}
             {theme === 'dark' ? <i className="p-1 fa-solid fa-moon" /> : null}
             {theme === 'system' ? <i className="p-1 fa-solid fa-gear" /> : null}
-            <span className="uppercase">{theme}</span>
+            <span className="uppercase">{translate[locale][theme]}</span>
         </div>
     );
 

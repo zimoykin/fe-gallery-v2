@@ -9,13 +9,16 @@ import './index.css';
 import './palitra.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { LocaleProvider } from './contexts/locale/locale.context';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider>
-          <App />
+          <LocaleProvider>
+            <App />
+          </LocaleProvider>
         </ThemeProvider>
       </PersistGate>
     </Provider>
