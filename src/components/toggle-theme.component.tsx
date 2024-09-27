@@ -59,7 +59,7 @@ const ToggleThemeComponent: React.FC = () => {
         >
             {theme === 'light' ? <i className="p-1 fa-solid fa-sun" /> : null}
             {theme === 'dark' ? <i className="p-1 fa-solid fa-moon" /> : null}
-            {theme === 'system' ? <span>💻</span> : null}
+            {theme === 'system' ? <i className="p-1 fa-solid fa-gear" /> : null}
             <span className="uppercase">{theme}</span>
         </div>
     );
