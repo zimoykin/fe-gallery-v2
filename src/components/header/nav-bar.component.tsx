@@ -11,8 +11,7 @@ const NavBarComponent: React.FC = () => {
         <nav className='p-1 w-full flex flex-row max-w-screen-2xl bg-main-bg gap-3
         '>
             {/* mobile view */}
-            <div className='w-full block justify-start gap-2 md:hidden
-               '
+            <div className='w-full block justify-start gap-2 md:hidden'
             >
                 <button
                     className="text-white block md:hidden focus:outline-none"
@@ -54,7 +53,7 @@ const NavBarComponent: React.FC = () => {
             </div>
 
             {/* desktop view */}
-            <div className="hidden md:flex space-x-4 transition-all ease-in-out delay-75 duration-300">
+            <div className="w-full hidden md:flex space-x-4 transition-all ease-in-out delay-75 duration-300">
                 <MenuBtnsComponent onClick={toggleMenu} />
             </div>
         </nav>
