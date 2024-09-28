@@ -48,7 +48,7 @@ const ConfirmRegisterPage: React.FC = () => {
             return;
         }
 
-        AuthClient.post<IRegister>('auth/confirm', {
+        AuthClient.post<IRegister>('/auth/confirm', {
             code: confirmCode,
             token: token
         })
