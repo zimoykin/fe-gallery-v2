@@ -5,6 +5,9 @@ import CameraSpinner from '../components/camera-spinner/camera-spinner.component
 import { validateEmail, validatePassword } from '../helpers/input-validate.helper';
 import { toast } from 'react-toastify';
 import { useLocale, translate } from '../contexts/locale';
+import { AuthClient } from '../networking';
+import { IRegister } from '../interfaces/register.inetrface';
+import { url } from 'inspector';
 
 const RegisterPage: React.FC = () => {
 
@@ -87,27 +90,38 @@ const RegisterPage: React.FC = () => {
             return;
         }
 
-        setTimeout(() => {
-            setIsLoading(false);
-            toast.info(`${weWillSendEmail} ✉️`, { toastId: 'register' });
-            //TODO: implement register logic
-            navigate('/');
-        }, 4000);
 
+        AuthClient.post<IRegister>('auth/register', {
+            name: name,
+            email: email,
+            password: password
+        })
+        .then(() => {
+            toast.info(`${weWillSendEmail} ✉️`, { toastId: 'register' });
+            navigate('/');
+        })
+        .catch((error) => {
+            toast.error(error.message, { toastId: 'register' });
+            setError(error.message);
+            throw error;
+        })
+        .finally(() => {
+            setIsLoading(false);
+        });
     };
 
 
     return (<>
         <div className='flex flex-col justify-start items-center h-full w-full overflow-auto'>
 
-            <div className='p-2 text-center bg-secondary-bg md:bg-transparent'>
+            <div className='p-2 text-center bg-secondary-bg md:bg-transparent w-full'>
                 <h1 className='text-secondary-col text-shadow-md md:text-6xl text-4xl font-bold'> {niceToMeetYou}! </h1>
             </div>
 
             <div className='p-5 hidden md:block'>
                 <PalitraComponent size='medium' />
             </div>
-            <div className='p-1 flex md:hidden'>
+            <div className='p-1 w-full flex justify-center bg-main-bg-75 md:hidden'>
                 <PalitraComponent size='mini' />
             </div>
 
@@ -119,23 +133,23 @@ const RegisterPage: React.FC = () => {
                     }}
                     className='flex w-full justify-center items-center flex-col gap-2'>
                     <input
-                        className='p-2 w-5/6 md:w-3/4 
-                        bg-main-bg text-secondary-col text-lg
+                        className='p-3 w-5/6 md:w-3/4 
+                        bg-main-bg text-secondary-col text-xs
                         rounded-md shadow-md'
                         type="text" placeholder={nameTitle} value={name} onChange={(e) => setName(e.target.value)} />
                     <input
-                        className='p-2 w-5/6 md:w-3/4
-                        bg-main-bg text-secondary-col text-lg
+                        className='p-3 w-5/6 md:w-3/4
+                        bg-main-bg text-secondary-col text-xs
                         rounded-md shadow-md'
                         type="email" placeholder={emailTitle} value={email} onChange={(e) => setEmail(e.target.value)} />
                     <input
-                        className='p-2 w-5/6 md:w-3/4
-                        bg-main-bg text-secondary-col text-lg
+                        className='p-3 w-5/6 md:w-3/4
+                        bg-main-bg text-secondary-col text-xs
                         rounded-md shadow-md'
                         type="password" placeholder={passwordTitle} value={password} onChange={(e) => setPassword(e.target.value)} />
                     <input
-                        className='p-2 w-5/6 md:w-3/4
-                        bg-main-bg text-secondary-col text-lg
+                        className='p-3 w-5/6 md:w-3/4
+                        bg-main-bg text-secondary-col text-xs
                         rounded-md shadow-md'
                         type="password" placeholder={confirmPasswordTitle} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                     <button className='p-2 w-5/6 md:w-3/4

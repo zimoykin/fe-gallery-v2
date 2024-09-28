@@ -1,23 +1,23 @@
 import { Axios, AxiosRequestConfig } from "axios";
-import networkClient from "./api-settings";
+import authClient from "./settings";
 
-export class ApiClient {
-  private static instance: ApiClient;
+export class AuthClient {
+  private static instance: AuthClient;
   private axiosInstance: Axios;
 
   constructor() {
-    this.axiosInstance = networkClient;
+    this.axiosInstance = authClient;
   }
 
   static init = () => {
-    if (!ApiClient.instance) {
-      this.instance = new ApiClient();
+    if (!AuthClient.instance) {
+      this.instance = new AuthClient();
     }
-    return ApiClient.instance;
+    return AuthClient.instance;
   };
 
   static async get<T>(path: string, config?: AxiosRequestConfig) {
-    const response = await ApiClient.init()
+    const response = await AuthClient.init()
       .axiosInstance.get<T>(path, config)
       .catch((error) => {
         console.error(error);
@@ -38,25 +38,28 @@ export class ApiClient {
     data?: unknown,
     config?: AxiosRequestConfig,
   ) {
-    const response = await ApiClient.init()
+    return AuthClient.init()
       .axiosInstance.post<T>(path, data, config)
+      .then((response) => {
+        if (response?.status !== 200) {
+          console.error(response?.statusText ?? "post error");
+          throw new Error(response.statusText ?? "post error");
+        } else {
+          return response.data;
+        }
+      })
       .catch((error) => {
         console.error(error);
-        throw error.message ?? "an error";
+        throw error ?? new Error("an error");
       });
-    if (response?.status !== 200) {
-      console.error(response?.statusText ?? "post error");
-      throw new Error(response.statusText ?? "post error");
-    } else {
-      return response.data;
-    }
   }
+
   static async put<T, K = unknown>(
     path: string,
     data: K,
     config?: AxiosRequestConfig,
   ) {
-    return ApiClient.init()
+    return AuthClient.init()
       .axiosInstance.put<T>(path, data, config)
       .catch((error) => {
         console.error(error);
@@ -76,7 +79,7 @@ export class ApiClient {
     data: unknown,
     config?: AxiosRequestConfig,
   ) {
-    const response = await ApiClient.init()
+    const response = await AuthClient.init()
       .axiosInstance.patch<T>(path, data, config)
       .catch((error) => {
         console.error(error);
@@ -90,7 +93,7 @@ export class ApiClient {
     }
   }
   static async delete<T>(patch: string, config?: AxiosRequestConfig) {
-    const response = await ApiClient.init()
+    const response = await AuthClient.init()
       .axiosInstance.delete<T>(patch, config)
       .catch((error) => {
         console.error(error);
@@ -109,7 +112,7 @@ export class ApiClient {
     data: FormData,
     config?: AxiosRequestConfig,
   ) {
-    const response = await ApiClient.init()
+    const response = await AuthClient.init()
       .axiosInstance.post<T>(path, data, {
         ...config,
         headers: {

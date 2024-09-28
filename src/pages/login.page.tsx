@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import PalitraComponent from "../components/palitra/palitra.component";
 import CameraSpinner from "../components/camera-spinner/camera-spinner.component";
@@ -6,6 +6,9 @@ import { useDispatch } from "react-redux";
 import { login } from "../features/auth/auth-slice";
 import { useNavigate } from "react-router-dom";
 import { useLocale, translate } from "../contexts/locale";
+import { ApiClient } from "../networking/api/api-client";
+import { AuthClient } from "../networking";
+import { ILoginResponse } from "../interfaces/login-response.interface";
 
 const LoginPage: React.FC = () => {
 
@@ -19,14 +22,18 @@ const LoginPage: React.FC = () => {
         gallery,
         email: emailTitle,
         password: passwordTitle,
+        pleaseFillYour,
         login: loginTitle } = translate[locale];
 
     document.title = `${loginTitle} | ${gallery} | React`;
+
+    const errorTimeout = useRef<NodeJS.Timeout | null>(null);
 
     //states
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
     const handleClickCreateAccount = () => {
         navigate('/register');
@@ -35,20 +42,48 @@ const LoginPage: React.FC = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (email === '' || password === '') {
-            toast.error('Please fill in all fields!', { toastId: 'login' });
+        if (email === '') {
+            setError(`${pleaseFillYour} ${emailTitle}!`);
+            return;
+        }
+
+        if (password === '') {
+            setError(`${pleaseFillYour} ${passwordTitle}!`);
             return;
         }
 
         setIsLoading(true);
-        //TODO: implement login logic
         setTimeout(() => {
-            setIsLoading(false);
-            toast.info('unfortunately, this feature is not available! 🤪', { toastId: 'login' });
-            dispatch(login(['accessToken', 'refreshToken']));
-            navigate('/profile');
-        }, 2000);
+            AuthClient.post<ILoginResponse>('/auth/login', { email, password })
+                .then((response) => {
+                    if (response && response.accessToken && response.refreshToken) {
+                        dispatch(login([response.accessToken, response.refreshToken]));
+                        navigate('/');
+                    }
+                    else {
+                        setError('Login failed');
+                    }
+                }).catch((error: Error) => {
+                    toast.error(error.message, { toastId: 'login' });
+                    setError(error.message);
+                    setIsLoading(false);
+                }).finally(() => {
+                    setIsLoading(false);
+                });
+
+        }, 0);
     };
+
+    useEffect(() => {
+        if (errorTimeout.current)
+            clearTimeout(errorTimeout.current);
+
+        if (error)
+            errorTimeout.current = setTimeout(() => {
+                setError(null);
+            }, 3000);
+
+    }, [error, errorTimeout]);
 
     return (
         <div className="flex w-full h-full flex-row justify-center items-center">
@@ -64,7 +99,10 @@ const LoginPage: React.FC = () => {
                     <div className="flex md:hidden">
                         <PalitraComponent size="mini" />
                     </div>
-                    <h1 className="md:hidden text-secondary-col text-shadow-xl font-bold uppercase">{welcome}!</h1>
+                    {!error &&
+                        <h1 className="md:hidden text-secondary-col text-shadow-xl font-bold uppercase">{welcome}!</h1>
+                    }
+                    {error && <p className="bg-danger-bg text-center text-danger-cl w-full p-1">{error}</p>}
                     {isLoading
                         ?
                         <CameraSpinner size="mini" />
@@ -76,13 +114,13 @@ const LoginPage: React.FC = () => {
                                 placeholder={emailTitle}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="p-3 w-2/3 shadow-md rounded-lg bg-main-bg text-main-col" />
+                                className="p-3 w-2/3 shadow-md rounded-lg bg-main-bg text-main-col text-xs" />
 
                             <input type="password"
                                 placeholder={passwordTitle}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="p-3 w-2/3 shadow-md rounded-lg bg-main-bg text-main-col" />
+                                className="p-3 w-2/3 shadow-md rounded-lg bg-main-bg text-main-col text-xs" />
                             <button className="w-2/3 p-3 bg-primary-bg rounded-lg shadow-md active:scale-95 hover:scale-103" >{loginTitle}</button>
                         </form>
                     }
