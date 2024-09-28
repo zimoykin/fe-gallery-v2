@@ -5,8 +5,7 @@ import CameraSpinner from "../components/camera-spinner/camera-spinner.component
 import { useDispatch } from "react-redux";
 import { login } from "../features/auth/auth-slice";
 import { useNavigate } from "react-router-dom";
-import { useLocale } from "../contexts/locale";
-import translate from "../contexts/locale/locale";
+import { useLocale, translate } from "../contexts/locale";
 
 const LoginPage: React.FC = () => {
 

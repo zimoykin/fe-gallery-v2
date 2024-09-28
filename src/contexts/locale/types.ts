@@ -1,4 +1,4 @@
-import localeTranslate from "../locale/locale";
+import { translate as localeTranslate } from "./translate";
 
 export type Locale = keyof typeof localeTranslate;
 
