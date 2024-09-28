@@ -44,6 +44,9 @@ export const translate: Record<string, Record<string, string>> = {
     weWillSendEmail:
       "Wir werden Ihnen eine E-Mail senden, um Ihre Registrierung zu bestätigen!",
     userTopList: "Benutzer Top-Liste",
+    latestTopics: "Neueste Themen",
+    readMore: "Mehr lesen",
+    collapse: "Weniger anzeigen",
   },
   en: {
     home: "Home",
@@ -89,5 +92,8 @@ export const translate: Record<string, Record<string, string>> = {
       "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character!",
     weWillSendEmail: "We will send you an email to confirm your registration!",
     userTopList: "User Top List",
+    latestTopics: "Latest Topics",
+    readMore: "Read More",
+    collapse: "Collapse",
   },
 } as const;
