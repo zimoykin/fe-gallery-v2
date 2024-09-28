@@ -41,7 +41,7 @@ const NavBarComponent: React.FC = () => {
                         />
                         <div className='
     transition-opacity duration-1000
-                        absolute z-20 left-0 top-0 h-screen w-1/3 bg-main-bg'>
+                        absolute z-20 left-0 top-0 h-screen w-1/2 bg-main-bg'>
                             <div className='p-3'>
                                 <MenuBtnsComponent
                                     onClick={toggleMenu}

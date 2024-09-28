@@ -28,7 +28,7 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
                 hover:text-main-col 
                 hover:bg-secondary-bg
                 justify-end items-center
-                flex
+                flex p-2 md:p-1 
                 `;
 
 
@@ -49,21 +49,21 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
                     onClick();
                 }}
             >
-                <i className='p-2 fa-solid fa-home' />
-                <span className='p-2 uppercase text-sm'>
+                <i className='p-1 fa-solid fa-home' />
+                <span className='md:p-1 uppercase text-sm'>
                     {home}</span>
             </div>
-            <span className='p-2 hidden md:block'>/</span>
+            <span className='md:p-1 hidden md:block'>/</span>
             <div className={MenuClassName}
                 onClick={() => {
                     navigate('/notification');
                     onClick();
                 }}
             >
-                <i className='p-2 fa-solid fa-bell' />
-                <span className='p-2 uppercase text-xs'>{notification}</span>
+                <i className='p-1 fa-solid fa-bell' />
+                <span className='md:p-1 uppercase text-xs'>{notification}</span>
             </div>
-            <span className='p-2 hidden md:block'>/</span>
+            <span className='md:p-1 hidden md:block'>/</span>
             <div
                 onClick={() => {
                     navigate('/profile');
@@ -71,27 +71,29 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
                 }}
                 className={MenuClassName}>
                 <i className='p-1 fa-solid fa-user' />
-                <span className='p-1 uppercase text-sm'>{profile}</span>
+                <span className='md:p-1 uppercase text-sm'>{profile}</span>
             </div>
-            <span className='p-2 hidden md:block'>/</span>
+            <span className='p-1 hidden md:block'>/</span>
             <div
                 onClick={() => { navigate('/gallery'); onClick(); }}
                 className={MenuClassName}
             >
-                <i className='p-2 fa-solid fa-image' />
-                <span className=' p-2 uppercase text-sm'>{gallery}</span>
+                <i className='p-1 fa-solid fa-image' />
+                <span className='md:p-1 uppercase text-sm'>{gallery}</span>
             </div>
-            <span className='p-2 hidden md:block'>//</span>
+            <span className='md:p-1 hidden md:block'>//</span>
 
             <div className='flex justify-end items-center md:justify-start md:items-start'>
                 <hr className='md:hidden w-2/3 p-1' />
             </div>
 
-            <div className='p-2'>
+            <div className='md:p-1'>
                 <ToggleThemeComponent />
             </div>
 
-            <span className='p-2 hidden md:block'>/</span>
+            {/* <i className="fas fa-user-astronaut"></i> */}
+
+            <span className='md:p-1 hidden md:block'>/</span>
             <div
                 onClick={() => { navigate('/gallery'); onClick(); }}
                 className={MenuClassName}
@@ -106,7 +108,7 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
             >
                 <i className='p-1 fa-solid fa-flag' />
                 <span
-                    className='p-1 uppercase hover:bg-secondary-bg rounded-md'>{locale}
+                    className='md:p-1 uppercase hover:bg-secondary-bg rounded-md'>{locale}
                 </span>
             </div>
 
@@ -114,15 +116,19 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
                 <hr className='md:hidden w-2/3 p-1' />
             </div>
 
-            <div className='absolute p-1 right-0'>
+            <div className='absolute md:p-1 right-0'>
                 <div className='flex md:flex-row flex-col gap-1 justify-end items-end'>
-                    <div className='p-1 right-0 border border-main-col hover:bg-danger-bg rounded-md'
+                    <div className='p-1 border-secondary-col right-0 hover:border hover:bg-danger-bg hover:bg-danger-cl rounded-md'
                         onClick={
                             handleOnClickLoginBtn
                         }
                     >
-                        <i className='fa-solid fa-arrow-right-from-bracket' />
-                        <span className='uppercase text-sm'>{isAuthenticated ? logOutTitle : login}</span>
+                        {
+                            isAuthenticated
+                                ? <i className="p-1 text-secondary-col fas fa-walking" />
+                                : <i className="p-1 text-secondary-col fas fa-key" />
+                        }
+                        <span className='uppercase text-sm text-secondary-col'>{isAuthenticated ? logOutTitle : login}</span>
                     </div>
                 </div>
             </div>
