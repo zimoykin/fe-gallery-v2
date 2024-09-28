@@ -18,7 +18,7 @@ const SizesMap = {
 
 const Avatar: React.FC<Props> = ({ onClick, url, size = 'auto' }: Props) => {
   return (
-    <div className="p-1">
+    <>
       <div
         onClick={onClick}
         className="bg-no-repeat bg-cover bg-position:center 
@@ -37,7 +37,7 @@ const Avatar: React.FC<Props> = ({ onClick, url, size = 'auto' }: Props) => {
         }
       />
       <div />
-    </div>
+    </>
   );
 };
 

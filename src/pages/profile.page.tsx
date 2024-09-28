@@ -84,8 +84,13 @@ const ProfilePage: React.FC = () => {
         className='flex w-full shadow-lg h-full md:flex-row flex-col justify-start items-center md:p-1 md:gap-2 overflow-auto'
     >
         {/* left side */}
-        <div className='relative h-full md:w-1/3 w-full bg-main-bg p-2 shadow-2xl md:rounded-xl'>
-            <Avatar url={profile?.url} />
+        <div className='relative h-full md:w-1/3 w-full 
+        flex-col justify-center items-center 
+        bg-main-bg p-2 shadow-2xl md:rounded-xl'>
+            <div className='w-full flex justify-center'>
+                <Avatar size='medium' url={profile?.url} />
+            </div>
+
             {profile && <ProfileInfoComponent profile={profile} />}
             {isLoadingProfle && <div className='hidden md:flex h-full w-full bg-black bg-opacity-60
             justify-center items-center absolute top-0 left-0' >

@@ -37,14 +37,16 @@ const UserTopList: React.FC = () => {
                     {isLoading && <PalitraComponent size='mini' />}
                     {!isLoading && users.map((user, index) => (
                         <div
-                            onClick={() => { 
+                            onClick={() => {
                                 navigate(`/gallery/${user.id}`);
                             }}
                             key={index}
                             className='w-full flex justify-start p-1 items-center bg-main-bg-75
                             shadow-md hover:scale-103 hover:shadow-xl transition-all duration-300
                             '>
-                            <Avatar url={user.url} size='micro' />
+                            <div className='p-1'>
+                                <Avatar url={user.url} size='micro' />
+                            </div>
                             <span className='text-main-col text-sm text-shadow-sm'>
                                 {user.name}
                             </span>
