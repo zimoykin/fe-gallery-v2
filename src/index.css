@@ -56,6 +56,17 @@
   --danger-bg-light: #f28888;
   --danger-cl-light: #000000;
 
+  /* highlight color */
+
+  --highlight-cl-dark: #faab35;
+  --highlight-cl-light: #faab35;
+  
+  --highlight-bg-dark-75: #249fa1b0;
+  --highlight-bg-light-75: #67dddfc6;
+  
+  --highlight-bg-dark: #249fa1;
+  --highlight-bg-light: #67dddf;
+
   /* command panel */
   --command-panel-bg-dark: #3b6566;
   --command-panel-bg-light: #a0e3e4;
@@ -102,6 +113,11 @@ body.light {
   --danger-cl: var(--danger-cl-light);
 
   --command-panel-bg: var(--command-panel-bg-light);
+
+  --highlight-bg: var(--highlight-bg-light);
+  --highlight-bg-75: var(--highlight-bg-light-75);
+
+  --highlight-cl: var(--highlight-cl-light);
 }
 
 body.dark {
@@ -123,6 +139,12 @@ body.dark {
   --danger-cl: var(--danger-cl-dark);
 
   --command-panel-bg: var(--command-panel-bg-dark);
+
+  --highlight-bg: var(--highlight-bg-dark);
+  --highlight-bg-75: var(--highlight-bg-dark-75);
+
+  --highlight-cl: var(--highlight-cl-dark);
+
 }
 
 * {
@@ -159,6 +181,11 @@ h1 {
     --danger-cl: var(--danger-cl-light);
 
     --command-panel-bg: var(--command-panel-bg-light);
+
+    --highlight-bg: var(--highlight-bg-light);
+    --highlight-bg-75: var(--highlight-bg-light-75);
+
+    --highlight-cl: var(--highlight-cl-light);
   }
 }
 
@@ -182,6 +209,11 @@ h1 {
     --secondary-bg-75: var(--secondary-bg-dark-75);
 
     --command-panel-bg: var(--command-panel-bg-dark);
+
+    --highlight-bg: var(--highlight-bg-dark);
+    --highlight-bg-75: var(--highlight-bg-dark-75); 
+
+    --highlight-cl: var(--highlight-cl-dark);
   }
 }
 

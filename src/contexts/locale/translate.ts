@@ -47,6 +47,8 @@ export const translate: Record<string, Record<string, string>> = {
     latestTopics: "Neueste Themen",
     readMore: "Mehr lesen",
     collapse: "Weniger anzeigen",
+    confirmationCode: "Bestätigungscode",
+    writeYourCodeBelow: "Geben Sie Ihren Code unten ein",
   },
   en: {
     home: "Home",
@@ -95,5 +97,7 @@ export const translate: Record<string, Record<string, string>> = {
     latestTopics: "Latest Topics",
     readMore: "Read More",
     collapse: "Collapse",
+    confirmationCode: "Confirmation code",
+    writeYourCodeBelow: "Write your code below",
   },
 } as const;

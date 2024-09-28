@@ -8,6 +8,7 @@ import BackgroundWithImage from './components/background/background.component';
 import ProfilePage from './pages/profile.page';
 import LoginPage from './pages/login.page';
 import RegisterPage from './pages/register.page';
+import ConfirmRegisterPage from './pages/confirm-register.page';
 
 function App() {
   return (
@@ -41,7 +42,7 @@ function App() {
                 />
                 <Route
                   path='/register/confirm'
-                  element={<UnavailablePage />}
+                  element={<ConfirmRegisterPage />}
                 />
                 <Route
                   path='*'
