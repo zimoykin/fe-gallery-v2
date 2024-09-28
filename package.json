@@ -11,7 +11,8 @@
     "dev": "vite",
     "lint": "eslint .",
     "prepare": "husky install",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "serve": "vite serve"
   },
   "dependencies": {
     "react": "^18.3.1",
