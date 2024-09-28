@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PalitraComponent from '../components/palitra/palitra.component';
 import CameraSpinner from '../components/camera-spinner/camera-spinner.component';
@@ -33,16 +33,17 @@ const RegisterPage: React.FC = () => {
 
     const [error, setError] = useState<string | null>(null);
 
-    let errorTimeout: NodeJS.Timeout;
+    const errorTimeout = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-        clearTimeout(errorTimeout);
+        if (errorTimeout.current)
+            clearTimeout(errorTimeout.current);
         if (error) {
-            errorTimeout = setTimeout(() => {
+            errorTimeout.current = setTimeout(() => {
                 setError(null);
             }, 3000);
         }
-    }, [error]);
+    }, [error, errorTimeout]);
 
     const handleRegisterClick = () => {
         setIsLoading(true);

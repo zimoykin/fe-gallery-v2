@@ -23,7 +23,7 @@ const ProfilePage: React.FC = () => {
         if (!isAuthenticated) {
             navigate('/login');
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, navigate]);
 
     useEffect(() => {
         setIsLoadingProfile(true);
