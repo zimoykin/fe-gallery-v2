@@ -34,7 +34,10 @@ const UserTopListComponent: React.FC = () => {
             '>
                 <h1 className='font-bold text-sm bg-command-panel-bg w-full p-2 lowercase'> {userTopList}</h1>
                 <div className='h-full w-full min-h-10 gap-1'>
-                    {isLoading && <PalitraComponent size='mini' />}
+                    {isLoading && <div className='p-2'>
+                        <PalitraComponent size='mini' />
+                    </div>
+                    }
                     {!isLoading && users.map((user, index) => (
                         <div
                             onClick={() => {
