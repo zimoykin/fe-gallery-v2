@@ -15,6 +15,9 @@ export default {
         "danger-bg": `var(--danger-bg)`,
         "danger-cl": `var(--danger-cl)`,
         "command-panel-bg": `var(--command-panel-bg)`,
+        "highlight-bg": `var(--highlight-bg)`,
+        "highlight-bg-75": `var(--highlight-bg-75)`,
+        "highlight-cl": "var(--highlight-cl)",
       },
       maxWidth: {
         "normal-screen": "1600px",

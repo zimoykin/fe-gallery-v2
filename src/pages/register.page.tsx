@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import { useLocale, translate } from '../contexts/locale';
 import { AuthClient } from '../networking';
 import { IRegister } from '../interfaces/register.inetrface';
-import { url } from 'inspector';
 
 const RegisterPage: React.FC = () => {
 
