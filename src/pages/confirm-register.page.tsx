@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import PalitraComponent from '../components/palitra/palitra.component';
-import CameraSpinner from '../components/camera-spinner/camera-spinner.component';
 import { toast } from 'react-toastify';
 import { useLocale, translate } from '../contexts/locale';
 import { AuthClient } from '../networking';
@@ -90,7 +89,7 @@ const ConfirmRegisterPage: React.FC = () => {
                     bg-primary-bg text-primary-col rounded-md' onClick={handleRegisterClick}> <span className='text-2xl font-bold'>{confirm}</span> </button>
                 </div>}
 
-                {isLoading && <CameraSpinner size='small' />}
+                {isLoading && <PalitraComponent size='small' />}
             </div>
         </div>
 
