@@ -3,8 +3,7 @@ import { useTheme } from "../contexts/theme/theme-context";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { toDark, toLight, toSystem } from "../features/thema/thema-slice";
-import { useLocale } from "../contexts/locale";
-import translate from '../contexts/locale/locale';
+import { useLocale, translate } from "../contexts/locale";
 
 const ToggleThemeComponent: React.FC = () => {
 

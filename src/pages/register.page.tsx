@@ -4,8 +4,7 @@ import PalitraComponent from '../components/palitra/palitra.component';
 import CameraSpinner from '../components/camera-spinner/camera-spinner.component';
 import { validateEmail, validatePassword } from '../helpers/input-validate.helper';
 import { toast } from 'react-toastify';
-import { useLocale } from '../contexts/locale';
-import trnsl from '../contexts/locale/locale';
+import { useLocale, translate } from '../contexts/locale';
 
 const RegisterPage: React.FC = () => {
 
@@ -22,7 +21,7 @@ const RegisterPage: React.FC = () => {
         pleaseConfirmPassword,
         passwordsDoNotMatch,
         passwordRequirements, weWillSendEmail
-    } = trnsl[locale];
+    } = translate[locale];
 
     const [isLoading, setIsLoading] = useState(false);
 

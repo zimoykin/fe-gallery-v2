@@ -3,8 +3,7 @@ import ToggleThemeComponent from '../toggle-theme.component';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { useLocale } from '../../contexts/locale';
-import translate from '../../contexts/locale/locale';
+import { useLocale, translate } from '../../contexts/locale';
 import { logout } from '../../features/auth/auth-slice';
 
 interface Props {

@@ -1,4 +1,4 @@
-export default {
+export const translate: Record<string, Record<string, string>> = {
   de: {
     home: "Startseite",
     login: "Anmelden",
@@ -43,6 +43,7 @@ export default {
       "Das Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten!",
     weWillSendEmail:
       "Wir werden Ihnen eine E-Mail senden, um Ihre Registrierung zu bestätigen!",
+    userTopList: "Benutzer Top-Liste",
   },
   en: {
     home: "Home",
@@ -87,5 +88,6 @@ export default {
     passwordRequirements:
       "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character!",
     weWillSendEmail: "We will send you an email to confirm your registration!",
+    userTopList: "User Top List",
   },
 } as const;
