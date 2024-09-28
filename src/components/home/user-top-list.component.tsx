@@ -6,7 +6,7 @@ import { MockUsers } from '../../mocki/users.mock';
 import Avatar from '../avatar/avatar-component';
 import { useNavigate } from 'react-router-dom';
 
-const UserTopList: React.FC = () => {
+const UserTopListComponent: React.FC = () => {
 
     const navigate = useNavigate();
     const { locale } = useLocale();
@@ -59,4 +59,4 @@ const UserTopList: React.FC = () => {
     );
 };
 
-export default UserTopList;
+export default UserTopListComponent;
