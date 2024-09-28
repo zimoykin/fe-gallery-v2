@@ -1,10 +1,10 @@
 import axios from "axios";
-import store, { RootState } from "../store";
+import store, { RootState } from "../../store";
 
-const { REACT_APP_AUTH_URL } = process.env;
+const apiUrl = import.meta.env.VITE_APP_AUTH_URL;
 
 const apiAuthClient = axios.create({
-  baseURL: REACT_APP_AUTH_URL,
+  baseURL: apiUrl,
 });
 
 // Add a request interceptor to include the token in headers

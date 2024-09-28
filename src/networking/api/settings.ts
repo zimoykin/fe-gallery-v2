@@ -1,12 +1,12 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import store, { RootState } from "../store";
-import { login, logout } from "../features/auth/auth-slice";
-import apiAuthClient from "./api-auth-client";
+import store, { RootState } from "../../store";
+import { login, logout } from "../../features/auth/auth-slice";
+import apiAuthClient from "../auth/settings";
 
-const { REACT_APP_API_URL } = process.env;
+const apiUrl = import.meta.env.VITE_APP_API_URL;
 
 const networkClient = axios.create({
-  baseURL: REACT_APP_API_URL,
+  baseURL: apiUrl,
 });
 axios.defaults.withCredentials = true;
 // Add a request interceptor to include the token in headers
