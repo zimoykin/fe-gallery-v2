@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import { login } from "../features/auth/auth-slice";
 import { useNavigate } from "react-router-dom";
 import { useLocale, translate } from "../contexts/locale";
-import { ApiClient } from "../networking/api/api-client";
 import { AuthClient } from "../networking";
 import { ILoginResponse } from "../interfaces/login-response.interface";
 
