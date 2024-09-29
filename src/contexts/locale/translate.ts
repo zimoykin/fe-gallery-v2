@@ -48,7 +48,14 @@ export const translate: Record<string, Record<string, string>> = {
     readMore: "Mehr lesen",
     collapse: "Weniger anzeigen",
     confirmationCode: "Bestätigungscode",
+    mustBeTheSame: "Passwörter müssen identisch sein",
     writeYourCodeBelow: "Geben Sie Ihren Code unten ein",
+    startRecoveryProcess:
+      "Um den Wiederherstellungsprozess zu starten, geben Sie unten Ihre E-Mail ein",
+    sendConfirmationCode: "Bestätigungscode senden",
+    writeAndConfirmNewPassword:
+      "Geben Sie Ihr neues Passwort ein und bestätigen Sie es",
+    forgotPassword: "Passwort vergessen",
   },
   en: {
     home: "Home",
@@ -98,6 +105,12 @@ export const translate: Record<string, Record<string, string>> = {
     readMore: "Read More",
     collapse: "Collapse",
     confirmationCode: "Confirmation code",
+    mustBeTheSame: "Passwords must be the same",
     writeYourCodeBelow: "Write your code below",
+    startRecoveryProcess:
+      "To start the recovery process, write your email below",
+    sendConfirmationCode: "Send confirmation code",
+    writeAndConfirmNewPassword: "Write and confirm your new password",
+    forgotPassword: "Forgot password",
   },
 } as const;

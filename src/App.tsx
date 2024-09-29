@@ -9,6 +9,8 @@ import ProfilePage from './pages/profile.page';
 import LoginPage from './pages/login.page';
 import RegisterPage from './pages/register.page';
 import ConfirmRegisterPage from './pages/confirm-register.page';
+import RecoveryPage from './pages/recovery.page';
+import RecoveryConfirmPage from './pages/confirm-recovery.page';
 
 function App() {
   return (
@@ -43,6 +45,14 @@ function App() {
                 <Route
                   path='/register/confirm'
                   element={<ConfirmRegisterPage />}
+                />
+                <Route
+                  path='/recovery'
+                  element={<RecoveryPage />}
+                />
+                <Route
+                  path='/recovery/confirm'
+                  element={<RecoveryConfirmPage />}
                 />
                 <Route
                   path='*'

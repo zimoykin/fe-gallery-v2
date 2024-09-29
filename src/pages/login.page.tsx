@@ -22,6 +22,7 @@ const LoginPage: React.FC = () => {
         email: emailTitle,
         password: passwordTitle,
         pleaseFillYour,
+        forgotPassword,
         login: loginTitle } = translate[locale];
 
     document.title = `${loginTitle} | ${gallery} | React`;
@@ -121,24 +122,26 @@ const LoginPage: React.FC = () => {
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="p-3 w-2/3 shadow-md rounded-lg bg-main-bg text-main-col text-xs" />
                             <button className="w-2/3 p-3 bg-primary-bg rounded-lg shadow-md active:scale-95 hover:scale-103" >{loginTitle}</button>
+                            <span
+                                onClick={() => navigate('/recovery')}
+                                className="cursor-pointer p-1 w-2/3 flex justify-end items-center hover:bg-secondary-bg text-secondary-col transition-all ease-in-out delay-75 text-shadow-sm hover:scale-105"> {forgotPassword}? </span>
                         </form>
                     }
-
                     {!isLoading && <div className="p-1 w-full flex flex-col justify-center items-center">
                         <hr className="p-1 w-2/3 border-t-2 border-main-bg-75 my-2" />
-                        <span className="p-1 text-sm">
+                        <span className="p-1 bg-main-bg text-sm hover:scale-105 ">
                             {orSignUpWith} <a
                                 onClick={(e) => {
                                     e.preventDefault();
                                     toast.info('This feature is not available yet 😵‍💫', { toastId: 'unavailable' });
                                 }}
-                                className="p-1 cursor hover:bg-secondary-bg text-secondary-col" href="">Google</a>
+                                className="p-1 cursor-pointer hover:bg-secondary-bg text-secondary-col" href="">Google</a>
                         </span>
                         <hr className="p-1 w-2/3 border-t-2 border-main-bg-75 my-2" />
-                        <span className="p-1 text-sm">
+                        <span className="p-1 text-sm bg-main-bg">
                             {doNotHaveAccount} <br /><a
                                 onClick={handleClickCreateAccount}
-                                className="p-1 cursor hover:bg-secondary-bg text-main-col">{createForFree}</a>
+                                className="p-1 cursor-pointer text-shadow-sm bg-main-bg hover:bg-secondary-bg text-secondary-col hover:scale-105">{createForFree}</a>
                         </span>
                     </div>}
 

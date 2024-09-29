@@ -33,6 +33,9 @@ export default {
         md: "3px 3px 0 rgba(0, 0, 0, 0.7)",
         lg: "4px 4px 0 rgba(0, 0, 0, 0.7)",
       },
+      fontSize: {
+        "auto-shrink": "clamp(1.5rem, 2rem, 2.25rem)",
+      },
     },
   },
   plugins: [require("tailwindcss-textshadow")],
