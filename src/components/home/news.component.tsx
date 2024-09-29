@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 interface Props {
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     item: any;
 }
 
@@ -24,7 +25,8 @@ const NewsComponent: React.FC<Props> = ({ item }) => {
 
     useEffect(() => {
         setTimeout(() => {
-            MockUsers.find((user) => user.id === item.profileId) && setProfile(MockUsers.find((user) => user.id === item.profileId) as IProfile);
+            if (MockUsers.some((user) => user.id === item.profileId))
+                setProfile(MockUsers.find((user) => user.id === item.profileId));
         }, Math.random() * 3000);
     }, [item.profileId]);
 
@@ -37,11 +39,11 @@ const NewsComponent: React.FC<Props> = ({ item }) => {
             <div className='flex flex-col w-full h-full justify-start items-center bg-command-panel-bg p-1'>
 
                 <div className='flex w-full justify-start items-center'>
-                    <div 
-                    onClick={() => {
-                        navigate(`/gallery/${profile?.id}`);
-                    }}
-                    className='
+                    <div
+                        onClick={() => {
+                            navigate(`/gallery/${profile?.id}`);
+                        }}
+                        className='
                     hover:scale-105 hover:bg-main-bg
                     min-w-36 flex justify-start items-center gap-1 border p-1'>
                         <Avatar url={profile?.url} size='micro' />

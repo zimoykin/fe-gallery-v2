@@ -32,7 +32,7 @@ const UserTopListComponent: React.FC = () => {
         <>
             <div className='flex w-full h-full flex-col justify-center items-center text-secondary-col
             '>
-                <h1 className='font-bold text-sm bg-command-panel-bg w-full p-2 lowercase'> {userTopList}</h1>
+                <h1 className='font-bold text-sm bg-yellow-400 text-black w-full p-2 uppercase'> {userTopList}</h1>
                 <div className='h-full w-full min-h-10 gap-1'>
                     {isLoading && <div className='p-2'>
                         <PalitraComponent size='mini' />

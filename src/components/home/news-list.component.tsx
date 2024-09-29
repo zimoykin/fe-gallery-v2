@@ -9,7 +9,7 @@ const NewsListComponent: React.FC = () => {
     const { locale } = useLocale();
     const { latestTopics } = translate[locale];
 
-    const [news, setNews] = useState<any[]>([]);
+    const [news, setNews] = useState<typeof NewsMock>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
