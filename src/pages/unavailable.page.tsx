@@ -1,13 +1,19 @@
 
-import React from "react";
+import React, { useEffect } from "react";
+import { translate, useLocale } from "../contexts/locale";
 
 const UnavailablePage: React.FC = () => {
 
-    document.title = '404 - Unavailable | Gallery | React';
+    const { locale } = useLocale();
+    const { pageNotFound } = translate[locale];
+
+    useEffect(() => {
+        document.title = `404 - ${pageNotFound} | Gallery | React`;
+    }, [locale]);
 
     return (
         <div className="flex w-full h-full flex-col justify-center items-center">
-            <h1 className="text-secondary-col text-6xl md:text-9xl font-extrabold">Page not found</h1>
+            <h1 className="text-secondary-col text-6xl md:text-9xl text-shadow-md font-extrabold">{pageNotFound}</h1>
         </div>
     );
 };
