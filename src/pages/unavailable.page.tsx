@@ -9,7 +9,7 @@ const UnavailablePage: React.FC = () => {
 
     useEffect(() => {
         document.title = `404 - ${pageNotFound} | Gallery | React`;
-    }, [locale]);
+    }, [locale, pageNotFound]);
 
     return (
         <div className="flex w-full h-full flex-col justify-center items-center">

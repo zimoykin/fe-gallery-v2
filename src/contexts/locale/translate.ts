@@ -57,6 +57,8 @@ export const translate: Record<string, Record<string, string>> = {
       "Geben Sie Ihr neues Passwort ein und bestätigen Sie es",
     forgotPassword: "Passwort vergessen",
     pageNotFound: "Seite nicht gefunden",
+    only: "Nur",
+    eurPerPerson: "€ pro Person",
   },
   en: {
     home: "Home",
@@ -114,5 +116,7 @@ export const translate: Record<string, Record<string, string>> = {
     writeAndConfirmNewPassword: "Write and confirm your new password",
     forgotPassword: "Forgot password",
     pageNotFound: "Page not found",
+    only: "Only",
+    eurPerPerson: "Eur per person",
   },
 } as const;
