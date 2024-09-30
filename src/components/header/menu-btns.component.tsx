@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ToggleThemeComponent from '../toggle-theme.component';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { useLocale, translate } from '../../contexts/locale';
 import { logout } from '../../features/auth/auth-slice';
+import { storeLocale } from '../../features/locale/locale-slice';
 
 interface Props {
     onClick: () => void;
@@ -14,7 +15,8 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { locale, toggleLocale } = useLocale();
+    const { locale: storedLocale } = useSelector((state: RootState) => state.locale);
+    const { locale, toggleLocale, setLocaleFromStorage } = useLocale();
     const { home, profile, gallery, notification, login, logout: logOutTitle } = translate[locale];
 
     const { isAuthenticated } = useSelector((state: RootState) => state.auth);
@@ -30,7 +32,14 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
                 flex p-2 md:p-1 
                 `;
 
+    useEffect(() => {
+        if (storedLocale)
+            setLocaleFromStorage(storedLocale);
+    }, [storedLocale]);
 
+    useEffect(() => {
+        dispatch(storeLocale(locale));
+    }, [toggleLocale]);
     const handleOnClickLoginBtn = () => {
         if (isAuthenticated) {
             dispatch(logout());
@@ -38,6 +47,10 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
         else {
             navigate('/login');
         }
+    };
+
+    const handleOnOnToggleLocale = () => {
+        toggleLocale();
     };
 
     return (
@@ -100,9 +113,7 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
             </div>
 
             <div
-                onClick={() => {
-                    toggleLocale();
-                }}
+                onClick={handleOnOnToggleLocale}
                 className={MenuClassName}
             >
                 <i className='p-1 fa-solid fa-flag' />
