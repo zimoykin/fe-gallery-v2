@@ -38,6 +38,10 @@ const FoldersComponent: React.FC<Props> = ({ folders: initialFolders }) => {
                 <i className="p-1 fa-solid fa-plus hover:bg-main-bg hover:scale-125 border transition ease-in-out delay-75"
                     onClick={handleAddClick}
                 />
+                <div className="flex absolute right-0 pr-1 text-main-col font-thin text-xl">
+                    <i className="p-1 fas fa-folder text-opacity-90 text-gray-400" />
+                    <span className="uppercase text-opacity-90 text-gray-400">Folders</span>
+                </div>
             </div>
             {/* table */}
             <table className="w-full h-full">
