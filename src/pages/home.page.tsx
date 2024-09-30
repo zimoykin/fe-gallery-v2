@@ -1,7 +1,7 @@
 import React from 'react';
 import UserTopListComponent from '../components/home/user-top-list.component';
 import NewsListComponent from '../components/home/news-list.component';
-import CommercialComponent from '../components/commercial.component';
+import CommercialComponent from '../components/home/commercial.component';
 
 const HomePage: React.FC = () => {
     document.title = 'Home | Gallery | React';
