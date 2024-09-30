@@ -8,8 +8,8 @@ export const offers: ICommercial[] = [
     description:
       "Our tour: Hiking in the Pyrenees 10.9km, yachting, gastronomy, wine tasting, 3 beautiful beaches, 7 nights in a 5 star hotel, free breakfast, all flying tickets included",
     price: 300,
-    image: "spain-ads.png",
-    preview: "spain-ads.png",
+    image: "https://picsum.photos/id/28/1200/800",
+    preview: "https://picsum.photos/id/28/400/300",
     category: "trip",
     profileId: "2",
     url: "https://www.google.com",

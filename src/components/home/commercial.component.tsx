@@ -42,7 +42,7 @@ const CommercialComponent: React.FC = () => {
                             '
                             key={index}>
                             <div className='p-3 bg-gray-600 w-1/4 min-h-40 bg-no-repeat bg-cover'
-                                style={{ backgroundImage: `url(${item.image})` }}
+                                style={{ backgroundImage: `url(${item.preview})` }}
                             />
                             <div className='p-1 w-full flex justify-start items-start flex-col'>
                                 <div className='p-1 w-full flex justify-start items-start'>
