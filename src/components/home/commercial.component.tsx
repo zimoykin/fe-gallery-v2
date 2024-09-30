@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { ICommercial } from '../interfaces/commercial.interface';
-import CameraSpinner from './camera-spinner/camera-spinner.component';
+import { ICommercial } from '../../interfaces/commercial.interface';
+import CameraSpinner from '../camera-spinner/camera-spinner.component';
 
 const CommercialComponent: React.FC = () => {
 
@@ -13,7 +13,6 @@ const CommercialComponent: React.FC = () => {
         setIsLoading(true);
         setTimeout(() => {
             setIsLoading(false);
-
             setAds([
                 {
                     id: '1',
@@ -68,18 +67,32 @@ const CommercialComponent: React.FC = () => {
                 {
                     ads.map((item, index) => (
                         <div
-                            className='p-1 w-full flex flex-row justify-start items-start'
+                            className='p-1 w-full flex flex-row justify-start items-start
+                            hover:bg-secondary-bg transition-colors delay-75 ease-in-out
+                            '
                             key={index}>
                             <div className='p-3 bg-gray-600 w-1/4 min-h-40 bg-no-repeat bg-cover'
                                 style={{ backgroundImage: `url(${item.image})` }}
                             />
-                            <div className='p-1 w-full bg-secondary-bg flex justify-start items-start flex-col'>
-                                <h1 className='text-3xl font-bold text-center text-highlight-cl text-shadow-sm'>
-                                    {item.title}
-                                </h1>
-                                <span>
-                                    {item.location}
-                                </span>
+                            <div className='p-1 w-full flex justify-start items-start flex-col'>
+                                <div className='p-1 w-full flex justify-start items-start'>
+                                    <div className='p-1 w-5/6 flex justify-start items-start'>
+                                        <h1 className='text-3xl font-bold text-left text-highlight-cl text-shadow-sm'>
+                                            {item.title}
+                                        </h1>
+                                    </div>
+                                    <div className='p-1 h-full w-1/6 flex justify-end items-start'>
+                                        <i className='
+                                        hover:text-main-col hover:cursor-pointer hover:scale-105
+                                        font-bold text-right text-highlight-cl text-shadow-sm fa-solid fa-link' />
+                                    </div>
+                                </div>
+                                <div>
+                                    <i className='p-1 fa-solid fa-location-dot' />
+                                    <span>
+                                        {item.location}
+                                    </span>
+                                </div>
 
                                 <span>
                                     {item.description}
