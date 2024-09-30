@@ -11,6 +11,7 @@ import RegisterPage from './pages/register.page';
 import ConfirmRegisterPage from './pages/confirm-register.page';
 import RecoveryPage from './pages/recovery.page';
 import RecoveryConfirmPage from './pages/confirm-recovery.page';
+import OfferPage from './pages/offer.page';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
                   path='/'
                   element={<HomePage />}
                 />
+                <Route path='/offers/:offerId' element={<OfferPage />} />
                 <Route
                   path='/gallery/:profileId'
                   element={<UnavailablePage />}
