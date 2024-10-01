@@ -59,6 +59,9 @@ export const translate: Record<string, Record<string, string>> = {
     pageNotFound: "Seite nicht gefunden",
     only: "Nur",
     eurPerPerson: "€ pro Person",
+    inbox: "Posteingang",
+    toStartChatPleaseSelectProfile:
+      "Um den Chat zu starten, wählen Sie bitte ein Profil",
   },
   en: {
     home: "Home",
@@ -118,5 +121,7 @@ export const translate: Record<string, Record<string, string>> = {
     pageNotFound: "Page not found",
     only: "Only",
     eurPerPerson: "Eur per person",
+    inbox: "Inbox",
+    toStartChatPleaseSelectProfile: "To start chat please select profile",
   },
 } as const;
