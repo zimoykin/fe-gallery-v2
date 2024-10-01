@@ -17,7 +17,7 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
     const dispatch = useDispatch();
     const { locale: storedLocale } = useSelector((state: RootState) => state.locale);
     const { locale, toggleLocale, setLocaleFromStorage } = useLocale();
-    const { home, profile, gallery, notification, login, logout: logOutTitle } = translate[locale];
+    const { home, profile, gallery, inbox, login, logout: logOutTitle } = translate[locale];
 
     const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
@@ -68,12 +68,12 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
             <span className='md:p-1 hidden md:block'>/</span>
             <div className={MenuClassName}
                 onClick={() => {
-                    navigate('/notification');
+                    navigate('/inbox');
                     onClick();
                 }}
             >
-                <i className='p-1 fa-solid fa-bell' />
-                <span className='md:p-1 uppercase text-xs'>{notification}</span>
+                <i className='p-1 fas fa-inbox' />
+                <span className='md:p-1 uppercase text-xs'>{inbox}</span>
             </div>
             <span className='md:p-1 hidden md:block'>/</span>
             <div

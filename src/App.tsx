@@ -13,6 +13,7 @@ import RecoveryPage from './pages/recovery.page';
 import RecoveryConfirmPage from './pages/confirm-recovery.page';
 import OfferPage from './pages/offer.page';
 import GalleryPage from './pages/gallery.page';
+import InboxPage from './pages/inbox.page';
 
 function App() {
   return (
@@ -36,6 +37,10 @@ function App() {
                 <Route
                   path='/profile'
                   element={<ProfilePage />}
+                />
+                <Route
+                  path='/inbox'
+                  element={<InboxPage />}
                 />
                 <Route
                   path='/login'
