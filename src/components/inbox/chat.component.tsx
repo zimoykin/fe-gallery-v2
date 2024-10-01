@@ -52,6 +52,7 @@ const ChatComponent: React.FC<Props> = ({ profileId }) => {
 
     const handleSendMessage = (e?: React.FormEvent<HTMLFormElement>) => {
         if (e) e.preventDefault();
+        if (message === '') return;
         if (sender && receiver)
             setMessages(msg => [
                 ...msg,
@@ -80,7 +81,7 @@ const ChatComponent: React.FC<Props> = ({ profileId }) => {
                         </div>
                     ) : (
                         <div className='w-full h-full relative flex flex-col justify-between p-10'>
-                            <div className='flex-1 overflow-auto flex flex-col-reverse'>
+                            <div className='flex-1 overflow-auto no-scrollbar flex flex-col-reverse'>
                                 <div className='flex flex-col w-full gap-3'>
                                     {messages.map((message, index) => (
                                         <div
@@ -93,7 +94,7 @@ const ChatComponent: React.FC<Props> = ({ profileId }) => {
                                                 flex gap-2
                                                 ${message.senderId === profileId ? 'justify-end items-end flex-row-reverse' : 'flex-row items-start justify-start'}
                                             `}>
-                                                <Avatar size='micro' url={message.senderId === profileId ? sender?.url : 'https://picsum.photos/id/1/200/300'} />
+                                                <Avatar size='micro' url={message.senderId === profileId ? sender?.url : receiver?.url} />
                                                 <span>{message.text}</span>
                                             </div>
                                         </div>
@@ -102,18 +103,24 @@ const ChatComponent: React.FC<Props> = ({ profileId }) => {
                                 </div>
                             </div>
                             {/* message input */}
-                            <div className='w-full p-2 pb-5 shadow-md'>
-                                <form className='flex w-full justify-center items-center' onSubmit={handleSendMessage}>
+                            <div className='w-full pb-5 shadow-md'>
+                                <form className='flex w-full justify-start items-center
+                                hover:cursor-pointer
+                                ' onSubmit={handleSendMessage}>
+                                    <i className='fas fa-paperclip p-4 hover:text-main-col hover:cursor-pointer' />
+                                    <i className='fas fa-location-dot p-4 hover:text-main-col hover:cursor-pointer' />
                                     <input
-                                        className='w-full p-2 bg-gray-400 text-black rounded-md'
+                                        className='w-full text-xs p-3 bg-gray-400 text-black rounded-md'
                                         type="text"
                                         value={message}
                                         onChange={(e) => setMessage(e.target.value)}
                                     />
-                                    <i
-                                        onClick={() => handleSendMessage()}
-                                        className='fas fa-paper-plane p-2 hover:text-main-col hover:cursor-pointer'
-                                    />
+                                    <div className='hover:scale-125 hover:cursor-pointer hover:shadow-md'>
+                                        <i
+                                            onClick={() => handleSendMessage()}
+                                            className='fas fa-paper-plane p-4 pl-4 hover:text-main-col hover:cursor-pointer'
+                                        />
+                                    </div>
                                 </form>
                             </div>
                         </div>
