@@ -128,7 +128,7 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
 
             <div className='absolute md:p-1 right-0'>
                 <div className='flex md:flex-row flex-col gap-1 justify-end items-end'>
-                    <div className='p-1 border-secondary-col right-0 hover:border hover:bg-danger-bg hover:bg-danger-cl rounded-md'
+                    <div className='p-1 border-secondary-col right-0 hover:border hover:bg-danger-bg rounded-md'
                         onClick={
                             handleOnClickLoginBtn
                         }
