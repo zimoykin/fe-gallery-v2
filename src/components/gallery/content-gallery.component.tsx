@@ -26,7 +26,7 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
                 setSelectedFolder(MockFolders[0]);
             }, 1500 * Math.random());
         }
-    }, [profileId, setFolders, setIsLoading]);
+    }, [profileId, setFolders, setIsLoading, setSelectedFolder]);
 
     useEffect(() => {
         setIsLoadingTopics(true);
@@ -47,7 +47,7 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
                 setIsLoadingTopics(false);
             }, 1500 * Math.random());
         }
-    }, [selectedFolder, setImages, setIsLoadingTopics]);
+    }, [selectedFolder, folders, setImages, setIsLoadingTopics]);
 
     return <>
         <div className='w-full min-h-44 h-full flex flex-col md:flex-row justify-start items-start '>

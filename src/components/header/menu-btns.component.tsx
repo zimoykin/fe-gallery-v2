@@ -35,11 +35,11 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
     useEffect(() => {
         if (storedLocale)
             setLocaleFromStorage(storedLocale);
-    }, [storedLocale]);
+    }, [storedLocale, setLocaleFromStorage]);
 
     useEffect(() => {
         dispatch(storeLocale(locale));
-    }, [toggleLocale]);
+    }, [toggleLocale, dispatch, locale]);
     const handleOnClickLoginBtn = () => {
         if (isAuthenticated) {
             dispatch(logout());
