@@ -22,6 +22,7 @@ const Avatar: React.FC<Props> = ({ onClick, url, size = 'auto' }: Props) => {
       <div
         onClick={onClick}
         className="bg-no-repeat bg-cover bg-position:center 
+        aspect-square
         bg-slate-400
         rounded-full cursor-pointer shadow-2xl hover:scale-105"
         style={

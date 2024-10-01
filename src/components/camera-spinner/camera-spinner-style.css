@@ -68,13 +68,13 @@
 }
 
 .spinner .small {
-  min-width: 5rem;
-  min-height: 5rem;
+  min-width: 4.5rem;
+  min-height: 4.5rem;
 }
 
 .spinner .medium {
-  min-width: 10rem;
-  min-height: 10rem;
+  min-width: 9rem;
+  min-height: 9rem;
 }
 
 .spinner .large {
@@ -89,15 +89,11 @@
 }
 
 @keyframes shot {
-  0% {
-    scale: 0.8;
+  0%, 100% {
+    scale: 0.9;
   }
 
   50% {
     scale: 1.1;
-  }
-
-  100% {
-    scale: 0.8;
   }
 }

@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+}
+
+
 :root {
   font-family: Tektur, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
@@ -60,10 +73,10 @@
 
   --highlight-cl-dark: #faab35;
   --highlight-cl-light: #faab35;
-  
+
   --highlight-bg-dark-75: #249fa1b0;
   --highlight-bg-light-75: #67dddfc6;
-  
+
   --highlight-bg-dark: #249fa1;
   --highlight-bg-light: #67dddf;
 
@@ -211,7 +224,7 @@ h1 {
     --command-panel-bg: var(--command-panel-bg-dark);
 
     --highlight-bg: var(--highlight-bg-dark);
-    --highlight-bg-75: var(--highlight-bg-dark-75); 
+    --highlight-bg-75: var(--highlight-bg-dark-75);
 
     --highlight-cl: var(--highlight-cl-dark);
   }

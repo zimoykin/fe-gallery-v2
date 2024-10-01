@@ -7,7 +7,7 @@ interface Props {
 
 const CameraSpinner: React.FC<Props> = ({ size = 'mini' }) => {
   return (
-    <div className="flex justify-center items-center z-30">
+    <div className="flex justify-center items-center z-40">
       <div className="spinner">
         <div className={size}>
           <div className="petal"></div>

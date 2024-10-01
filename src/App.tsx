@@ -12,6 +12,7 @@ import ConfirmRegisterPage from './pages/confirm-register.page';
 import RecoveryPage from './pages/recovery.page';
 import RecoveryConfirmPage from './pages/confirm-recovery.page';
 import OfferPage from './pages/offer.page';
+import GalleryPage from './pages/gallery.page';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
       <Router>
         <div className="app-container">
           <HeaderComponent />
-          <main className='h-[calc(100vh-2rem)] pt-20 w-screen flex z-30 absolute'>
+          <main className='h-[calc(100vh-2rem)] pt-20 w-full flex z-30 absolute'>
             <div className='w-full max-w-screen-2xl mx-auto transition ease-in-out delay-0'>
               <Routes>
                 <Route
@@ -30,7 +31,7 @@ function App() {
                 <Route path='/offers/:offerId' element={<OfferPage />} />
                 <Route
                   path='/gallery/:profileId'
-                  element={<UnavailablePage />}
+                  element={<GalleryPage />}
                 />
                 <Route
                   path='/profile'
