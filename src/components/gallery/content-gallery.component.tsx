@@ -10,10 +10,10 @@ interface Props {
 const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
 
     const [isLoading, setIsLoading] = useState(false);
-    const [isLoadingTopics, setIsLoadingTopics] = useState(false);
+    const [isLoadingImages] = useState(false);
     const [folders, setFolders] = useState<IUserFolder[]>([]);
     const [selectedFolder, setSelectedFolder] = useState<IUserFolder>();
-    const [images, setImages] = useState<string[]>([]);
+    const [images] = useState<string[]>([]);
 
     useEffect(() => {
         if (profileId) {
@@ -30,13 +30,6 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
                 });
         }
     }, [profileId, setFolders, setIsLoading, setSelectedFolder]);
-
-
-    useEffect(() => {
-        if (selectedFolder) {
-    
-        }
-    }, [selectedFolder, folders, setImages, setIsLoadingTopics]);
 
     return <>
         <div className='w-full min-h-44 h-full flex flex-col md:flex-row justify-start items-start '>
@@ -82,7 +75,7 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
             </div>
             {/* right */}
             {
-                !isLoadingTopics
+                !isLoadingImages
                     ?
                     <div className='flex flex-row flex-wrap md:w-2/3 p-2 gap-2'>
                         {images?.map((image, index) => (

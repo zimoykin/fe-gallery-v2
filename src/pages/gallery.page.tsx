@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { MockUsers } from '../mocki/users.mock';
 import { IProfile } from '../interfaces/profile.interface';
 import HeaderGalleryComponent from '../components/gallery/header-gallery.component';
 import ContentGalleryComponent from '../components/gallery/content-gallery.component';
