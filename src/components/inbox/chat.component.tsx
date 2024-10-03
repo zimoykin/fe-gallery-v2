@@ -30,7 +30,7 @@ const ChatComponent: React.FC<Props> = ({ profileId }) => {
             setSender(MockUsers.find(u => u.id === profileId) || null);
             setReceiver(MockUsers.find(u => u.id !== profileId) || null);
         }
-    }, [profileId]);
+    }, [profileId, setSender, setReceiver]);
 
     useEffect(() => {
         setIsLoading(true);
@@ -42,13 +42,13 @@ const ChatComponent: React.FC<Props> = ({ profileId }) => {
             );
             setIsLoading(false);
         }, Math.random() * 2000);
-    }, [profileId, receiver?.id]);
+    }, [profileId, receiver]);
 
     useEffect(() => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
-    }, [messages]);
+    }, [messages, receiver]);
 
     const handleSendMessage = (e?: React.FormEvent<HTMLFormElement>) => {
         if (e) e.preventDefault();

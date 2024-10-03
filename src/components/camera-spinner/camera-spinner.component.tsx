@@ -16,6 +16,7 @@ const CameraSpinner: React.FC<Props> = ({ size = 'mini' }) => {
           <div className="petal"></div>
           <div className="petal"></div>
           <div className="petal"></div>
+          <div className="petal"></div>
         </div>
       </div>
     </div>

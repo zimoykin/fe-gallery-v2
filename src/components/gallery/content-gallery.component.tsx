@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PalitraComponent from '../palitra/palitra.component';
 import { IUserFolder } from '../../interfaces/folder.interface';
-import { MockFolders } from '../../mocki/folders.mock';
-import { NewsMock } from '../../mocki/news.mock';
+import { ApiClient } from '../../networking';
 
 interface Props {
     profileId: string;
@@ -15,37 +14,27 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
     const [folders, setFolders] = useState<IUserFolder[]>([]);
     const [selectedFolder, setSelectedFolder] = useState<IUserFolder>();
     const [images, setImages] = useState<string[]>([]);
-    const [topics, setTopics] = useState<typeof NewsMock>([]);
 
     useEffect(() => {
         if (profileId) {
             setIsLoading(true);
-            setTimeout(() => {
-                setFolders(MockFolders);
-                setIsLoading(false);
-                setSelectedFolder(MockFolders[0]);
-            }, 1500 * Math.random());
+            ApiClient.get<IUserFolder[]>(`/public/folders/${profileId}`)
+                .then((res) => {
+                    setFolders(res);
+                    if (res?.length > 0)
+                        setSelectedFolder(res[0]);
+                }).catch((error) => {
+                    console.error(error);
+                }).finally(() => {
+                    setIsLoading(false);
+                });
         }
     }, [profileId, setFolders, setIsLoading, setSelectedFolder]);
 
-    useEffect(() => {
-        setIsLoadingTopics(true);
-        setTimeout(() => {
-            setTopics(NewsMock);
-            setIsLoadingTopics(false);
-        }, 1500 * Math.random());
-
-    }, [topics, setTopics, setIsLoadingTopics]);
 
     useEffect(() => {
         if (selectedFolder) {
-            setIsLoadingTopics(true);
-            setTimeout(() => {
-                setImages(folders.map(fold => {
-                    return fold.url ?? '';
-                }).sort(() => Math.random() - 0.5));
-                setIsLoadingTopics(false);
-            }, 1500 * Math.random());
+    
         }
     }, [selectedFolder, folders, setImages, setIsLoadingTopics]);
 
