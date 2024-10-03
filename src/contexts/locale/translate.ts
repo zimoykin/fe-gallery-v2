@@ -62,6 +62,8 @@ export const translate: Record<string, Record<string, string>> = {
     inbox: "Posteingang",
     toStartChatPleaseSelectProfile:
       "Um den Chat zu starten, wählen Sie bitte ein Profil",
+    foldersTitle: "Ordner",
+    equipmentsTitle: "Ausrüstung",
   },
   en: {
     home: "Home",
@@ -123,5 +125,7 @@ export const translate: Record<string, Record<string, string>> = {
     eurPerPerson: "Eur per person",
     inbox: "Inbox",
     toStartChatPleaseSelectProfile: "To start chat please select profile",
+    foldersTitle: "Folders",
+    equipmentsTitle: "Equipments",
   },
 } as const;

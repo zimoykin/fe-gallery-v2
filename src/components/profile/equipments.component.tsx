@@ -1,28 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { IEquipment } from "../../interfaces/eqiupment.interface";
+import { translate, useLocale } from "../../contexts/locale";
+import EquipmentComponent from "./equipment.component";
+import { EquipWithState } from "./types/equip-with-state.type";
+import { ApiClient } from "../../networking";
 
-interface Props {
-    equipments: IEquipment[];
-}
 
-const EquipmentsComponent: React.FC<Props> = ({ equipments: initial }) => {
+const EquipmentsComponent: React.FC = () => {
 
-    const [equipments, setEquipments] = useState<IEquipment[]>(initial);
+    const [equipments, setEquipments] = useState<EquipWithState[]>([]);
+
+    const { locale } = useLocale();
+    const { equipmentsTitle } = translate[locale];
+
+
+    const refreshCB = useCallback(() => {
+        ApiClient.get<IEquipment[]>('/equipments')
+            .then(data => {
+                setEquipments(
+                    data.map((equipment) => {
+                        return {
+                            ...equipment,
+                            isEdit: false
+                        };
+                    })
+                );
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, [setEquipments]);
 
     useEffect(() => {
-        setEquipments(initial);
-    }, [initial]);
+        refreshCB();
+    }, [refreshCB]);
+
+    const addNewEquipment = (): EquipWithState => ({
+        name: 'New Equipment',
+        favorite: 0,
+        category: 'other',
+        isEdit: true,
+    });
 
     const handleAddClick = () => {
-        setEquipments((eq) => {
-            return [...eq, {
-                name: 'New Equipment',
-                favorite: false,
-                type: 'other'
-            }];
-        });
+        setEquipments((eq) => [...eq, addNewEquipment()]);
     };
-
     const handleDeleteClick = (index: number) => {
         setEquipments((eq) => {
             return [...eq.slice(0, index), ...eq.slice(index + 1)];
@@ -39,35 +61,20 @@ const EquipmentsComponent: React.FC<Props> = ({ equipments: initial }) => {
                 />
                 <div className="flex absolute right-0 pr-1 text-main-col font-thin text-xl">
                     <i className="p-1 fas fa-list text-opacity-90 text-gray-400" />
-                    <span className="uppercase text-opacity-90 text-gray-400">equipment</span>
+                    <span className="uppercase text-opacity-90 text-gray-400">{equipmentsTitle}</span>
                 </div>
             </div>
             {/* table */}
             <table className="w-full h-full">
                 <tbody>
                     {
-                        [...equipments]?.map((eq, index) => (
-                            <tr
-                                key={index}
-                                className="w-full  hover:scale-101 transition ease-in-out delay-75 hover:bg-primary-bg mt-4">
-                                <td className="w-4/6 p-2">
-                                    <span className="p-2">{eq.name}</span>
-                                </td>
-                                <td className="w-1/6 text-center">
-                                    <span>{eq.type}</span> </td>
-                                <td className="w-1/6 text-center">
-                                    <span>{eq.favorite
-                                        ? <i className="p-2 fa-solid fa-star text-yellow-400 hover:bg-main-bg hover:scale-125" />
-                                        : <i className="p-2 fa-solid fa-star text-yellow-50 hover:bg-yellow-500 hover:scale-125" />}
-                                    </span>
-                                    <span>
-                                        <i className="p-2 fas fa-trash hover:bg-danger-bg hover:scale-125"
-                                            onClick={() => handleDeleteClick(index)}
-                                        />
-                                    </span>
-                                </td>
-
-                            </tr>
+                        equipments?.map((eq, index) => (
+                            <EquipmentComponent
+                                key={eq.id || index}
+                                equipment={eq}
+                                onDeleteClick={() => handleDeleteClick(index)}
+                                refresh={refreshCB}
+                            />
                         ))
                     }
                 </tbody>
