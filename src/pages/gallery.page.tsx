@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { MockUsers } from '../mocki/users.mock';
 import { IProfile } from '../interfaces/profile.interface';
 import HeaderGalleryComponent from '../components/gallery/header-gallery.component';
 import ContentGalleryComponent from '../components/gallery/content-gallery.component';
 import CameraSpinner from '../components/camera-spinner/camera-spinner.component';
+import { ApiClient } from '../networking';
 
 const GalleryPage: React.FC = () => {
 
@@ -18,18 +18,15 @@ const GalleryPage: React.FC = () => {
     useEffect(() => {
         if (profileId) {
             setIsLoading(true);
-            setTimeout(() => {
-                //TODO: implement api call instead of fake request
-                const profile = MockUsers.find((user) => user.id === profileId);
-                if (profile) {
-                    setProfile(profile);
-                }
-                else {
+            
+            ApiClient.get<IProfile>(`/public/profiles/${profileId}`)
+                .then((res) => setProfile(res))
+                .catch((error) => {
+                    console.error(error);
                     setError(`Oh no! profile ${profileId} not found! 😱`);
-                }
-
-                setIsLoading(false);
-            }, 3000 * Math.random());
+                }).finally(() => {
+                    setIsLoading(false);
+                });
         }
     }, [profileId, setProfile]);
 

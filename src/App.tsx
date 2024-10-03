@@ -21,6 +21,7 @@ function App() {
       <BackgroundWithImage />
       <Router>
         <div className="app-container">
+          {/* nav bar */}
           <HeaderComponent />
           <main className='h-[calc(100vh-2rem)] pt-20 w-full flex z-30 absolute'>
             <div className='w-full max-w-screen-2xl mx-auto transition ease-in-out delay-0'>

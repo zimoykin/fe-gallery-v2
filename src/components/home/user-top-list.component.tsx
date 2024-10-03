@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useLocale, translate } from '../../contexts/locale';
 import { IProfile } from '../../interfaces/profile.interface';
 import PalitraComponent from '../palitra/palitra.component';
-import { MockUsers } from '../../mocki/users.mock';
 import Avatar from '../avatar/avatar-component';
 import { useNavigate } from 'react-router-dom';
+import { ApiClient } from '../../networking';
 
 const UserTopListComponent: React.FC = () => {
 
@@ -20,13 +20,15 @@ const UserTopListComponent: React.FC = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        setTimeout(() => {
-            //TODO: get top users
-            setUsers(MockUsers);
+        ApiClient.get<IProfile[]>('/public/profiles').then((res) => {
+            setUsers(res);
+        }).catch((error) => {
+            console.error(error);
+        }).finally(() => {
             setIsLoading(false);
-        }, 1000);
+        });
 
-    }, []);
+    }, [setIsLoading, setUsers]);
 
     return (
         <>

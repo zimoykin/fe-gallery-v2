@@ -9,7 +9,7 @@ export class ApiClient {
     this.axiosInstance = networkClient;
   }
 
-  static init = () => {
+  private static init = () => {
     if (!ApiClient.instance) {
       this.instance = new ApiClient();
     }

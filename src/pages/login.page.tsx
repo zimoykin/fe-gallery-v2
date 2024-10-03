@@ -6,8 +6,10 @@ import { useDispatch } from "react-redux";
 import { login } from "../features/auth/auth-slice";
 import { useNavigate } from "react-router-dom";
 import { useLocale, translate } from "../contexts/locale";
-import { AuthClient } from "../networking";
+import { ApiClient, AuthClient } from "../networking";
 import { ILoginResponse } from "../interfaces/login-response.interface";
+import { IProfile } from "../interfaces/profile.interface";
+import { storeProfile } from "../features/profile/profile-slice";
 
 const LoginPage: React.FC = () => {
 
@@ -53,24 +55,15 @@ const LoginPage: React.FC = () => {
         }
 
         setIsLoading(true);
-        setTimeout(() => {
-            AuthClient.post<ILoginResponse>('/auth/login', { email, password })
-                .then((response) => {
-                    if (response && response.accessToken && response.refreshToken) {
-                        dispatch(login([response.accessToken, response.refreshToken]));
-                        navigate('/');
-                    }
-                    else {
-                        setError('Login failed');
-                    }
-                }).catch((error: Error) => {
-                    toast.error(error.message, { toastId: 'login' });
-                    setError(error.message);
-                    setIsLoading(false);
-                }).finally(() => {
-                    setIsLoading(false);
-                });
+        setTimeout(async () => {
+            const tokens = await AuthClient.post<ILoginResponse>('/auth/login', { email, password });
+            dispatch(login([tokens.accessToken, tokens.refreshToken]));
 
+            await ApiClient.post<{ status: string; }>('/profiles/login');
+            const profile = await ApiClient.get<IProfile>('/profiles/me');
+            dispatch(storeProfile(profile));
+            navigate('/');
+            setIsLoading(false);
         }, 0);
     };
 

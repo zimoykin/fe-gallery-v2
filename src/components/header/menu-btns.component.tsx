@@ -16,6 +16,7 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { locale: storedLocale } = useSelector((state: RootState) => state.locale);
+    const { profile: storedProfile } = useSelector((state: RootState) => state.profile);
     const { locale, toggleLocale, setLocaleFromStorage } = useLocale();
     const { home, profile, gallery, inbox, login, logout: logOutTitle } = translate[locale];
 
@@ -87,7 +88,7 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
             </div>
             <span className='p-1 hidden md:block'>/</span>
             <div
-                onClick={() => { navigate('/gallery'); onClick(); }}
+                onClick={() => { navigate(`/gallery/${storedProfile?.id}`); onClick(); }}
                 className={MenuClassName}
             >
                 <i className='p-1 fa-solid fa-image' />
