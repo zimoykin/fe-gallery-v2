@@ -59,8 +59,17 @@ const LoginPage: React.FC = () => {
             const tokens = await AuthClient.post<ILoginResponse>('/auth/login', { email, password });
             dispatch(login([tokens.accessToken, tokens.refreshToken]));
 
-            await ApiClient.post<{ status: string; }>('/profiles/login');
-            const profile = await ApiClient.get<IProfile>('/profiles/me');
+            await ApiClient.post<{ status: string; }>('/profiles/login')
+                .catch((error) => {
+                    console.error(error);
+                    setIsLoading(false);
+                    throw error;
+                });
+            const profile = await ApiClient.get<IProfile>('/profiles/me').catch((error) => {
+                console.error(error);
+                setIsLoading(false);
+                throw error;
+            });
             dispatch(storeProfile(profile));
             navigate('/');
             setIsLoading(false);

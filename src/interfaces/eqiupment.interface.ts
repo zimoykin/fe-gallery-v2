@@ -1,5 +1,6 @@
 export interface IEquipment {
+  id?: string;
   name: string;
-  favorite: boolean;
-  type: "camera" | "lens" | "other";
+  favorite: number; // 1 - true, 0 - false
+  category: "camera" | "lens" | "other";
 }

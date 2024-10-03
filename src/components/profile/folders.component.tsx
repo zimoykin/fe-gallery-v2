@@ -1,33 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { IFolder } from "../../interfaces/folder.interface";
+import { translate, useLocale } from "../../contexts/locale";
+import CameraSpinner from "../camera-spinner/camera-spinner.component";
+import { ApiClient } from "../../networking";
+import { FolderWithState } from "./types/folder-with-state.type";
+import FolderComponent from "./folder.component";
 
-interface Props {
-    folders: IFolder[];
-}
-const FoldersComponent: React.FC<Props> = ({ folders: initialFolders }) => {
-    const [folders, setFolders] = useState<IFolder[]>(initialFolders);
+const FoldersComponent: React.FC = () => {
+    const [folders, setFolders] = useState<FolderWithState[]>([]);
+
+    const { locale } = useLocale();
+    const { foldersTitle } = translate[locale];
+
+    const [isLoadingFolders, setIsLoadingFolders] = useState<boolean>(false);
 
     useEffect(() => {
-        setFolders(initialFolders);
-    }, [initialFolders]);
+        setIsLoadingFolders(true);
+        ApiClient.get<IFolder[]>(`/folders`)
+            .then((res) => {
+                setFolders(res.map((folder) => {
+                    return {
+                        ...folder,
+                        isEdit: false
+                    };
+                }));
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+            .finally(() => {
+                setIsLoadingFolders(false);
+            });
+
+    }, [setFolders]);
+
 
     const handleAddClick = () => {
         setFolders((fold) => {
             return [...fold, {
                 title: 'New Folder',
-                description: 'New Folder Description',
+                description: 'Save your photos in folders',
                 privateAccess: 0,
                 bgColor: '#ffffff',
                 color: '#000000',
                 sortOrder: fold.length + 1,
-                url: '/avatar.jpg'
+                url: '',
+                isEdit: true
             }];
-        });
-    };
-
-    const handleDeleteClick = (index: number) => {
-        setFolders((fold) => {
-            return [...fold.slice(0, index), ...fold.slice(index + 1)];
         });
     };
 
@@ -40,35 +59,25 @@ const FoldersComponent: React.FC<Props> = ({ folders: initialFolders }) => {
                 />
                 <div className="flex absolute right-0 pr-1 text-main-col font-thin text-xl">
                     <i className="p-1 fas fa-folder text-opacity-90 text-gray-400" />
-                    <span className="uppercase text-opacity-90 text-gray-400">Folders</span>
+                    <span className="uppercase text-opacity-90 text-gray-400">{foldersTitle}</span>
                 </div>
             </div>
+
+            {isLoadingFolders && <div className='hidden w-full md:flex bg-black bg-opacity-60 justify-center items-center md:h-full absolute top-0 left-0' >
+                <CameraSpinner size='large' />
+            </div>}
             {/* table */}
             <table className="w-full h-full">
                 <tbody>
                     {
                         [...folders]?.map((eq, index) => (
-                            <tr
-                                key={index}
-                                className="w-full max-h-20 hover:scale-101 transition ease-in-out delay-75 hover:bg-primary-bg mt-4">
-                                <td className="w-2/6 p-3">
-                                    <span className="p-2">{eq.title}</span>
-                                </td>
-                                <td className="w-3/6 text-center">
-                                    <span>{eq.description.slice(0, 50)}</span> </td>
-                                <td className="w-1/6 text-center">
-                                    <span>{(eq.privateAccess ?? 0) === 0
-                                        ? <i className="p-2 fa-solid fa-image text-yellow-400 hover:bg-main-bg hover:scale-125" />
-                                        : <i className="p-2 fa-solid fa-image text-yellow-50 hover:bg-yellow-500 hover:scale-125" />}
-                                    </span>
-                                    <span>
-                                        <i className="p-2 fas fa-trash hover:bg-danger-bg hover:scale-125"
-                                            onClick={() => handleDeleteClick(index)}
-                                        />
-                                    </span>
-                                </td>
-
-                            </tr>
+                            <FolderComponent 
+                            onDeleteClick={() => {
+                                setFolders((fold) => {
+                                    return [...fold.slice(0, index), ...fold.slice(index + 1)];
+                                });
+                            }}
+                            key={index} folder={eq} />
                         ))
                     }
                 </tbody>
