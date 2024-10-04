@@ -64,6 +64,7 @@ export const translate: Record<string, Record<string, string>> = {
       "Um den Chat zu starten, wählen Sie bitte ein Profil",
     foldersTitle: "Ordner",
     equipmentsTitle: "Ausrüstung",
+    images: "Bilder",
   },
   en: {
     home: "Home",
@@ -127,5 +128,6 @@ export const translate: Record<string, Record<string, string>> = {
     toStartChatPleaseSelectProfile: "To start chat please select profile",
     foldersTitle: "Folders",
     equipmentsTitle: "Equipments",
+    images: "Images",
   },
 } as const;
