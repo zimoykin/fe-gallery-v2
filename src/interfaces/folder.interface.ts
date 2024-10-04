@@ -7,6 +7,7 @@ export interface IUserFolder {
   description: string;
   sortOrder: number;
   url?: string;
+  favoriteFotoId: string;
   privateAccess?: number; // 0 = public, 1 = private
 }
 
