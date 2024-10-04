@@ -83,10 +83,6 @@ const FolderComponent: React.FC<Props> = ({ folder: initial, onDeleteClick }) =>
         setIsEdit(false);
     };
 
-    const handleUploadImageClick = () => {
-
-    };
-
     return (<>
         <tr
             className="w-full P-2 max-h-20 hover:scale-101 transition ease-in-out delay-75 hover:bg-primary-bg mt-4">
