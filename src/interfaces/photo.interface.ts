@@ -11,8 +11,8 @@ export interface IPhoto {
   description?: string;
   likes?: number;
   url: string;
-  favorite?: boolean;
   privateAccess?: number; // 0 - public, 1 - private
+  isFavorite: boolean;
 }
 
 export interface IPhotoWithImageFile extends Partial<IPhoto> {

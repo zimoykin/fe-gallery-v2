@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IPhotoWithImageFile } from "../../interfaces/photo.interface";
+import { IPhoto, IPhotoWithImageFile } from "../../interfaces/photo.interface";
 import { ApiClient } from "../../networking";
 import FilesUploadComponent from "../file-upload.component";
 import PalitraComponent from "../palitra/palitra.component";
@@ -28,7 +28,7 @@ const ImagesComponent: React.FC<Props> = ({ folderId }) => {
             return;
         }
         setIsLoading(true);
-        ApiClient.get<IPhotoWithImageFile[]>(`/photos/${folderId}/preview`)
+        ApiClient.get<IPhoto[]>(`/photos/${folderId}/preview`)
             .then((res) => {
                 setImages(res);
             })
@@ -40,6 +40,25 @@ const ImagesComponent: React.FC<Props> = ({ folderId }) => {
 
     }, [folderId]);
 
+
+    const handleFavoriteClick = (photoId?: string) => {
+
+        if (!photoId) {
+            return;
+        }
+
+        setIsLoading(true);
+        ApiClient.patch<IPhoto>(`/photos/${folderId}/${photoId}`, undefined)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.error(err);
+            }).finally(() => {
+                setIsLoading(false);
+            });
+
+    };
 
     const handleFileAdding = (files: File[]) => {
         console.log(files);
@@ -116,6 +135,17 @@ const ImagesComponent: React.FC<Props> = ({ folderId }) => {
                                     onClick={() => handleUploadImage(image, index)}
                                     className=" p-1 hover:scale-105 fas fa-upload text-primary-bg text-gray-400" />}
                                 <i className=" p-1 hover:scale-105 fas fa-trash  text-red-400" />
+                            </div>
+
+                            <div className="absolute p-1 m-2 top-0 left-0 gap-2
+                            hover:bg-primary-cl hover:scale-125">
+                                {image?.id && <i
+                                    onClick={() => handleFavoriteClick(image?.id)}
+                                    className={`
+                                    p-1 hover:scale-105 fas fa-star 
+                                    ${image.isFavorite === true ? 'text-yellow-500' : 'text-gray-600'}`}
+                                />
+                                }
                             </div>
                         </div>
                     ))}
