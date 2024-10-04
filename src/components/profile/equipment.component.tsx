@@ -3,7 +3,7 @@ import { EquipWithState } from "./types/equip-with-state.type";
 import { ApiClient } from "../../networking";
 import { IEquipment } from "../../interfaces/eqiupment.interface";
 import { toast } from "react-toastify";
-
+import CameraSpinnerModal from "../camera-spinner/camera-spinner-modal.component";
 
 interface Props {
     equipment: EquipWithState;
@@ -18,16 +18,20 @@ const EquipmentComponent: React.FC<Props> = ({ equipment: initial, onDeleteClick
     const [favorite, setFavorite] = useState<number>(initial.favorite);
     const [category, setCategory] = useState<string>(initial.category);
     const [isEdit, setIsEdit] = useState<boolean>(initial.isEdit ?? false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const handleDeleteClick = () => {
         setIsEdit(false);
         if (id) {
+            setIsLoading(true);
             ApiClient.delete<IEquipment>(`/equipments/${id}`)
                 .then(() => {
                     onDeleteClick();
                 }).catch((error) => {
                     console.error(error);
                     toast.error('Error deleting equipment');
+                }).finally(() => {
+                    setIsLoading(false);
                 });
 
             return;
@@ -38,6 +42,7 @@ const EquipmentComponent: React.FC<Props> = ({ equipment: initial, onDeleteClick
     const handleFavoriteClick = () => {
         setFavorite((prev) => prev === 0 ? 1 : 0);
         if (id) {
+            setIsLoading(true);
             ApiClient.put<IEquipment>(`/equipments/${id}`, {
                 name,
                 favorite: favorite === 0 ? 1 : 0,
@@ -47,12 +52,15 @@ const EquipmentComponent: React.FC<Props> = ({ equipment: initial, onDeleteClick
             }).catch((error) => {
                 console.error(error);
                 toast.error(error);
+            }).finally(() => {
+                setIsLoading(false);
             });
         }
     };
 
 
     const handleSaveClick = () => {
+        setIsLoading(true);
         if (id) {
             // update equipment
             ApiClient.put<IEquipment>(`/equipments/${id}`, {
@@ -64,6 +72,8 @@ const EquipmentComponent: React.FC<Props> = ({ equipment: initial, onDeleteClick
             }).catch((error) => {
                 console.error(error);
                 toast.error(error);
+            }).finally(() => {
+                setIsLoading(false);
             });
         } else {
             // create equipment
@@ -78,12 +88,17 @@ const EquipmentComponent: React.FC<Props> = ({ equipment: initial, onDeleteClick
             }).catch((error) => {
                 console.error(error);
                 toast.error(error);
+            }).finally(() => {
+                setIsLoading(false);
             });
         }
     };
 
     return (<>
-
+        {isLoading && <div className="relative w-full h-full flex justify-center items-center">
+            <CameraSpinnerModal />
+        </div>
+        }
         <tr
             className="w-full hover:scale-101 transition ease-in-out delay-75 hover:bg-primary-bg mt-4">
             <td className="p-2">
