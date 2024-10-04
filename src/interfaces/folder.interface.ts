@@ -7,7 +7,7 @@ export interface IUserFolder {
   description: string;
   sortOrder: number;
   url?: string;
-  privateAccess?: number;
+  privateAccess?: number; // 0 = public, 1 = private
 }
 
 export interface IFoldersAndTotal extends IUserFolder {

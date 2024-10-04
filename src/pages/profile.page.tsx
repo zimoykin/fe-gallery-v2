@@ -99,9 +99,6 @@ const ProfilePage: React.FC = () => {
             {/* bottom right */}
             <div className='w-full h-full md:h-1/2  bg-secondary-bg-75  flex justify-start relative items-start overflow-y-auto'>
                 <EquipmentsComponent />
-                {isLoadingProfle && <div className='hidden w-full md:flex bg-black bg-opacity-60 justify-center items-center md:h-full absolute top-0 left-0' >
-                    <CameraSpinner size='large' />
-                </div>}
             </div>
         </div>
 

@@ -24,6 +24,24 @@ const FolderComponent: React.FC<Props> = ({ folder: initial, onDeleteClick }) =>
                 console.error(error);
             });
     };
+    const handlePrivacyClick = () => {
+        setPrivateAccess((prev) => prev === 0 ? 1 : 0);
+        setTimeout(() => {
+            ApiClient.put<IUserFolder>(`/folders/${id}`, {
+                ...initial,
+                privateAccess: privateAccess === 0 ? 1 : 0,
+                title,
+                description,
+                bgColor: initial.bgColor,
+                color: initial.color,
+                sortOrder: initial.sortOrder,
+                url: initial.url,
+
+            }).catch((error) => {
+                console.error(error);
+            });
+        }, 0);
+    };
 
     const handleSaveClick = () => {
 
@@ -74,15 +92,14 @@ const FolderComponent: React.FC<Props> = ({ folder: initial, onDeleteClick }) =>
             {/* privateAccess */}
             <td className="justify-start items-start">
                 {!isEdit
-                    ? <div>{(privateAccess ?? 0) === 0
-                        ? <i className="p-1 fa-solid fa-shield text-yellow-400 hover:bg-main-bg hover:scale-105" />
-                        : <i className="p-1 fa-solid fa-shield text-yellow-50 hover:bg-yellow-500 hover:scale-105" />}
+                    ? <div
+                        onClick={handlePrivacyClick}
+                    >{(privateAccess ?? 0) > 0
+                        ? <i className="p-1 fa-solid fa-shield text-red-400 hover:bg-main-bg hover:scale-105" />
+                        : <i className="p-1 fa-solid fa-earth text-yellow-400 hover:bg-yellow-500 hover:scale-105" />}
                     </div>
                     :
-                    <select className="p-1 bg-secondary-bg border rounded-md" value={privateAccess} onChange={(e) => setPrivateAccess(parseInt(e.target.value))}>
-                        <option value={0}>Pub</option>
-                        <option value={1}>Priv</option>
-                    </select>
+                    null
                 }
             </td>
 
