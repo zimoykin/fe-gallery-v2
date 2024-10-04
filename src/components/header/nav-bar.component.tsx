@@ -54,7 +54,7 @@ const NavBarComponent: React.FC = () => {
 
             {/* desktop view */}
             <div className="w-full hidden md:flex space-x-4 transition-all ease-in-out delay-75 duration-300">
-                <MenuBtnsComponent onClick={toggleMenu} />
+                <MenuBtnsComponent />
             </div>
         </nav>
     );

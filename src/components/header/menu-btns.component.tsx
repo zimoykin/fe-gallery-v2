@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import ToggleThemeComponent from '../toggle-theme.component';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { useLocale, translate } from '../../contexts/locale';
@@ -8,7 +8,7 @@ import { logout } from '../../features/auth/auth-slice';
 import { storeLocale } from '../../features/locale/locale-slice';
 
 interface Props {
-    onClick: () => void;
+    onClick?: () => void;
 }
 
 const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
@@ -56,46 +56,58 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
 
     return (
         < div className=' relative md:flex justify-start items-center w-full h-full'>
-            <div className={MenuClassName}
-                onClick={() => {
-                    navigate('/');
-                    onClick();
-                }}
-            >
-                <i className='p-1 fa-solid fa-home' />
-                <span className='md:p-1 uppercase text-sm'>
-                    {home}</span>
-            </div>
+            {/* home */}
+            <Link to='/'>
+                <div className={MenuClassName}
+                    onClick={() => {
+                        if (onClick) onClick();
+                    }}
+                >
+                    <i className='p-1 fa-solid fa-home' />
+                    <span className='md:p-1 uppercase text-sm'>
+                        {home}</span>
+                </div>
+            </Link>
             <span className='md:p-1 hidden md:block'>/</span>
-            <div className={MenuClassName}
-                onClick={() => {
-                    navigate('/inbox');
-                    onClick();
-                }}
-            >
-                <i className='p-1 fas fa-inbox' />
-                <span className='md:p-1 uppercase text-xs'>{inbox}</span>
-            </div>
+            {/* inbox */}
+            <Link to='/inbox'>
+                <div className={MenuClassName}
+                    onClick={() => {
+                        if (onClick) onClick();
+                    }}
+                >
+                    <i className='p-1 fas fa-inbox' />
+                    <span className='md:p-1 uppercase text-xs'>{inbox}</span>
+                </div>
+            </Link>
             <span className='md:p-1 hidden md:block'>/</span>
-            <div
-                onClick={() => {
-                    navigate('/profile');
-                    onClick();
-                }}
-                className={MenuClassName}>
-                <i className='p-1 fa-solid fa-user' />
-                <span className='md:p-1 uppercase text-sm'>{profile}</span>
-            </div>
+            {/* profile */}
+            <Link to={'/profile'}>
+                <div
+                    onClick={() => {
+                        if (onClick) onClick();
+                    }}
+                    className={MenuClassName}>
+                    <i className='p-1 fa-solid fa-user' />
+                    <span className='md:p-1 uppercase text-sm'>{profile}</span>
+                </div>
+            </Link>
             <span className='p-1 hidden md:block'>/</span>
-            <div
-                onClick={() => { navigate(`/gallery/${storedProfile?.id}`); onClick(); }}
-                className={MenuClassName}
-            >
-                <i className='p-1 fa-solid fa-image' />
-                <span className='md:p-1 uppercase text-sm'>{gallery}</span>
-            </div>
+
+            {/* gallery */}
+            <Link to={`/gallery/${storedProfile?.id}`}>
+                <div
+                    onClick={() => { if (onClick) onClick(); }}
+                    className={MenuClassName}
+                >
+                    <i className='p-1 fa-solid fa-image' />
+                    <span className='md:p-1 uppercase text-sm'>{gallery}</span>
+                </div>
+
+            </Link>
             <span className='md:p-1 hidden md:block'>//</span>
 
+            {/* system */}
             <div className='flex justify-end items-center md:justify-start md:items-start'>
                 <hr className='md:hidden w-2/3 p-1' />
             </div>
@@ -107,11 +119,11 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
             {/* <i className="fas fa-user-astronaut"></i> */}
 
             <span className='md:p-1 hidden md:block'>/</span>
-            <div
-                onClick={() => { navigate('/gallery'); onClick(); }}
-                className={MenuClassName}
-            >
-            </div>
+            <Link to={'/gallery'}>
+                <div
+                    className={MenuClassName}
+                />
+            </Link>
 
             <div
                 onClick={handleOnOnToggleLocale}

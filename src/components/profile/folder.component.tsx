@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FolderWithState } from "./types/folder-with-state.type";
 import { ApiClient } from "../../networking";
 import { IUserFolder } from "../../interfaces/folder.interface";
+import { Link } from "react-router-dom";
 
 interface Props {
     folder: FolderWithState;
@@ -126,9 +127,10 @@ const FolderComponent: React.FC<Props> = ({ folder: initial, onDeleteClick }) =>
                 {!isEdit
                     ?
                     <>
-                        <i className="p-2 fa-solid fa-image text-yellow-50 hover:bg-yellow-500 hover:scale-105"
-                            onClick={handleUploadImageClick}
-                        />
+                        <Link to={`/upload/${id}`}>
+                            <i className="p-2 fa-solid fa-image text-yellow-50 hover:bg-yellow-500 hover:scale-105"
+                            />
+                        </Link>
                         <i className="p-2 fa-solid fa-pencil text-yellow-50 hover:bg-yellow-500 hover:scale-105"
                             onClick={() => setIsEdit(true)}
                         />

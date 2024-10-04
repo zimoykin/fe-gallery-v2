@@ -7,7 +7,7 @@ import EquipmentsComponent from '../components/profile/equipments.component';
 import FoldersComponent from '../components/profile/folders.component';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { ApiClient } from '../networking';
 import { storeProfile } from '../features/profile/profile-slice';
 
@@ -101,7 +101,7 @@ const ProfilePage: React.FC = () => {
                 <EquipmentsComponent />
             </div>
         </div>
-
+        <Outlet />
     </div>);
 };
 
