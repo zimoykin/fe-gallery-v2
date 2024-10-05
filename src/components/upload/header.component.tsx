@@ -12,12 +12,27 @@ const HeaderComponent: React.FC<Props> = ({ folderId }) => {
 
     const [folder, setFolder] = useState<IUserFolder>();
     const [isLoading, setIsLoading] = useState(false);
+    const [gradient, setGradient] = useState('');
 
     useEffect(() => {
         setIsLoading(true);
         ApiClient.get<IUserFolder>(`/folders/${folderId}`)
             .then((res) => {
+                console.log(res);
                 setFolder(res);
+
+                const newGradient = `
+                linear-gradient(to bottom right, 
+                ${res.leftTopColor ?? '#203e32'},
+                ${res.leftBottomColor ?? '#1c382a'}, 
+                ${res.centerTopColor ?? '#2b5a4e'},
+                ${res.centerBottomColor ?? '#2b5a4e'},
+                ${res.rightTopColor ?? '#cb2f3c'}, 
+                ${res.rightBottomColor ?? '#b00011'}
+                )
+            `;
+                setGradient(newGradient);
+
             })
             .catch((error) => {
                 console.error(error);
@@ -36,8 +51,12 @@ const HeaderComponent: React.FC<Props> = ({ folderId }) => {
                 </div>
                 :
                 <div className={`w-full h-1/6 p-2
-                flex justify-start items-start bg-green-400 bg-opacity-55`
-                }>
+                    flex justify-start items-start `}
+                    style={{
+                        background: gradient,
+                    }}
+                >
+
 
                     <div
                         className="bg-gray-500 h-full 

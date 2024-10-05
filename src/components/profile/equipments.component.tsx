@@ -55,15 +55,11 @@ const EquipmentsComponent: React.FC = () => {
         favorite: 0,
         category: 'other',
         isEdit: true,
+        id: 'new-' + equipments.length,
     });
 
     const handleAddClick = () => {
         setEquipments((eq) => [...eq, addNewEquipment()]);
-    };
-    const handleDeleteClick = (index: number) => {
-        setEquipments((eq) => {
-            return [...eq.slice(0, index), ...eq.slice(index + 1)];
-        });
     };
 
 
@@ -86,11 +82,13 @@ const EquipmentsComponent: React.FC = () => {
             <table className="w-full h-full">
                 <tbody>
                     {
-                        equipments?.map((eq, index) => (
+                        equipments?.map((eq) => (
                             <EquipmentComponent
-                                key={eq.id || index}
+                                key={eq.id}
                                 equipment={eq}
-                                onDeleteClick={() => handleDeleteClick(index)}
+                                onDeleteClick={() => {
+                                    setEquipments((eqs) => eqs.filter((e) => e.id !== eq.id));
+                                }}
                                 refresh={refreshCB}
                             />
                         ))

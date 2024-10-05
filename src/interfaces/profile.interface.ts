@@ -10,6 +10,6 @@ export interface IProfile {
   privateAccess: number; // 0 - public, 1 - private
   equipment?: IEquipment[];
   url?: string;
-
+  favoriteEquipment?: Array<IEquipment>;
   email: string;
 }

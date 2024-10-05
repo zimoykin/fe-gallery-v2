@@ -6,6 +6,7 @@ import PalitraComponent from "../palitra/palitra.component";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { translate, useLocale } from "../../contexts/locale";
+import ImageGalleryComponent from "../image-gallery.component";
 
 interface Props {
     folderId?: string;
@@ -42,7 +43,6 @@ const ImagesComponent: React.FC<Props> = ({ folderId }) => {
 
 
     const handleFavoriteClick = (photoId?: string) => {
-
         if (!photoId) {
             return;
         }
@@ -73,10 +73,25 @@ const ImagesComponent: React.FC<Props> = ({ folderId }) => {
 
     };
 
+    const handleRemoveClick = (photoId: string) => {
+        setIsLoading(true);
+        ApiClient.delete<IPhoto>(`/photos/${folderId}/${photoId}`)
+            .then((res) => {
+                console.log(res);
+                setImages(prev => prev.filter(photo => photo.id !== photoId));
+            })
+            .catch((err) => {
+                console.error(err);
+            }).finally(() => {
+                setIsLoading(false);
+            });
+    };
+
     const handleUploadImage = (image: IPhotoWithImageFile, index: number) => {
         if (image.file && profile) {
             const formData = new FormData();
             formData.append('file', image.file);
+            //todo: hardcoded values
             formData.append('camera', 'Canon EOS 6D');
             formData.append('lens', 'Canon EF 24-70mm f/2.8L II USM');
             formData.append('film', 'no');
@@ -99,7 +114,8 @@ const ImagesComponent: React.FC<Props> = ({ folderId }) => {
         <div className="w-full flex justify-start items-start 
                     bg-command-panel-bg py-2 pb-3 px-2
                     shadow-md rounded-md
-                    sticky top-0 z-10">
+                    sticky top-0 z-0
+                    ">
 
             <FilesUploadComponent
                 pickedImages={handleFileAdding}
@@ -114,43 +130,13 @@ const ImagesComponent: React.FC<Props> = ({ folderId }) => {
         {
             !isLoading
                 ?
-                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 w-full p-2 overflow-scroll no-scrollbar'>
-                    {images?.map((image, index) => (
-
-                        <div
-                            key={index}
-                            className="relative">
-                            <div
-                                style={{ backgroundImage: `url(${image.url})` }}
-                                className='bg-no-repeat bg-center bg-cover
-                                    hover:scale-102 transition-all duration-300
-                                    hover:border-2 border-main-col
-                                    aspect-square p-1 shadow-md rounded-md' />
-
-                            <div className="absolute p-1 m-2 top-0 right-0 gap-2
-                            hover:bg-yellow-500 hover:scale-125
-                            bg-opacity-40
-                            bg-slate-300">
-                                {!image?.id && <i
-                                    onClick={() => handleUploadImage(image, index)}
-                                    className=" p-1 hover:scale-105 fas fa-upload text-primary-bg text-gray-400" />}
-                                <i className=" p-1 hover:scale-105 fas fa-trash  text-red-400" />
-                            </div>
-
-                            <div className="absolute p-1 m-2 top-0 left-0 gap-2
-                            hover:bg-primary-cl hover:scale-125">
-                                {image?.id && <i
-                                    onClick={() => handleFavoriteClick(image?.id)}
-                                    className={`
-                                    p-1 hover:scale-105 fas fa-star 
-                                    ${image.isFavorite === true ? 'text-yellow-500' : 'text-gray-600'}`}
-                                />
-                                }
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
+                <ImageGalleryComponent
+                    images={images}
+                    onFavoriteClick={(id) => handleFavoriteClick(id)}
+                    onRemoveClick={(id) => handleRemoveClick(id)}
+                    onUploadClick={(image, index) => handleUploadImage(image, index)}
+                    readOnly={false}
+                />
                 :
                 <div className='w-full md:w-2/3 p-5'>
                     <PalitraComponent size='mini' />

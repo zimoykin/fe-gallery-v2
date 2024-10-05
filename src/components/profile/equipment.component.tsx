@@ -22,7 +22,7 @@ const EquipmentComponent: React.FC<Props> = ({ equipment: initial, onDeleteClick
 
     const handleDeleteClick = () => {
         setIsEdit(false);
-        if (id) {
+        if (!id?.startsWith('new-')) {
             setIsLoading(true);
             ApiClient.delete<IEquipment>(`/equipments/${id}`)
                 .then(() => {
