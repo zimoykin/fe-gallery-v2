@@ -7,12 +7,11 @@ const NavBarComponent: React.FC = () => {
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
+
     return (
-        <nav className='p-1 w-full flex flex-row max-w-screen-2xl bg-main-bg gap-3
-        '>
+        <nav className="p-1 w-full flex flex-row max-w-screen-2xl bg-main-bg gap-3">
             {/* mobile view */}
-            <div className='w-full block justify-start gap-2 md:hidden'
-            >
+            <div className="w-full block justify-start gap-2 md:hidden">
                 <button
                     className="text-white block md:hidden focus:outline-none"
                     onClick={toggleMenu}
@@ -32,24 +31,25 @@ const NavBarComponent: React.FC = () => {
                         />
                     </svg>
                 </button>
-                {isOpen &&
-                    <div>
-                        <div className={`transition-opacity duration-1000
-                        absolute z-10 right-0 top-0 h-screen w-screen bg-secondary-bg-75
-                         ${isOpen ? 'bg-opacity-80' : 'bg-opacity-0'}`}
-                            onClick={toggleMenu}
-                        />
-                        <div className='
-    transition-opacity duration-1000
-                        absolute z-20 left-0 top-0 h-screen w-1/2 bg-main-bg'>
-                            <div className='p-3'>
-                                <MenuBtnsComponent
-                                    onClick={toggleMenu}
-                                />
-                            </div>
-                        </div>
+
+                {/* Фон затемнения */}
+                {isOpen && (
+                    <div
+                        className={`fixed z-10 right-0 top-0 h-screen w-screen bg-gray-600 opacity-65`}
+                        onClick={toggleMenu}
+                    />
+                )}
+
+                {/* Меню */}
+                <div
+                    className={`fixed z-20 left-0 top-0 h-screen w-2/5 bg-main-bg transform transition-transform duration-300 ease-in-out ${
+                        isOpen ? 'translate-x-0' : '-translate-x-full'
+                    }`}
+                >
+                    <div className="p-3">
+                        <MenuBtnsComponent onClick={toggleMenu} />
                     </div>
-                }
+                </div>
             </div>
 
             {/* desktop view */}
@@ -58,7 +58,6 @@ const NavBarComponent: React.FC = () => {
             </div>
         </nav>
     );
-
 };
 
 export default NavBarComponent;

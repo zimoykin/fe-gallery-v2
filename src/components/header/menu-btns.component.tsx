@@ -112,18 +112,18 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
                 <hr className='md:hidden w-2/3 p-1' />
             </div>
 
-            <div className='md:p-1'>
+            <div className='md:p-1 hover:bg-secondary-bg rounded-md'>
                 <ToggleThemeComponent />
             </div>
 
             {/* <i className="fas fa-user-astronaut"></i> */}
 
-            <span className='md:p-1 hidden md:block'>/</span>
+            {/* <span className='md:p-1 hidden md:block'>/</span>
             <Link to={'/gallery'}>
                 <div
                     className={MenuClassName}
                 />
-            </Link>
+            </Link> */}
 
             <div
                 onClick={handleOnOnToggleLocale}
@@ -141,7 +141,7 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
 
             <div className='absolute md:p-1 right-0'>
                 <div className='flex md:flex-row flex-col gap-1 justify-end items-end'>
-                    <div className='p-1 border-secondary-col right-0 hover:border hover:bg-danger-bg rounded-md'
+                    <div className='flex justify-end items-end p-1 border-secondary-col right-0 hover:bg-red-400 hover:bg-opacity-45 hover:scale-105 rounded-md'
                         onClick={
                             handleOnClickLoginBtn
                         }
