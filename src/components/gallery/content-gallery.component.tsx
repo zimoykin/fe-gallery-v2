@@ -13,7 +13,7 @@ interface Props {
 const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
 
     const [isLoading, setIsLoading] = useState(false);
-    const [isLoadingImages, setIsLoadingImages] = useState(false);
+    const [, setIsLoadingImages] = useState(false);
     const [folders, setFolders] = useState<IUserFolder[]>([]);
     const [selectedFolder, setSelectedFolder] = useState<IUserFolder>();
     const [images, setImages] = useState<IPhoto[]>([]);
