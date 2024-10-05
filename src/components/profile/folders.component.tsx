@@ -32,20 +32,20 @@ const FoldersComponent: React.FC = () => {
                 setIsLoadingFolders(false);
             });
 
-    }, [setFolders]);
+    }, []);
 
 
     const handleAddClick = () => {
         setFolders((fold) => {
             return [...fold, {
-                title: 'New Folder',
+                title: 'New Folder ' + (fold.length + 1),
                 description: 'Save your photos in folders',
                 privateAccess: 0,
-                bgColor: '#ffffff',
-                color: '#000000',
                 sortOrder: fold.length + 1,
                 url: '',
-                isEdit: true
+                favoriteFotoId: '',
+                isEdit: true,
+                id: 'new-' + folders.length.toString()
             }];
         });
     };
@@ -70,16 +70,21 @@ const FoldersComponent: React.FC = () => {
             <table className="w-full h-full">
                 <tbody>
                     {
-                        [...folders]?.map((eq, index) => (
-                            <FolderComponent 
-                            onDeleteClick={() => {
-                                setFolders((fold) => {
-                                    return [...fold.slice(0, index), ...fold.slice(index + 1)];
-                                });
-                            }}
-                            key={index} folder={eq} />
+                        folders?.map((folder, index) => (
+                            <FolderComponent
+                                onDeleteClick={() => {
+                                    setFolders((prevFolders) => {
+                                        const newFolders = prevFolders.filter(({ id }) => id !== folder.id);
+                                        return newFolders;
+                                    });
+                                }}
+                                index={index}
+                                key={folder.id}
+                                folder={folder}
+                            />
                         ))
                     }
+
                 </tbody>
             </table>
         </div>

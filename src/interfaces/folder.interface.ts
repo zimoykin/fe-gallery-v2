@@ -2,8 +2,12 @@ export interface IUserFolder {
   id: string;
   profileId: string;
   title: string;
-  bgColor: string;
-  color: string;
+  leftBottomColor?: string;
+  leftTopColor?: string;
+  rightBottomColor?: string;
+  rightTopColor?: string;
+  centerBottomColor?: string;
+  centerTopColor?: string;
   description: string;
   sortOrder: number;
   url?: string;

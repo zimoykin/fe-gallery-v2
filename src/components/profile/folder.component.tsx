@@ -5,11 +5,12 @@ import { IUserFolder } from "../../interfaces/folder.interface";
 import { Link } from "react-router-dom";
 
 interface Props {
+    index: number;
     folder: FolderWithState;
-    onDeleteClick: () => void;
+    onDeleteClick: (index: number) => void;
 }
 
-const FolderComponent: React.FC<Props> = ({ folder: initial, onDeleteClick }) => {
+const FolderComponent: React.FC<Props> = ({ folder: initial, onDeleteClick, index }) => {
 
     const [id, setId] = useState<string | undefined>(initial.id);
     const [title, setTitle] = useState<string>(initial.title);
@@ -18,11 +19,17 @@ const FolderComponent: React.FC<Props> = ({ folder: initial, onDeleteClick }) =>
     const [isEdit, setIsEdit] = useState<boolean>(initial.isEdit ?? false);
 
     const handleDeleteClick = () => {
+        if (id?.startsWith('new-')) {
+            onDeleteClick(index);
+            return;
+        }
         ApiClient.delete<IUserFolder>(`/folders/${id}`)
             .then(() => {
-                onDeleteClick();
+                onDeleteClick(index);
             }).catch((error) => {
                 console.error(error);
+            }).finally(() => {
+                setIsEdit(false);
             });
     };
     const handlePrivacyClick = () => {
@@ -33,8 +40,6 @@ const FolderComponent: React.FC<Props> = ({ folder: initial, onDeleteClick }) =>
                 privateAccess: privateAccess === 0 ? 1 : 0,
                 title,
                 description,
-                bgColor: initial.bgColor,
-                color: initial.color,
                 sortOrder: initial.sortOrder,
                 url: initial.url,
 
@@ -45,35 +50,27 @@ const FolderComponent: React.FC<Props> = ({ folder: initial, onDeleteClick }) =>
     };
 
     const handleSaveClick = () => {
-
-        if (id) {
+        if (!id?.startsWith('new-')) {
             // update folder
             ApiClient.put<IUserFolder>(`/folders/${id}`, {
-                ...initial,
                 title,
                 description,
-                privateAccess
-            }).then((res) => {
-
-                setTitle(res.title);
-                setDescription(res.description);
-                setPrivateAccess(res.privateAccess ?? 0);
-
+                privateAccess,
+                sortOrder: initial.sortOrder,
+            } as IUserFolder).then(() => {
+                setIsEdit(false);
             }).catch((error) => {
                 console.error(error);
             });
         } else {
             // create folder
-            ApiClient.post<IUserFolder>('/folders', {
-                ...initial,
+            ApiClient.post<string>('/folders', {
                 title,
                 description,
-                privateAccess
-            }).then((res) => {
-                setTitle(res.title);
-                setDescription(res.description);
-                setPrivateAccess(res.privateAccess ?? 0);
-                setId(res.id);
+                privateAccess,
+                sortOrder: initial.sortOrder,
+            } as IUserFolder).then((res) => {
+                setId(res);
                 setIsEdit(false);
             }).catch((error) => {
                 console.error(error);
@@ -113,7 +110,7 @@ const FolderComponent: React.FC<Props> = ({ folder: initial, onDeleteClick }) =>
             {/* description */}
             <td className=" justify-start items-start">
                 {!isEdit
-                    ? <span className="p-1 text-xs">{description.slice(0, 50)}</span>
+                    ? <span className="p-1 text-xs">{description?.slice(0, 50)}</span>
                     : <input className="p-1 text-xs bg-secondary-bg border rounded-md" type="text" value={description} onChange={(e) => setDescription(e.target.value)} />
                 }
             </td>
@@ -137,7 +134,7 @@ const FolderComponent: React.FC<Props> = ({ folder: initial, onDeleteClick }) =>
                             onClick={handleSaveClick}
                         />
                         <i className="p-2 fas fa-trash hover:bg-danger-bg hover:scale-125"
-                            onClick={handleDeleteClick}
+                            onClick={() => handleDeleteClick()}
                         />
                     </>
                 }

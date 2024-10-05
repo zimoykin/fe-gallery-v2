@@ -35,6 +35,7 @@ export default {
       },
       fontSize: {
         "auto-shrink": "clamp(1.5rem, 2rem, 2.25rem)",
+        xxs: "0.625rem", // 10px
       },
     },
   },
