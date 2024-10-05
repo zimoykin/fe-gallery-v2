@@ -22,7 +22,7 @@ const HeaderComponent: React.FC<Props> = ({ folderId }) => {
                 setFolder(res);
 
                 const newGradient = `
-                linear-gradient(to bottom right, 
+                linear-gradient(to right, 
                 ${res.leftTopColor ?? '#203e32'},
                 ${res.leftBottomColor ?? '#1c382a'}, 
                 ${res.centerTopColor ?? '#2b5a4e'},

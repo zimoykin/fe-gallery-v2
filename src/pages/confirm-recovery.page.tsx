@@ -4,7 +4,7 @@ import PalitraComponent from '../components/palitra/palitra.component';
 import { toast } from 'react-toastify';
 import { useLocale, translate } from '../contexts/locale';
 import { AuthClient } from '../networking';
-import { IRegister } from '../interfaces/register.inetrface';
+import { IRegister } from '../interfaces/register.interface';
 
 const RecoveryConfirmPage: React.FC = () => {
 

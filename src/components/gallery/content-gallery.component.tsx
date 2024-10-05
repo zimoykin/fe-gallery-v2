@@ -11,11 +11,11 @@ interface Props {
 }
 
 const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
-
     const [isLoading, setIsLoading] = useState(false);
-    const [isLoadingImages, setIsLoadingImages] = useState(false);
+    const [, setIsLoadingImages] = useState(false);
     const [folders, setFolders] = useState<IUserFolder[]>([]);
     const [selectedFolder, setSelectedFolder] = useState<IUserFolder>();
+    const [gradient, setGradient] = useState('');
     const [images, setImages] = useState<IPhoto[]>([]);
 
     useEffect(() => {
@@ -24,11 +24,12 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
             ApiClient.get<IUserFolder[]>(`/public/folders/${profileId}`)
                 .then((res) => {
                     setFolders(res);
-                    if (res?.length > 0)
-                        setSelectedFolder(res[0]);
-                }).catch((error) => {
+                    if (res?.length > 0) setSelectedFolder(res[0]);
+                })
+                .catch((error) => {
                     console.error(error);
-                }).finally(() => {
+                })
+                .finally(() => {
                     setIsLoading(false);
                 });
         }
@@ -37,17 +38,32 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
     useEffect(() => {
         if (selectedFolder) {
             setIsLoadingImages(true);
-            ApiClient.get<PublicPhotoOutputDto[]>(`/public/photos/${profileId}/${selectedFolder.id}`)
+
+            const newGradient = `
+            linear-gradient(to right bottom, 
+            ${selectedFolder.leftTopColor ?? '#203e32'},
+            ${selectedFolder.leftBottomColor ?? '#1c382a'}, 
+            ${selectedFolder.centerTopColor ?? '#2b5a4e'},
+            ${selectedFolder.centerBottomColor ?? '#2b5a4e'},
+            ${selectedFolder.rightTopColor ?? '#cb2f3c'},
+            ${selectedFolder.rightBottomColor ?? '#b00011'}
+            )`;
+
+            setGradient(newGradient);
+            ApiClient.get<PublicPhotoOutputDto[]>(
+                `/public/photos/${profileId}/${selectedFolder.id}`
+            )
                 .then((res) => {
                     setImages(res.map(({ photo }) => photo));
-                }).catch((error) => {
+                })
+                .catch((error) => {
                     console.error(error);
-                }).finally(() => {
+                })
+                .finally(() => {
                     setIsLoadingImages(false);
                 });
         }
-    }, [selectedFolder]);
-
+    }, [profileId, selectedFolder]);
 
     const handleLikeClick = (photoId: string) => {
         if (photoId) {
@@ -58,72 +74,73 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
                 })
                 .catch((error) => {
                     console.error(error);
-                }).finally(() => {
+                })
+                .finally(() => {
                     setIsLoadingImages(false);
                 });
         }
     };
 
-    return <>
-        <div className='w-full min-h-44 h-full flex flex-col md:flex-row justify-start items-start overflow-auto no-scrollbar '>
-            {/* left */}
-            <div className='w-full md:w-1/3 '>
-                {
-                    !isLoading
-                        ?
-                        <div className='p-2 flex md:flex-col gap-2 justify-start items-start bg-secondary-bg-75
+    return (
+        <>
+            <div className="w-full min-h-44 h-full flex flex-col md:flex-row justify-start items-start overflow-auto no-scrollbar ">
+                {/* left */}
+                <div className="w-full md:w-1/3 ">
+                    {!isLoading ? (
+                        <div
+                            className="p-2 flex md:flex-col gap-2 justify-start items-start bg-secondary-bg-75
                         overflow-scroll no-scrollbar
-                        '>
-                            {
-                                folders?.map((folder, index) => (
-                                    <div
-                                        className={`break-words flex gap-1 w-full cursor-pointer
+                        "
+                        >
+                            {folders?.map((folder, index) => (
+                                <div
+                                    className={`break-words flex gap-1 w-full cursor-pointer
                                                 ${selectedFolder?.id === folder.id ? 'bg-gray-400' : null}
                                             `}
-                                        onClick={() => setSelectedFolder(folder)}
-                                        key={index}>
-                                        <div
-                                            style={{ backgroundImage: `url(${folder.url})` }}
-                                            className='w-24 h-24 md:w-40 md:h-40 p-1 shadow-md
+                                    style={{ backgroundImage: selectedFolder?.id === folder.id ? gradient : 'none' }}
+                                    onClick={() => setSelectedFolder(folder)}
+                                    key={index}
+                                >
+                                    <div
+                                        style={{ backgroundImage: `url(${folder.url})` }}
+                                        className="w-24 h-24 md:w-40 md:h-40 p-1 shadow-md
                                                         bg-cover bg-no-repeat bg-center rounded-md
                                                         hover:scale-101
                                                         aspect-square
-                                                        flex justify-center items-center'
-                                        />
-                                        <span className={`p-2 text-lg 
+                                                        flex justify-center items-center"
+                                    />
+                                    <span
+                                        className={`p-2 text-lg 
                                             ${selectedFolder?.id === folder.id ? 'text-yellow-400' : null}
-                                            hover:text-secondary-col hover:cursor-pointer`}>
-                                            {folder.title}
-                                        </span>
-                                    </ div>
-                                ))
-
-                            }
+                                            hover:text-secondary-col hover:cursor-pointer`}
+                                    >
+                                        {folder.title}
+                                    </span>
+                                </div>
+                            ))}
                         </div>
-                        :
-                        <div className='p-1 flex w-full justify-center items-center'>
+                    ) : (
+                        <div className="p-1 flex w-full justify-center items-center">
                             <PalitraComponent />
                         </div>
-                }
-
-            </div>
-            {/* right */}
-            {/* images */}
-            {
-                !isLoading
-                    ?
-                    <ImageGalleryComponent images={images}
+                    )}
+                </div>
+                {/* right */}
+                {/* images */}
+                {!isLoading ? (
+                    <ImageGalleryComponent
+                        images={images}
                         onLikeClick={handleLikeClick}
-                        readOnly />
-                    :
-                    <div className='w-full md:w-2/3 p-5'>
-                        <PalitraComponent size='mini' />
+                        readOnly
+                    />
+                ) : (
+                    <div className="w-full md:w-2/3 p-5">
+                        <PalitraComponent size="mini" />
                     </div>
-            }
-
-
-        </div >
-    </>;
+                )}
+            </div>
+        </>
+    );
 };
 
 export default ContentGalleryComponent;
