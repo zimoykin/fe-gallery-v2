@@ -59,7 +59,7 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
 		} else {
 			navigate('/login');
 		}
-		onClick && onClick();
+		if (onClick) onClick();
 	};
 
 	const handleOnOnToggleLocale = () => {
