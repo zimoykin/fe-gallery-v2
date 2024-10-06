@@ -1,7 +1,7 @@
-export interface ICommercial {
+export interface IOffer {
   id: string;
   title: string;
-  description?: string;
+  text?: string;
   price?: number;
   image?: string;
   preview: string;
@@ -9,4 +9,5 @@ export interface ICommercial {
   category?: "trip" | "hotel" | "restaurant" | "camera" | "lens" | "other";
   url?: string;
   profileId: string;
+  availableUntil: number;
 }

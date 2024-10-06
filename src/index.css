@@ -6,6 +6,7 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   .no-scrollbar {
     -ms-overflow-style: none;
     /* IE and Edge */
@@ -231,15 +232,33 @@ h1 {
 }
 
 
+input,
+textarea,
+select {
+  font-size: 14px;
+}
+
 
 @media (max-width: 768px) {
   body {
     font-size: 13px;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 12;
   }
 }
 
 @media (max-width: 480px) {
   body {
     font-size: 11px;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 12;
   }
 }
