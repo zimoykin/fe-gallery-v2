@@ -15,6 +15,7 @@ import OfferPage from './pages/offer.page';
 import GalleryPage from './pages/gallery.page';
 import InboxPage from './pages/inbox.page';
 import UploadImagesPage from './pages/upload-images.page';
+import CookieConsent from './components/cookie-consent.component';
 
 function App() {
   return (
@@ -77,6 +78,7 @@ function App() {
             </div>
           </main>
           <FooterComponent />
+          <CookieConsent />
         </div>
       </Router>
     </>

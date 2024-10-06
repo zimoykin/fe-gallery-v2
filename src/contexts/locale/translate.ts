@@ -65,6 +65,11 @@ export const translate: Record<string, Record<string, string>> = {
     foldersTitle: "Ordner",
     equipmentsTitle: "Ausrüstung",
     images: "Bilder",
+    weAcceptCookies:
+      'Wir verwenden Cookies, um Ihren Benutzererlebnis zu verbessern. Durch Klicken auf "Bestätigen", stimmen Sie zu, dass Cookies verwendet werden. ',
+    accept: "Akzeptieren",
+    decline: "Abbrechen",
+    cookiePolicy: "Cookie-Einwidung",
   },
   en: {
     home: "Home",
@@ -129,5 +134,10 @@ export const translate: Record<string, Record<string, string>> = {
     foldersTitle: "Folders",
     equipmentsTitle: "Equipments",
     images: "Images",
+    weAcceptCookies:
+      "We use cookies to improve your experience. By continuing, you agree to our ",
+    accept: "Accept",
+    decline: "Decline",
+    cookiePolicy: "Cookie Policy",
   },
 } as const;
