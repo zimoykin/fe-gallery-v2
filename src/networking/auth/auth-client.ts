@@ -1,4 +1,4 @@
-import { Axios, AxiosRequestConfig } from "axios";
+import { Axios, AxiosError, AxiosRequestConfig } from "axios";
 import authClient from "./settings";
 
 export class AuthClient {
@@ -33,9 +33,9 @@ export class AuthClient {
     }
   }
 
-  static async post<T>(
+  static async post<T, K = unknown>(
     path: string,
-    data?: unknown,
+    data?: K,
     config?: AxiosRequestConfig,
   ) {
     return AuthClient.init()
@@ -49,8 +49,12 @@ export class AuthClient {
         }
       })
       .catch((error) => {
-        console.error(error);
-        throw error ?? new Error("an error");
+        if (error instanceof AxiosError) {
+          throw new Error(error.response?.data?.message ?? "network error");
+        } else {
+          console.error(error);
+          throw error ?? new Error("an error");
+        }
       });
   }
 

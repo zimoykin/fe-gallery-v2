@@ -56,11 +56,17 @@ const LoginPage: React.FC = () => {
 
         setIsLoading(true);
         setTimeout(async () => {
-            const tokens = await AuthClient.post<ILoginResponse>('/auth/login', { email, password });
+            const tokens = await AuthClient.post<ILoginResponse>('/auth/login', { email, password })
+                .catch((error) => {
+                    setError(error.message);
+                    setIsLoading(false);
+                    throw error;
+                });
             dispatch(login([tokens.accessToken, tokens.refreshToken]));
 
             await ApiClient.post<{ status: string; }>('/profiles/login')
                 .catch((error) => {
+                    debugger;
                     console.error(error);
                     setIsLoading(false);
                     throw error;
