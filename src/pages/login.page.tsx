@@ -66,7 +66,6 @@ const LoginPage: React.FC = () => {
 
             await ApiClient.post<{ status: string; }>('/profiles/login')
                 .catch((error) => {
-                    debugger;
                     console.error(error);
                     setIsLoading(false);
                     throw error;
@@ -122,13 +121,13 @@ const LoginPage: React.FC = () => {
                                 placeholder={emailTitle}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="p-3 w-2/3 shadow-md rounded-lg bg-main-bg text-main-col text-xs" />
+                                className="p-3 w-2/3 shadow-md rounded-md bg-main-bg text-main-col" />
 
                             <input type="password"
                                 placeholder={passwordTitle}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="p-3 w-2/3 shadow-md rounded-lg bg-main-bg text-main-col text-xs" />
+                                className="p-3 w-2/3 shadow-md rounded-lg bg-main-bg text-main-cols" />
                             <button className="w-2/3 p-3 bg-primary-bg rounded-lg shadow-md active:scale-95 hover:scale-103" >{loginTitle}</button>
                             <span
                                 onClick={() => navigate('/recovery')}

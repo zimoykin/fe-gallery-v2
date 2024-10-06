@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { translate, useLocale } from "../contexts/locale";
-import { offers } from "../mocki/offers.mock";
-import { ICommercial } from "../interfaces/commercial.interface";
-import { useParams } from "react-router-dom";
+import { IOffer } from "../interfaces/commercial.interface";
+import { Link, useParams } from "react-router-dom";
 import { IProfile } from "../interfaces/profile.interface";
-import { MockUsers } from "../mocki/users.mock";
 import Avatar from "../components/avatar/avatar-component";
 import CameraSpinner from "../components/camera-spinner/camera-spinner.component";
-import { toast } from "react-toastify";
+import { ApiClient } from "../networking";
 
 
 const OfferPage: React.FC = () => {
@@ -21,30 +19,31 @@ const OfferPage: React.FC = () => {
     } = translate[locale];
 
     // states
-    const [offer, setOffer] = useState<ICommercial>();
+    const [offer, setOffer] = useState<IOffer>();
     const [profile, setProfile] = useState<IProfile>();
 
     useEffect(() => {
-        //TODO: implement api call instead of fake request
         setIsLoading(true);
-        setTimeout(() => {
-            const offer = offers.find((offer) => offer.id === offerId);
-            if (offer) {
-                setOffer(offer);
-            }
-            else {
-                toast.error(`oh no! ${offerId} not found!`, { toastId: 'offer' });
-            }
-            setIsLoading(false);
-        }, 1500 * Math.random());
+        ApiClient.get<IOffer>(`/public/offers/${offerId}`)
+            .then((res) => {
+                setOffer(res);
+            }).catch((error) => {
+                console.error(error);
+            }).finally(() => {
+                setIsLoading(false);
+            });
     }, [offerId]);
 
     useEffect(() => {
         if (offer?.profileId) {
-            setTimeout(() => {
-                const profile = MockUsers.find((user) => user.id === offer?.profileId);
-                setProfile(profile);
-            }, 1300 * Math.random());
+            ApiClient.get<IProfile>(`/public/profiles/${offer?.profileId}`)
+                .then((res) => {
+                    setProfile(res);
+                }).catch((error) => {
+                    console.error(error);
+                }).finally(() => {
+                    setIsLoading(false);
+                });
         }
     }, [offer?.profileId]);
 
@@ -59,21 +58,30 @@ const OfferPage: React.FC = () => {
         {offer &&
             <>
                 <div className="w-full flex flex-row justify-start items-start">
-                    <div className="flex flex-col border p-1 justify-center items-center min-w-44">
-                        <Avatar url={profile?.url} size="small" />
-                        <div>
-                            <span className="font-bold">{profile?.name}</span>
-                        </div>
+                    {/* Profile */}
+                    <Link
+                        to={`/gallery/${offer?.profileId}`}
+                    >
+                        <div className="
+                    hover:border-highlight-cl
+                    rounded-md
+                    flex flex-col border p-1 justify-center items-center min-w-44"
+                        >
+                            <Avatar url={profile?.url} size="small" />
+                            <div>
+                                <span className="font-bold">{profile?.name}</span>
+                            </div>
 
-                        <div className="hover:text-main-col hover:cursor-pointer hover:scale-103 transition-all ease-in-out">
-                            <i className="p-1 fas fa-envelope" />
-                            <span className="text-xs">{profile?.email}</span>
+                            <div className="hover:text-main-col hover:cursor-pointer hover:scale-103 transition-all ease-in-out">
+                                <i className="p-1 fas fa-envelope" />
+                                <span className="text-xs">{profile?.email}</span>
+                            </div>
+                            <div>
+                                <i className="p-1 fa-solid fa-location-dot" />
+                                <span className="text-xs">{profile?.location}</span>
+                            </div>
                         </div>
-                        <div>
-                            <i className="p-1 fa-solid fa-location-dot" />
-                            <span className="text-xs">{profile?.location}</span>
-                        </div>
-                    </div>
+                    </Link>
                     <div className="p-2 w-full">
                         {/* title */}
                         <div className="flex flex-row justify-start items-center w-full
@@ -83,24 +91,23 @@ const OfferPage: React.FC = () => {
                             </div>
                             <div className=" gap-2 flex p-1 w-1/6 flex-row justify-end items-end
                             ">
-                                <div className="p-3 flex flex-row justify-center items-center 
-                                hover:bg-highlight-bg 
-                                transition-all ease-in-out
-                                  text-highlight-cl border rounded-xl">
+                                <div className="p-2 
+                                hover:bg-highlight-bg hover:scale-110 hover:rounded-full
+                                transition-all ease-in-out delay-75
+                                text-yellow-500 border rounded-md">
                                     <i className="p-1 fa-solid fa-star" />
                                 </div>
-                                <div className="p-3 flex flex-row justify-center items-center
-                                hover:scale-105 hover:text-main-col hover:cursor-pointer
-                                hover:bg-highlight-bg transition-all ease-in-out
-                                text-highlight-cl border rounded-xl">
-                                    <span>+</span>
+                                <div className="p-2 
+                                hover:bg-highlight-bg hover:scale-110 hover:rounded-full
+                                transition-all ease-in-out delay-75
+                                text-yellow-500 border rounded-md">
                                     <i className="fa-solid fa-cart-shopping" />
                                 </div>
                             </div>
 
                         </div>
-                        <div>
-                            <p>{offer?.description}</p>
+                        <div className="p-1">
+                            <p>{offer?.text}</p>
                         </div>
                         <div className="p-2 bg-no-repeat bg-cover" style={{ backgroundImage: `url(${offer?.url})` }} />
                         <div>
@@ -115,9 +122,8 @@ const OfferPage: React.FC = () => {
                                     <i className='p-1 fa-regular fa-calendar' />
                                     <span>{new Date().toLocaleDateString(locale)}</span>
                                     <span> - </span>
-                                    {/* fake offer duration */}
                                     <span>{
-                                        new Date(new Date().setDate(new Date().getDate() + 10 * Math.random())).toLocaleDateString(locale)
+                                        new Date(offer.availableUntil).toLocaleDateString(locale)
                                     }</span>
                                 </div>
                             }
@@ -134,8 +140,12 @@ const OfferPage: React.FC = () => {
                 </div>
 
                 <div className="mt-2 p-2 w-full h-full flex flex-col justify-start items-start bg-slate-200 bg-opacity-15">
+                    <div>
+                        <p>{offer?.text}</p>
+                    </div>
+
                     <div
-                        className="bg-no-repeat bg-cover w-full h-full"
+                        className="bg-no-repeat bg-center bg-cover w-full h-full"
                         style={{ backgroundImage: `url(${offer?.image})` }}
                     />
                 </div>
