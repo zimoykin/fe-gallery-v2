@@ -41,7 +41,7 @@ const EquipmentComponent: React.FC<Props> = ({ equipment: initial, onDeleteClick
 
     const handleFavoriteClick = () => {
         setFavorite((prev) => prev === 0 ? 1 : 0);
-        if (id) {
+        if (!id?.startsWith('new-')) {
             setIsLoading(true);
             ApiClient.put<IEquipment>(`/equipments/${id}`, {
                 name,
@@ -61,7 +61,7 @@ const EquipmentComponent: React.FC<Props> = ({ equipment: initial, onDeleteClick
 
     const handleSaveClick = () => {
         setIsLoading(true);
-        if (id) {
+        if (!id?.startsWith('new-')) {
             // update equipment
             ApiClient.put<IEquipment>(`/equipments/${id}`, {
                 name,

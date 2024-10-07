@@ -3,8 +3,6 @@ import { IPhoto, IPhotoWithImageFile } from "../../interfaces/photo.interface";
 import { ApiClient } from "../../networking";
 import FilesUploadComponent from "../file-upload.component";
 import PalitraComponent from "../palitra/palitra.component";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
 import { translate, useLocale } from "../../contexts/locale";
 import ImageGalleryComponent from "../image-gallery.component";
 
@@ -21,8 +19,6 @@ const ImagesComponent: React.FC<Props> = ({ folderId }) => {
     const {
         images: imagesTranslations,
     } = translate[locale];
-
-    const { profile } = useSelector((state: RootState) => state.profile);
 
     useEffect(() => {
         if (!folderId) {
@@ -65,6 +61,8 @@ const ImagesComponent: React.FC<Props> = ({ folderId }) => {
         setImages(prev => {
             return [...prev, ...files.map(file => {
                 return {
+                    folderId: folderId,
+                    sortOrder: prev.length,
                     file: file,
                     url: URL.createObjectURL(file),
                 } as IPhotoWithImageFile;
@@ -85,28 +83,6 @@ const ImagesComponent: React.FC<Props> = ({ folderId }) => {
             }).finally(() => {
                 setIsLoading(false);
             });
-    };
-
-    const handleUploadImage = (image: IPhotoWithImageFile, index: number) => {
-        if (image.file && profile) {
-            const formData = new FormData();
-            formData.append('file', image.file);
-            //todo: hardcoded values
-            formData.append('camera', 'Canon EOS 6D');
-            formData.append('lens', 'Canon EF 24-70mm f/2.8L II USM');
-            formData.append('film', 'no');
-            formData.append('location', 'Regensburg, Germany');
-            formData.append('description', 'description');
-            formData.append('sortOrder', index.toString());
-
-            ApiClient.postUpload(`/photos/${folderId}`, formData)
-                .then((res) => {
-                    console.log(res);
-                })
-                .catch((err) => {
-                    console.error(err);
-                });
-        }
     };
 
     return <>
@@ -134,7 +110,6 @@ const ImagesComponent: React.FC<Props> = ({ folderId }) => {
                     images={images}
                     onFavoriteClick={(id) => handleFavoriteClick(id)}
                     onRemoveClick={(id) => handleRemoveClick(id)}
-                    onUploadClick={(image, index) => handleUploadImage(image, index)}
                     readOnly={false}
                 />
                 :
