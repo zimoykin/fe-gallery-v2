@@ -1,4 +1,4 @@
-import { StrictMode } from 'react';
+// import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import { LocaleProvider } from './contexts/locale/locale.context';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  <>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider>
@@ -23,5 +23,5 @@ createRoot(document.getElementById('root')!).render(
       </PersistGate>
     </Provider>
     <ToastContainer />
-  </StrictMode>,
+  </>,
 );

@@ -45,22 +45,14 @@ const ProfileInfoComponent: React.FC<Props> = ({ profile }) => {
 
     const handleSaveClick = () => {
         setIsLoadingProfile(true);
-        ApiClient.put<IProfile>('/profiles', {
+        ApiClient.put<string>('/profiles', {
             ...profile,
             name,
             location,
             email,
             website,
             privateAccess
-        }).then((res) => {
-            dispatch(storeProfile(res));
-
-            setName(res.name ?? '');
-            setLocation(res.location ?? '');
-            setEmail(res.email ?? '');
-            setWebsite(res.website ?? '');
-            setPrivateAccess(res.privateAccess ?? 0);
-
+        }).then(() => {
             setEditMode(false);
         }).catch((error) => {
             console.error(error);
