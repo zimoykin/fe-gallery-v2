@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { IPhoto, IPhotoWithImageFile } from "../interfaces/photo.interface";
-import { ApiClient } from "../networking";
 import ImageCardComponent from "./image-card.component";
 
 interface Props {
