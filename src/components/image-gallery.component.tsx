@@ -19,7 +19,7 @@ const ImageGalleryComponent: React.FC<Props> = ({ images, equipments, onLikeClic
             <div className='h-full grid grid-cols-1 place-items-center md:place-items-stretch md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 w-full p-2 overflow-scroll no-scrollbar '>
                 {images?.map((image, index) => (
                     <ImageCardComponent
-                        key={image?.id ?? index}
+                        key={image?._id ?? index}
                         onLikeClick={onLikeClick}
                         onFavoriteClick={onFavoriteClick}
                         onRemoveClick={onRemoveClick}

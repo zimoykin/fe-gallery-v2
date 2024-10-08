@@ -22,10 +22,9 @@ const ImageCardComponent: React.FC<Props> = ({
 }) => {
 
     const [isLoading, setIsLoading] = useState(false);
+    const [editMode, setEditMode] = useState<boolean>(image._id ? false : true);
 
-    const [editMode, setEditMode] = useState<boolean>(false);
-
-    const [id, setId] = useState<string | undefined>(image.id);
+    const [id, setId] = useState<string | undefined>(image._id);
     const [likes] = useState<number>(image.likes ?? 0);
     const [url] = useState<string>(image.previewUrl ?? '');
     const [location, setLocation] = useState<string>(image.location ?? '');
@@ -61,7 +60,7 @@ const ImageCardComponent: React.FC<Props> = ({
             handleUploadImage();
         } else {
             setIsLoading(true);
-            ApiClient.put(`/photos/${image.folderId}/${image.id}`, {
+            ApiClient.put(`/photos/${image.folderId}/${image._id}`, {
                 ...image,
                 camera, lens, iso, film, location, description: 'no description',
             })
