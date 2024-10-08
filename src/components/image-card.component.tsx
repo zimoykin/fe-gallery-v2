@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { IPhotoWithImageFile } from '../interfaces/photo.interface';
 import { ApiClient } from '../networking';
 import CameraSpinner from './camera-spinner/camera-spinner.component';
@@ -10,13 +10,15 @@ interface Props {
     onLikeClick?: (id: string) => void;
     readOnly?: boolean;
     onRemoveClick?: (id: string) => void;
+    equipments: IEquipment[];
 }
 
 
 const ImageCardComponent: React.FC<Props> = ({
     image,
     onFavoriteClick, onLikeClick, onRemoveClick,
-    readOnly
+    readOnly,
+    equipments
 }) => {
 
     const [isLoading, setIsLoading] = useState(false);
@@ -25,26 +27,12 @@ const ImageCardComponent: React.FC<Props> = ({
 
     const [id, setId] = useState<string | undefined>(image.id);
     const [likes] = useState<number>(image.likes ?? 0);
-    const [url] = useState<string>(image.url ?? '');
+    const [url] = useState<string>(image.previewUrl ?? '');
     const [location, setLocation] = useState<string>(image.location ?? '');
     const [camera, setCamera] = useState<string>(image.camera ?? '');
     const [lens, setLens] = useState<string>(image.lens ?? '');
     const [film, setFilm] = useState<string>(image.film ?? '');
     const [iso, setIso] = useState<string>(image.iso ?? '');
-
-    const [equipments, setEquipments] = useState<IEquipment[]>();
-
-    useEffect(() => {
-        const fetchEquipments = async () => {
-            try {
-                const res = await ApiClient.get<IEquipment[]>('/equipments');
-                setEquipments(res);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchEquipments();
-    }, []);
 
     const handleUploadImage = () => {
         if (image.file) {

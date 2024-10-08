@@ -15,7 +15,6 @@ const EquipmentsComponent: React.FC = () => {
     const { locale } = useLocale();
     const { equipmentsTitle } = translate[locale];
 
-
     const refreshCB = useCallback(() => {
         setIsLoading(true);
         setEquipments([]);

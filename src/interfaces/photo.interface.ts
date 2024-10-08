@@ -10,7 +10,9 @@ export interface IPhoto {
   location?: string;
   description?: string;
   likes?: number;
-  url: string;
+  previewUrl?: string;
+  originalUrl?: string;
+  compressedUrl?: string;
   privateAccess?: number; // 0 - public, 1 - private
   isFavorite: boolean;
 }
