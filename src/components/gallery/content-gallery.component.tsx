@@ -12,7 +12,7 @@ interface Props {
 
 const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
     const [isLoading, setIsLoading] = useState(false);
-    const [, setIsLoadingImages] = useState(false);
+    const [isLoadingImages, setIsLoadingImages] = useState(false);
     const [folders, setFolders] = useState<IUserFolder[]>([]);
     const [selectedFolder, setSelectedFolder] = useState<IUserFolder>();
     const [gradient, setGradient] = useState('');
@@ -85,7 +85,7 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
         <>
             <div className="w-full min-h-44 h-full flex flex-col md:flex-row justify-start items-start overflow-auto no-scrollbar ">
                 {/* left */}
-                <div className="w-full md:w-1/3 ">
+                <div className="w-full md:w-1/5 ">
                     {!isLoading ? (
                         <div
                             className="p-2 flex md:flex-col gap-2 justify-start items-start bg-secondary-bg-75
@@ -94,7 +94,7 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
                         >
                             {folders?.map((folder, index) => (
                                 <div
-                                    className={`break-words flex gap-1 w-full cursor-pointer
+                                    className={`relative break-words flex gap-1 w-full cursor-pointer
                                                 ${selectedFolder?.id === folder.id ? 'bg-gray-400' : null}
                                             `}
                                     style={{ backgroundImage: selectedFolder?.id === folder.id ? gradient : 'none' }}
@@ -109,13 +109,15 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
                                                         aspect-square
                                                         flex justify-center items-center"
                                     />
-                                    <span
-                                        className={`p-2 text-lg 
+                                    <div className='absolute w-full h-full flex flex-col justify-center items-start'>
+                                        <span
+                                            className={`p-2 text-lg 
                                             ${selectedFolder?.id === folder.id ? 'text-yellow-400' : null}
-                                            hover:text-secondary-col hover:cursor-pointer`}
-                                    >
-                                        {folder.title}
-                                    </span>
+                                            hover:text-secondary-col text-shadow-md hover:cursor-pointer`}
+                                        >
+                                            {folder.title}
+                                        </span>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -127,7 +129,7 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
                 </div>
                 {/* right */}
                 {/* images */}
-                {!isLoading ? (
+                {!isLoadingImages ? (
                     <ImageGalleryComponent
                         images={images}
                         onLikeClick={handleLikeClick}

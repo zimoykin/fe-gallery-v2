@@ -8,9 +8,10 @@ import ImageGalleryComponent from "../image-gallery.component";
 
 interface Props {
     folderId?: string;
+    needRefreshing?: () => void;
 }
 
-const ImagesComponent: React.FC<Props> = ({ folderId }) => {
+const ImagesComponent: React.FC<Props> = ({ folderId, needRefreshing }) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [images, setImages] = useState<IPhotoWithImageFile[]>([]);
@@ -47,6 +48,8 @@ const ImagesComponent: React.FC<Props> = ({ folderId }) => {
         ApiClient.patch<IPhoto>(`/photos/${folderId}/${photoId}`, undefined)
             .then((res) => {
                 console.log(res);
+                if (needRefreshing)
+                    needRefreshing();
             })
             .catch((err) => {
                 console.error(err);
@@ -85,21 +88,21 @@ const ImagesComponent: React.FC<Props> = ({ folderId }) => {
             });
     };
 
-    return <>
+    return <div className="w-full h-full flex flex-col justify-start items-start">
         {/* comand panel  */}
         <div className="w-full flex justify-start items-start 
-                    bg-command-panel-bg py-2 pb-3 px-2
+                    bg-highlight-bg p-1
                     shadow-md rounded-md
-                    sticky top-0 z-0
+                    sticky top-0 z-10
                     ">
 
             <FilesUploadComponent
                 pickedImages={handleFileAdding}
             />
 
-            <div className="flex absolute right-0 pr-1 text-main-col font-thin text-xl">
-                <i className="p-1 fas fa-image text-opacity-90 text-gray-400" />
-                <span className="uppercase text-opacity-90 text-gray-400">{imagesTranslations}</span>
+            <div className="flex h-full absolute right-0 text-main-col font-thin justify-center items-center gap-2 pr-2">
+                <i className="fas fa-image text-opacity-90 text-highlight-cl" />
+                <span className="uppercase text-opacity-90 text-highlight-cl">{imagesTranslations}</span>
             </div>
         </div>
         {/* images */}
@@ -113,11 +116,11 @@ const ImagesComponent: React.FC<Props> = ({ folderId }) => {
                     readOnly={false}
                 />
                 :
-                <div className='w-full md:w-2/3 p-5'>
+                <div className='w-full md:w-2/3'>
                     <PalitraComponent size='mini' />
                 </div>
         }
-    </>;
+    </ div>;
 };
 
 export default ImagesComponent;

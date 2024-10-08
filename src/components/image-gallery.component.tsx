@@ -13,28 +13,19 @@ interface Props {
 const ImageGalleryComponent: React.FC<Props> = ({ images, onLikeClick, readOnly, onFavoriteClick, onRemoveClick }) => {
 
     return (
-        <div className="w-full h-full flex justify-center items-center bg-gray-600 bg-opacity-25 overflow-auto no-scrollbar">
-            <div className='h-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 w-full p-2 overflow-scroll no-scrollbar '>
-                {images?.map(({ id, url, likes, location, camera, lens }, index) => (
+        <div className="w-full h-full flex  bg-gray-600 bg-opacity-25 overflow-auto no-scrollbar">
+            <div className='h-full grid grid-cols-1 place-items-center md:place-items-stretch md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 w-full p-2 overflow-scroll no-scrollbar '>
+                {images?.map((image, index) => (
                     <ImageCardComponent
-                        key={id ?? index}
-                        id={id}
-                        url={url}
-                        likes={likes}
-                        location={location}
-                        camera={camera}
-                        lens={lens}
+                        key={image?.id ?? index}
                         onLikeClick={onLikeClick}
                         onFavoriteClick={onFavoriteClick}
                         onRemoveClick={onRemoveClick}
                         readOnly={readOnly}
-
-                        image={images[index]}
+                        image={image}
                     />
                 ))}
             </div>
-
-
         </div >
     );
 
