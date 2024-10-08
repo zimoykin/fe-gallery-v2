@@ -103,7 +103,7 @@ const ImagesComponent: React.FC<Props> = ({ folderId, needRefreshing }) => {
         ApiClient.delete<IPhoto>(`/photos/${folderId}/${photoId}`)
             .then((res) => {
                 console.log(res);
-                setImages(prev => prev.filter(photo => photo.id !== photoId));
+                setImages(prev => prev.filter(photo => photo._id !== photoId));
             })
             .catch((err) => {
                 console.error(err);

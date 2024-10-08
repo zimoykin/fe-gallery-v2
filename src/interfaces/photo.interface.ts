@@ -1,5 +1,5 @@
 export interface IPhoto {
-  id: string;
+  _id: string;
   sortOrder: number;
   profileId: string;
   folderId: string;
