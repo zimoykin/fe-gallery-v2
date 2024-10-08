@@ -1,16 +1,18 @@
 import React from "react";
 import { IPhoto, IPhotoWithImageFile } from "../interfaces/photo.interface";
 import ImageCardComponent from "./image-card.component";
+import { IEquipment } from "../interfaces/eqiupment.interface";
 
 interface Props {
     images: Array<IPhoto | IPhotoWithImageFile>;
     readOnly: boolean;
+    equipments?: IEquipment[];
     onLikeClick?: (id: string) => void;
     onFavoriteClick?: (id: string) => void;
     onRemoveClick?: (id: string) => void;
 }
 
-const ImageGalleryComponent: React.FC<Props> = ({ images, onLikeClick, readOnly, onFavoriteClick, onRemoveClick }) => {
+const ImageGalleryComponent: React.FC<Props> = ({ images, equipments, onLikeClick, readOnly, onFavoriteClick, onRemoveClick }) => {
 
     return (
         <div className="w-full h-full flex  bg-gray-600 bg-opacity-25 overflow-auto no-scrollbar">
@@ -23,6 +25,7 @@ const ImageGalleryComponent: React.FC<Props> = ({ images, onLikeClick, readOnly,
                         onRemoveClick={onRemoveClick}
                         readOnly={readOnly}
                         image={image}
+                        equipments={equipments ?? []}
                     />
                 ))}
             </div>

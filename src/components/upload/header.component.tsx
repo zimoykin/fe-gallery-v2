@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IUserFolder } from "../../interfaces/folder.interface";
+import { ApiClient } from "../../networking";
+import { IPhoto } from "../../interfaces/photo.interface";
 
 
 interface Props {
@@ -10,15 +12,27 @@ interface Props {
 const HeaderComponent: React.FC<Props> = ({ folder, onEditClick }) => {
 
     const gradient = `
-    linear-gradient(to right, 
-    ${folder?.leftTopColor ?? '#203e32'},
-    ${folder?.leftBottomColor ?? '#1c382a'}, 
-    ${folder?.centerTopColor ?? '#2b5a4e'},
-    ${folder?.centerBottomColor ?? '#2b5a4e'},
-    ${folder?.rightTopColor ?? '#cb2f3c'}, 
-    ${folder?.rightBottomColor ?? '#b00011'}
-    )
-`;
+            linear-gradient(to right, 
+            ${folder?.leftTopColor ?? '#203e32'},
+            ${folder?.leftBottomColor ?? '#1c382a'}, 
+            ${folder?.centerTopColor ?? '#2b5a4e'},
+            ${folder?.centerBottomColor ?? '#2b5a4e'},
+            ${folder?.rightTopColor ?? '#cb2f3c'}, 
+            ${folder?.rightBottomColor ?? '#b00011'}
+            )
+    `;
+
+    const [favorite, setFavorite] = useState<IPhoto>();
+
+    useEffect(() => {
+        if (folder && folder?.favoriteFotoId) {
+            ApiClient.get<IPhoto>(`/photos/${folder?.id}/${folder?.favoriteFotoId}/preview`)
+                .then(res => {
+                    setFavorite(res);
+                })
+                .catch(console.error);
+        }
+    }, [folder?.favoriteFotoId, folder]);
 
     return (
         <>
@@ -33,7 +47,7 @@ const HeaderComponent: React.FC<Props> = ({ folder, onEditClick }) => {
                     shadow-xl rounded-xl
                     aspect-square bg-no-repeat bg-center bg-cover"
                     style={{
-                        backgroundImage: `url(${folder?.url ?? '/spain-ads.png'})`,
+                        backgroundImage: `url(${favorite?.previewUrl ?? '/spain-ads.png'})`,
                     }}
                 />
                 <div className="w-full h-full flex flex-col justify-start items-start p-2">

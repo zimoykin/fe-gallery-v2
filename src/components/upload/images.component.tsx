@@ -5,6 +5,9 @@ import FilesUploadComponent from "../file-upload.component";
 import PalitraComponent from "../palitra/palitra.component";
 import { translate, useLocale } from "../../contexts/locale";
 import ImageGalleryComponent from "../image-gallery.component";
+import { IEquipment } from "../../interfaces/eqiupment.interface";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 interface Props {
     folderId?: string;
@@ -15,6 +18,7 @@ const ImagesComponent: React.FC<Props> = ({ folderId, needRefreshing }) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [images, setImages] = useState<IPhotoWithImageFile[]>([]);
+    const { profile } = useSelector((state: RootState) => state.profile);
 
     const { locale } = useLocale();
     const {
@@ -37,6 +41,21 @@ const ImagesComponent: React.FC<Props> = ({ folderId, needRefreshing }) => {
             });
 
     }, [folderId]);
+
+
+    const [equipments, setEquipments] = useState<IEquipment[]>();
+
+    useEffect(() => {
+        const fetchEquipments = async () => {
+            try {
+                const res = await ApiClient.get<IEquipment[]>('/equipments');
+                setEquipments(res);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchEquipments();
+    }, []);
 
 
     const handleFavoriteClick = (photoId?: string) => {
@@ -67,7 +86,12 @@ const ImagesComponent: React.FC<Props> = ({ folderId, needRefreshing }) => {
                     folderId: folderId,
                     sortOrder: prev.length,
                     file: file,
-                    url: URL.createObjectURL(file),
+                    camera: equipments?.find(e => e.favorite === 1 && e.category === 'camera')?.name ?? 'no camera',
+                    lens: equipments?.find(e => e.favorite === 1 && e.category === 'lens')?.name ?? 'no lens',
+                    film: 'digital',
+                    iso: 'auto',
+                    location: profile?.location ?? 'no location',
+                    previewUrl: URL.createObjectURL(file),
                 } as IPhotoWithImageFile;
             })];
         });
@@ -114,6 +138,7 @@ const ImagesComponent: React.FC<Props> = ({ folderId, needRefreshing }) => {
                     onFavoriteClick={(id) => handleFavoriteClick(id)}
                     onRemoveClick={(id) => handleRemoveClick(id)}
                     readOnly={false}
+                    equipments={equipments}
                 />
                 :
                 <div className='w-full md:w-2/3'>
