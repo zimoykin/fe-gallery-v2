@@ -94,14 +94,14 @@ const LoginPage: React.FC = () => {
 
     return (
         <div className="flex w-full h-full flex-row justify-center items-center">
-            <div className="hidden md:block w-2/3 h-full  bg-main-bg-75">
+            <div className="hidden md:block w-2/3 md:h-2/3  bg-main-bg-75">
                 <div className="w-full h-full flex flex-col justify-center items-center">
                     <h1 className="p-3 text-secondary-col text-shadow-xl font-bold uppercase">{welcome}!</h1>
                     <PalitraComponent size="medium" />
                 </div>
             </div>
 
-            <div className="w-full md:w-1/3 h-full bg-secondary-bg-75">
+            <div className="w-full md:w-1/3 h-full md:h-2/3 bg-secondary-bg-75">
                 <div className="w-full h-full flex flex-col gap-1 justify-center items-center">
                     <div className="flex md:hidden">
                         <PalitraComponent size="mini" />
