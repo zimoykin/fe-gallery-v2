@@ -120,7 +120,7 @@ const FolderComponent: React.FC<Props> = ({ folder: initial, onDeleteClick, inde
                 {!isEdit
                     ?
                     <>
-                        <Link to={`/upload/${id}`}>
+                        <Link to={`folder/${id}`}>
                             <i className="p-2 fa-solid fa-image text-yellow-50 hover:bg-yellow-500 hover:scale-105"
                             />
                         </Link>

@@ -16,6 +16,7 @@ import GalleryPage from './pages/gallery.page';
 import InboxPage from './pages/inbox.page';
 import UploadImagesPage from './pages/upload-images.page';
 import CookieConsent from './components/cookie-consent.component';
+import SecurityContainer from './components/security-container';
 
 function App() {
   return (
@@ -37,15 +38,17 @@ function App() {
                   path='/gallery/:profileId'
                   element={<GalleryPage />}
                 />
-                <Route
-                  path='/profile'
-                  element={<ProfilePage />}
-                >
+                <Route path='/profile/' element={<SecurityContainer />}>
+                  <Route
+                    path='/profile/'
+                    element={<ProfilePage />}
+                  >
+                  </Route>
+                  <Route
+                    path='/profile/folder/:folderId'
+                    element={<UploadImagesPage />}
+                  />
                 </Route>
-                <Route
-                  path='/upload/:folderId'
-                  element={<UploadImagesPage />}
-                />
                 <Route
                   path='/inbox'
                   element={<InboxPage />}
