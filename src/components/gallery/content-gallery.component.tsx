@@ -5,12 +5,16 @@ import { ApiClient } from '../../networking';
 import { PublicPhotoOutputDto } from '../../interfaces/public-photo-output.interface';
 import ImageGalleryComponent from '../image-gallery.component';
 import { IPhoto } from '../../interfaces/photo.interface';
+import { useSearchParams } from 'react-router-dom';
 
 interface Props {
     profileId: string;
 }
 
 const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
+
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingImages, setIsLoadingImages] = useState(false);
     const [folders, setFolders] = useState<IUserFolder[]>([]);
@@ -24,7 +28,19 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
             ApiClient.get<IUserFolder[]>(`/public/folders/${profileId}`)
                 .then((res) => {
                     setFolders(res);
-                    if (res?.length > 0) setSelectedFolder(res[0]);
+                    if (searchParams.get('folder')) {
+                        const folderId = searchParams.get('folder');
+                        const folder = res.find(f => f.id === folderId);
+                        if (folder) {
+                            setSelectedFolder(folder);
+                            return;
+                        }
+                    }
+                    if (!selectedFolder && res?.length > 0) {
+                        searchParams.set('folder', res[0].id);
+                        setSearchParams(searchParams);
+                        setSelectedFolder(res[0]);
+                    }
                 })
                 .catch((error) => {
                     console.error(error);
@@ -98,7 +114,11 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
                                                 ${selectedFolder?.id === folder.id ? 'bg-gray-400' : null}
                                             `}
                                     style={{ backgroundImage: selectedFolder?.id === folder.id ? gradient : 'none' }}
-                                    onClick={() => setSelectedFolder(folder)}
+                                    onClick={() => {
+                                        searchParams.set('folder', folder.id);
+                                        setSearchParams(searchParams);
+                                        setSelectedFolder(folder);
+                                    }}
                                     key={index}
                                 >
                                     <div

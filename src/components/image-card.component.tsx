@@ -3,6 +3,7 @@ import { IPhotoWithImageFile } from '../interfaces/photo.interface';
 import { ApiClient } from '../networking';
 import CameraSpinner from './camera-spinner/camera-spinner.component';
 import { IEquipment } from '../interfaces/eqiupment.interface';
+import { useSearchParams } from 'react-router-dom';
 
 interface Props {
     image: IPhotoWithImageFile,
@@ -20,6 +21,8 @@ const ImageCardComponent: React.FC<Props> = ({
     readOnly,
     equipments
 }) => {
+
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const [isLoading, setIsLoading] = useState(false);
     const [editMode, setEditMode] = useState<boolean>(image._id ? false : true);
@@ -211,6 +214,14 @@ const ImageCardComponent: React.FC<Props> = ({
 
 
             <div
+                onClick={
+                    () => {
+                        if (id) {
+                            searchParams.set('id', id);
+                            setSearchParams(searchParams);
+                        }
+                    }
+                }
                 style={{ backgroundImage: `url(${url})` }}
                 className='w-full h-full p-2
                                 flex-grow 

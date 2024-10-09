@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Avatar from '../components/avatar/avatar-component';
 import { IProfile } from '../interfaces/profile.interface';
 import ProfileInfoComponent from '../components/profile/profile-info.component';
@@ -7,18 +7,13 @@ import EquipmentsComponent from '../components/profile/equipments.component';
 import FoldersComponent from '../components/profile/folders.component';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { Outlet, useNavigate } from 'react-router-dom';
 import { ApiClient } from '../networking';
 import { storeProfile } from '../features/profile/profile-slice';
 
 const ProfilePage: React.FC = () => {
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-    const { isAuthenticated } = useSelector((state: RootState) => state.auth);
     const { profile: storedProfile } = useSelector((state: RootState) => state.profile);
     const [profile, setProfile] = useState<IProfile | null>(() => {
         if (storedProfile) {
@@ -27,11 +22,7 @@ const ProfilePage: React.FC = () => {
         return null;
     });
     const [isLoadingProfle, setIsLoadingProfile] = useState<boolean>(false);
-    useEffect(() => {
-        if (!isAuthenticated) {
-            navigate('/login');
-        }
-    }, [isAuthenticated, navigate]);
+
 
 
     const handleAvatarClick = () => {
@@ -101,7 +92,6 @@ const ProfilePage: React.FC = () => {
                 <EquipmentsComponent />
             </div>
         </div>
-        <Outlet />
     </div>);
 };
 

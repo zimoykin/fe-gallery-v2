@@ -12,7 +12,7 @@ const GalleryPage: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    //states
+    //states 
     const [profile, setProfile] = useState<IProfile>();
 
     useEffect(() => {
