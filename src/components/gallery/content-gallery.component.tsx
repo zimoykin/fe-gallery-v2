@@ -39,7 +39,7 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
                     if (!selectedFolder && res?.length > 0) {
                         searchParams.set('folder', res[0].id);
                         setSearchParams(searchParams);
-                        setSelectedFolder(res[0]);
+                        setSelectedFolder(() => res[0]);
                     }
                 })
                 .catch((error) => {

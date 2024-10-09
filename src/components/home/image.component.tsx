@@ -27,7 +27,7 @@ const ImageHomeComponent: React.FC<Props> = ({ photo, profile }) => {
 
     useEffect(() => {
         if (photo && ref.current) {
-            adjustHeight(photo.originalUrl ?? '');
+            adjustHeight(photo.compressedUrl ?? '');
         }
     }, [photo]);
 
@@ -44,7 +44,7 @@ const ImageHomeComponent: React.FC<Props> = ({ photo, profile }) => {
                         className="relative bg-white mb-4 bg-cover bg-center break-inside-avoid h-auto
                     hover:cursor-pointer hover:scale-103 transition-all duration-200 delay-75 ease-in-out
                     "
-                        style={{ backgroundImage: `url(${photo.originalUrl})` }}
+                        style={{ backgroundImage: `url(${photo.compressedUrl})` }}
                     />
 
                     <div className='absolute top-0 left-0
