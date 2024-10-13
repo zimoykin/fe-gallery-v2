@@ -17,6 +17,7 @@ import InboxPage from './pages/inbox.page';
 import UploadImagesPage from './pages/upload-images.page';
 import CookieConsent from './components/cookie-consent.component';
 import SecurityContainer from './components/security-container';
+import MapsPage from './pages/maps.page';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
                   path='/gallery/:profileId'
                   element={<GalleryPage />}
                 />
+                <Route path='/map' element={<MapsPage />} />
                 <Route path='/profile/' element={<SecurityContainer />}>
                   <Route
                     path='/profile/'

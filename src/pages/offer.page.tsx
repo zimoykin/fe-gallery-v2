@@ -78,7 +78,7 @@ const OfferPage: React.FC = () => {
                             </div>
                             <div>
                                 <i className="p-1 fa-solid fa-location-dot" />
-                                <span className="text-xs">{profile?.location}</span>
+                                <span className="text-xs">{profile?.location?.title}</span>
                             </div>
                         </div>
                     </Link>

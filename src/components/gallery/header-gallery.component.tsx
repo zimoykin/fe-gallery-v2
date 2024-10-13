@@ -17,7 +17,7 @@ const HeaderGalleryComponent: React.FC<Props> = ({ profile }) => {
 
                 <div>
                     <i className='p-1 fa-solid fa-location-dot text-yellow-500 text-shadow-sm' />
-                    <span>{profile?.location}</span>
+                    <span>{profile?.location?.title}</span>
                 </div>
 
                 <div className='

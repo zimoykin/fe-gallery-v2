@@ -10,6 +10,8 @@ import './palitra.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { LocaleProvider } from './contexts/locale/locale.context';
+import { APIProvider } from '@vis.gl/react-google-maps';
+
 
 createRoot(document.getElementById('root')!).render(
   <>
@@ -17,7 +19,12 @@ createRoot(document.getElementById('root')!).render(
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider>
           <LocaleProvider>
-            <App />
+
+            <APIProvider
+              apiKey={import.meta.env.VITE_APP_API_KEY_MAP!}>
+              <App />
+            </APIProvider>
+
           </LocaleProvider>
         </ThemeProvider>
       </PersistGate>

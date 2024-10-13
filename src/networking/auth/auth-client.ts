@@ -2,23 +2,23 @@ import { Axios, AxiosError, AxiosRequestConfig } from "axios";
 import authClient from "./settings";
 
 export class AuthClient {
-  private static instance: AuthClient;
-  private axiosInstance: Axios;
+  static #instance: AuthClient;
+  #axiosinstance: Axios;
 
   constructor() {
-    this.axiosInstance = authClient;
+    this.#axiosinstance = authClient;
   }
 
   static init = () => {
-    if (!AuthClient.instance) {
-      this.instance = new AuthClient();
+    if (!AuthClient.#instance) {
+      this.#instance = new AuthClient();
     }
-    return AuthClient.instance;
+    return AuthClient.#instance;
   };
 
   static async get<T>(path: string, config?: AxiosRequestConfig) {
     const response = await AuthClient.init()
-      .axiosInstance.get<T>(path, config)
+      .#axiosinstance.get<T>(path, config)
       .catch((error) => {
         console.error(error);
         throw error.message ?? "an error";
@@ -39,7 +39,7 @@ export class AuthClient {
     config?: AxiosRequestConfig,
   ) {
     return AuthClient.init()
-      .axiosInstance.post<T>(path, data, config)
+      .#axiosinstance.post<T>(path, data, config)
       .then((response) => {
         if (response?.status !== 200) {
           console.error(response?.statusText ?? "post error");
@@ -64,7 +64,7 @@ export class AuthClient {
     config?: AxiosRequestConfig,
   ) {
     return AuthClient.init()
-      .axiosInstance.put<T>(path, data, config)
+      .#axiosinstance.put<T>(path, data, config)
       .catch((error) => {
         console.error(error);
         throw error.message ?? "an error";
@@ -84,7 +84,7 @@ export class AuthClient {
     config?: AxiosRequestConfig,
   ) {
     const response = await AuthClient.init()
-      .axiosInstance.patch<T>(path, data, config)
+      .#axiosinstance.patch<T>(path, data, config)
       .catch((error) => {
         console.error(error);
         throw error.message ?? "an error";
@@ -98,7 +98,7 @@ export class AuthClient {
   }
   static async delete<T>(patch: string, config?: AxiosRequestConfig) {
     const response = await AuthClient.init()
-      .axiosInstance.delete<T>(patch, config)
+      .#axiosinstance.delete<T>(patch, config)
       .catch((error) => {
         console.error(error);
         throw error.message ?? "an error";
@@ -117,7 +117,7 @@ export class AuthClient {
     config?: AxiosRequestConfig,
   ) {
     const response = await AuthClient.init()
-      .axiosInstance.post<T>(path, data, {
+      .#axiosinstance.post<T>(path, data, {
         ...config,
         headers: {
           ...config?.headers,

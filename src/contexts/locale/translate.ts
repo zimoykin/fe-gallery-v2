@@ -70,6 +70,7 @@ export const translate: Record<string, Record<string, string>> = {
     accept: "Akzeptieren",
     decline: "Abbrechen",
     cookiePolicy: "Cookie-Einwidung",
+    map: "Karte",
   },
   en: {
     home: "Home",
@@ -139,5 +140,6 @@ export const translate: Record<string, Record<string, string>> = {
     accept: "Accept",
     decline: "Decline",
     cookiePolicy: "Cookie Policy",
+    map: "Map",
   },
 } as const;
