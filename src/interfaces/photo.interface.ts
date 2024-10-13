@@ -1,3 +1,5 @@
+import { ILocation } from "./location.interface";
+
 export interface IPhoto {
   _id: string;
   sortOrder: number;
@@ -7,7 +9,7 @@ export interface IPhoto {
   lens?: string;
   iso?: string;
   film?: string;
-  location?: string;
+  location?: ILocation;
   description?: string;
   likes?: number;
   previewUrl?: string;

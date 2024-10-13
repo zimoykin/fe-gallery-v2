@@ -55,9 +55,9 @@ const ImageGalleryComponent: React.FC<Props> = ({ images, equipments, onLikeClic
                             searchParams.delete('id');
                             setSearchParams(searchParams);
                         }}
-                        src={selectedImages?.compressedUrl ?? '/path/to/placeholder.png'}
+                        src={selectedImages?.compressedUrl ?? ''}
                         alt="Selected"
-                        className="max-w-screen-md max-h-screen object-contain"
+                        className="max-w-screen max-h-screen object-contain bg-no-repeat"
                     />
                 </div>
             </div>}
