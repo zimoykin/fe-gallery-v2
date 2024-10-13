@@ -40,7 +40,7 @@ const ProfilePage: React.FC = () => {
 
             if (response.results.length > 0) {
                 const { address_components } = response.results[0];
-                let newAddress: string[] = [];
+                const newAddress: string[] = [];
                 address_components.forEach(({ long_name, types }) => {
                     switch (types[0]) {
                         case 'country':
@@ -72,7 +72,6 @@ const ProfilePage: React.FC = () => {
     };
 
     const resolveAddressByTitle = (address: string) => {
-        debugger;
         if (!geocoder) return;
         geocoder.geocode({ address }).then((response) => {
             if (!response.results) return;

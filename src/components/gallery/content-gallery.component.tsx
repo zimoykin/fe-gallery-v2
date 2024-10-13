@@ -49,7 +49,8 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
                     setIsLoading(false);
                 });
         }
-    }, [profileId, setFolders, setIsLoading, setSelectedFolder]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [profileId, setFolders,setIsLoading, setSelectedFolder]);
 
     useEffect(() => {
         if (selectedFolder) {

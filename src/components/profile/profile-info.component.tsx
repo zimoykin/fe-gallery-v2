@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IProfile } from '../../interfaces/profile.interface';
 import { ApiClient } from '../../networking';
 import { useDispatch } from 'react-redux';
 import { storeProfile } from '../../features/profile/profile-slice';
 import CameraSpinner from '../camera-spinner/camera-spinner.component';
 import { ILocation } from '../../interfaces/location.interface';
-import { useMapsLibrary } from '@vis.gl/react-google-maps';
+
 
 interface Props {
     profile: IProfile;
@@ -20,7 +20,6 @@ const ProfileInfoComponent: React.FC<Props> = ({
     profile,
     editMode,
     onSave,
-    onCancel,
     onEditClick,
     location,
     resolveAddressByTitle
