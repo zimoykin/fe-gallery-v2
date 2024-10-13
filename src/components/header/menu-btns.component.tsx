@@ -27,7 +27,8 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
 		gallery,
 		inbox,
 		login,
-		logout: logOutTitle
+		logout: logOutTitle,
+		map
 	} = translate[locale];
 
 	const { isAuthenticated } = useSelector((state: RootState) => state.auth);
@@ -94,19 +95,6 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
 				</div>
 			</Link>
 			<span className="md:p-1 hidden md:block">/</span>
-			{/* profile */}
-			<Link to={'/profile'}>
-				<div
-					onClick={() => {
-						if (onClick) onClick();
-					}}
-					className={MenuClassName}
-				>
-					<i className="p-1 fa-solid fa-user" />
-					<span className="md:p-1 uppercase text-sm">{profile}</span>
-				</div>
-			</Link>
-			<span className="p-1 hidden md:block">/</span>
 
 			{/* gallery */}
 			<Link to={`/gallery/${storedProfile?.id}`}>
@@ -120,7 +108,35 @@ const MenuBtnsComponent: React.FC<Props> = ({ onClick }) => {
 					<span className="md:p-1 uppercase text-sm">{gallery}</span>
 				</div>
 			</Link>
+
+			{/* MAP */}
+			<span className="md:p-1 hidden md:block">/</span>
+			<Link to="/map">
+				<div
+					onClick={() => {
+						if (onClick) onClick();
+					}}
+					className={MenuClassName}
+				>
+					<i className="p-1 fa-solid fa-map-location-dot" />
+					<span className="md:p-1 uppercase text-sm">{map}</span>
+				</div>
+			</Link>
+
 			<span className="md:p-1 hidden md:block">//</span>
+			{/* profile */}
+			<Link to={'/profile'}>
+				<div
+					onClick={() => {
+						if (onClick) onClick();
+					}}
+					className={MenuClassName}
+				>
+					<i className="p-1 fa-solid fa-user" />
+					<span className="md:p-1 uppercase text-sm">{profile}</span>
+				</div>
+			</Link>
+			<span className="p-1 hidden md:block">/</span>
 
 			{/* system */}
 			<div className="flex justify-end items-center md:justify-start md:items-start">

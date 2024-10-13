@@ -1,26 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { IProfile } from '../../interfaces/profile.interface';
 import { ApiClient } from '../../networking';
 import { useDispatch } from 'react-redux';
 import { storeProfile } from '../../features/profile/profile-slice';
 import CameraSpinner from '../camera-spinner/camera-spinner.component';
+import { ILocation } from '../../interfaces/location.interface';
+import { useMapsLibrary } from '@vis.gl/react-google-maps';
 
 interface Props {
     profile: IProfile;
+    editMode: boolean;
+    location?: ILocation;
+    onSave: () => void;
+    onCancel: () => void;
+    onEditClick: () => void;
+    resolveAddressByTitle: (address: string) => void;
 }
-const ProfileInfoComponent: React.FC<Props> = ({ profile }) => {
+const ProfileInfoComponent: React.FC<Props> = ({
+    profile,
+    editMode,
+    onSave,
+    onCancel,
+    onEditClick,
+    location,
+    resolveAddressByTitle
+}) => {
 
     const dispatch = useDispatch();
 
     const [isLoadingProfile, setIsLoadingProfile] = useState<boolean>(false);
 
-    const [editMode, setEditMode] = useState<boolean>(false);
     const [name, setName] = useState<string>(profile?.name ?? '');
-    const [location, setLocation] = useState<string>(profile?.location ?? '');
+    const [locationTitle, setLocationTitle] = useState<string>(profile?.location?.title ?? '');
+    const [latitude, setLatitude] = useState<number>(profile?.location?.lat ?? 46.227638);
+    const [longitude, setLongitude] = useState<number>(profile?.location?.long ?? 12.567381);
+    const [distance, setDistance] = useState<number>(profile?.location?.distance ?? 25);
+
+
     const [email, setEmail] = useState<string>(profile?.email ?? '');
     const [website, setWebsite] = useState<string>(profile?.website ?? '');
     const [privateAccess, setPrivateAccess] = useState<number>(profile?.privateAccess ?? 0);
 
+    useEffect(() => {
+        setLatitude(location!.lat);
+        setLongitude(location!.long);
+        setDistance(location!.distance);
+        setLocationTitle(location!.title);
+    }, [location]);
 
     useEffect(() => {
         setIsLoadingProfile(true);
@@ -28,7 +54,10 @@ const ProfileInfoComponent: React.FC<Props> = ({ profile }) => {
             .then((res) => {
                 dispatch(storeProfile(res));
                 setName(res.name ?? '');
-                setLocation(res.location ?? '');
+                setLocationTitle(res.location?.title ?? '');
+                setDistance(res.location?.distance ?? 0);
+                setLatitude(res.location?.lat ?? 0);
+                setLongitude(res.location?.long ?? 0);
                 setEmail(res.email ?? '');
                 setWebsite(res.website ?? '');
                 setPrivateAccess(res.privateAccess ?? 0);
@@ -42,23 +71,27 @@ const ProfileInfoComponent: React.FC<Props> = ({ profile }) => {
     }, [dispatch, setIsLoadingProfile]);
 
 
-
     const handleSaveClick = () => {
         setIsLoadingProfile(true);
         ApiClient.put<string>('/profiles', {
             ...profile,
             name,
-            location,
+            location: {
+                distance: distance,
+                lat: latitude,
+                long: longitude,
+                title: locationTitle
+            } as ILocation,
             email,
             website,
             privateAccess
         }).then(() => {
-            setEditMode(false);
+            onSave();
         }).catch((error) => {
             console.error(error);
         }).finally(() => {
             setIsLoadingProfile(false);
-            setEditMode(false);
+            onSave();
         });
     };
 
@@ -82,7 +115,7 @@ const ProfileInfoComponent: React.FC<Props> = ({ profile }) => {
                                 className='w-full p-2 text-xs border border-main-col rounded-md bg-transparent' type="text" />
                         }
                         {!editMode ? <i
-                            onClick={() => setEditMode(!editMode)}
+                            onClick={() => onEditClick()}
                             className='p-2 fas fa-pen 
                                 hover:text-main-col hover:cursor-pointer hover:scale-105
                                 border border-main-col rounded-xl' />
@@ -99,11 +132,23 @@ const ProfileInfoComponent: React.FC<Props> = ({ profile }) => {
 
                     <div className='w-3/4 flex flex-row justify-center items-center gap-2 py-1'>
                         <i className='p-1 fa-solid fa-location-dot' />
-                        {!editMode ? <p className='text-xs w-full'>{location || 'no location provided'}</p>
-                            : <input
-                                value={location} onChange={(e) => setLocation(e.target.value)}
-                                className='w-full p-2 text-xs border border-main-col rounded-md bg-transparent'
-                                type="text" />
+                        {!editMode ? <p className='text-xs w-full'>{locationTitle || 'no location provided'}</p>
+                            : <div className='w-full flex flex-row justify-center items-center gap-2'>
+                                <form onSubmit={(e) => {
+                                    e.preventDefault();
+                                    resolveAddressByTitle(locationTitle);
+                                }}>
+                                    <input
+                                        value={locationTitle} onChange={(e) => {
+                                            setLocationTitle(e.target.value);
+                                        }}
+                                        className='w-full p-2 text-xs border border-main-col rounded-md bg-transparent'
+                                        type="text" />
+                                </form>
+                                <input
+                                    className='w-1/4 p-2 text-xs border border-main-col rounded-md bg-transparent'
+                                    type="number" value={distance} onChange={(e) => setDistance(Number(e.target.value))} />
+                            </div>
                         }
                     </div>
                     <p>{profile.bio}</p>

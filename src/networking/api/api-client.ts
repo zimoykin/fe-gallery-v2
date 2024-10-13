@@ -2,23 +2,23 @@ import { Axios, AxiosRequestConfig } from "axios";
 import networkClient from "./settings";
 
 export class ApiClient {
-  private static instance: ApiClient;
-  private axiosInstance: Axios;
+  static #instance: ApiClient;
+  #axiosInstance: Axios;
 
   constructor() {
-    this.axiosInstance = networkClient;
+    this.#axiosInstance = networkClient;
   }
 
   private static init = () => {
-    if (!ApiClient.instance) {
-      this.instance = new ApiClient();
+    if (!ApiClient.#instance) {
+      this.#instance = new ApiClient();
     }
-    return ApiClient.instance;
+    return ApiClient.#instance;
   };
 
   static async get<T>(path: string, config?: AxiosRequestConfig) {
     const response = await ApiClient.init()
-      .axiosInstance.get<T>(path, config)
+      .#axiosInstance.get<T>(path, config)
       .catch((error) => {
         console.error(error);
         throw error.message ?? "an error";
@@ -39,7 +39,7 @@ export class ApiClient {
     config?: AxiosRequestConfig,
   ) {
     const response = await ApiClient.init()
-      .axiosInstance.post<T>(path, data, config)
+      .#axiosInstance.post<T>(path, data, config)
       .catch((error) => {
         console.error(error);
         throw error.message ?? "an error";
@@ -57,7 +57,7 @@ export class ApiClient {
     config?: AxiosRequestConfig,
   ) {
     return ApiClient.init()
-      .axiosInstance.put<T>(path, data, config)
+      .#axiosInstance.put<T>(path, data, config)
       .catch((error) => {
         console.error(error);
         throw error.message ?? "an error";
@@ -77,7 +77,7 @@ export class ApiClient {
     config?: AxiosRequestConfig,
   ) {
     const response = await ApiClient.init()
-      .axiosInstance.patch<T>(path, data, config)
+      .#axiosInstance.patch<T>(path, data, config)
       .catch((error) => {
         console.error(error);
         throw error.message ?? "an error";
@@ -91,7 +91,7 @@ export class ApiClient {
   }
   static async delete<T>(patch: string, config?: AxiosRequestConfig) {
     const response = await ApiClient.init()
-      .axiosInstance.delete<T>(patch, config)
+      .#axiosInstance.delete<T>(patch, config)
       .catch((error) => {
         console.error(error);
         throw error.message ?? "an error";
@@ -110,7 +110,7 @@ export class ApiClient {
     config?: AxiosRequestConfig,
   ) {
     const response = await ApiClient.init()
-      .axiosInstance.post<T>(path, data, {
+      .#axiosInstance.post<T>(path, data, {
         ...config,
         headers: {
           ...config?.headers,

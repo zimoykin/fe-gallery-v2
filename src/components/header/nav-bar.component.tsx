@@ -32,7 +32,7 @@ const NavBarComponent: React.FC = () => {
                     </svg>
                 </button>
 
-                {/* Фон затемнения */}
+                {/* background */}
                 {isOpen && (
                     <div
                         className={`fixed z-10 right-0 top-0 h-screen w-screen bg-gray-600 opacity-65`}
@@ -40,11 +40,10 @@ const NavBarComponent: React.FC = () => {
                     />
                 )}
 
-                {/* Меню */}
+                {/* Buttons */}
                 <div
-                    className={`fixed z-20 left-0 top-0 h-screen w-2/5 bg-main-bg transform transition-transform duration-300 ease-in-out ${
-                        isOpen ? 'translate-x-0' : '-translate-x-full'
-                    }`}
+                    className={`fixed z-20 left-0 top-0 h-screen w-2/5 bg-main-bg transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
+                        }`}
                 >
                     <div className="p-3">
                         <MenuBtnsComponent onClick={toggleMenu} />
