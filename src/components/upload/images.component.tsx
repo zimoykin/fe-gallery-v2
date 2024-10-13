@@ -79,7 +79,6 @@ const ImagesComponent: React.FC<Props> = ({ folderId, needRefreshing }) => {
     };
 
     const handleFileAdding = (files: File[]) => {
-        console.log(files);
         setImages(prev => {
             return [...prev, ...files.map(file => {
                 return {
