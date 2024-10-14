@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { storeProfile } from '../../features/profile/profile-slice';
 import CameraSpinner from '../camera-spinner/camera-spinner.component';
 import { ILocation } from '../../interfaces/location.interface';
+import { Link } from 'react-router-dom';
 
 
 interface Props {
@@ -196,6 +197,18 @@ const ProfileInfoComponent: React.FC<Props> = ({
                             </>
                         }
                     </div>
+
+                    {!editMode && <Link
+                    // target='_blank'
+                    to='/profile/offers'>
+                        <br />
+                        <div className='hover:bg-secondary-bg hover:scale-105'>
+                            <i className="fas fa-external-link p-2 text-highlight-cl" />
+                            <span className='underline text-highlight-cl'>
+                                edit your offers
+                            </span>
+                        </div>
+                    </Link>}
                 </ div>
             }
         </>

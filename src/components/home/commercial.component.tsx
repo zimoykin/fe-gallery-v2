@@ -46,7 +46,7 @@ const CommercialComponent: React.FC = () => {
 						>
 							<div
 								className="bg-gray-600 h-full min-h-40 bg-center aspect-square flex justify-center items-center bg-no-repeat bg-cover"
-								style={{ backgroundImage: `url(${item.preview})` }}
+								style={{ backgroundImage: `url(${item.previewUrl})` }}
 							/>
 							<div className="w-full flex justify-start items-start flex-col">
 								<div className="relative p-4 w-full flex justify-start items-start">

@@ -4,7 +4,8 @@ export interface IOffer {
   text?: string;
   price?: number;
   image?: string;
-  preview: string;
+  previewUrl: string;
+  compressedUrl: string;
   location?: string;
   category?: "trip" | "hotel" | "restaurant" | "camera" | "lens" | "other";
   url?: string;
