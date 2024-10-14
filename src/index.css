@@ -85,6 +85,12 @@
   --command-panel-bg-dark: #3b6566;
   --command-panel-bg-light: #a0e3e4;
 
+  --bloc-cl-dark: #ffefd6;
+  --bloc-cl-light: #013e3f;
+
+  --bloc-bg-light: #ffefd6;
+  --bloc-bg-dark: #013e3f;
+
 
   --color-1: #fd5900;
   --color-1-2: #fb925a;
@@ -132,6 +138,9 @@ body.light {
   --highlight-bg-75: var(--highlight-bg-light-75);
 
   --highlight-cl: var(--highlight-cl-light);
+
+  --bloc-cl: var(--bloc-cl-light);
+  --bloc-bg: var(--bloc-bg-light);
 }
 
 body.dark {
@@ -159,6 +168,8 @@ body.dark {
 
   --highlight-cl: var(--highlight-cl-dark);
 
+  --bloc-cl: var(--bloc-cl-dark);
+  --bloc-bg: var(--bloc-bg-dark);
 }
 
 * {
@@ -200,6 +211,9 @@ h1 {
     --highlight-bg-75: var(--highlight-bg-light-75);
 
     --highlight-cl: var(--highlight-cl-light);
+
+    --bloc-cl: var(--bloc-cl-dark);
+    --bloc-bg: var(--bloc-bg-dark);
   }
 }
 
@@ -228,6 +242,9 @@ h1 {
     --highlight-bg-75: var(--highlight-bg-dark-75);
 
     --highlight-cl: var(--highlight-cl-dark);
+
+    --bloc-cl: var(--bloc-cl-dark);
+    --bloc-bg: var(--bloc-bg-dark);
   }
 }
 

@@ -19,12 +19,10 @@ createRoot(document.getElementById('root')!).render(
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider>
           <LocaleProvider>
-
             <APIProvider
               apiKey={import.meta.env.VITE_APP_API_KEY_MAP!}>
               <App />
             </APIProvider>
-
           </LocaleProvider>
         </ThemeProvider>
       </PersistGate>

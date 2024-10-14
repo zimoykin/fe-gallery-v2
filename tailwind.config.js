@@ -18,6 +18,8 @@ export default {
         "highlight-bg": `var(--highlight-bg)`,
         "highlight-bg-75": `var(--highlight-bg-75)`,
         "highlight-cl": "var(--highlight-cl)",
+        "bloc-cl": "var(--bloc-cl)",
+        "bloc-bg": "var(--bloc-bg)",
       },
       maxWidth: {
         "normal-screen": "1600px",
