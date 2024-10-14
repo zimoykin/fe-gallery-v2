@@ -39,13 +39,20 @@ const ProfileInfoComponent: React.FC<Props> = ({
 
     const [email, setEmail] = useState<string>(profile?.email ?? '');
     const [website, setWebsite] = useState<string>(profile?.website ?? '');
-    const [privateAccess, setPrivateAccess] = useState<number>(profile?.privateAccess ?? 0);
+    const [privateAccess, setPrivateAccess] = useState<boolean>(profile?.privateAccess ?? false);
 
     useEffect(() => {
-        setLatitude(location!.lat);
-        setLongitude(location!.long);
-        setDistance(location!.distance);
-        setLocationTitle(location!.title);
+        if (location?.lat)
+            setLatitude(location!.lat);
+
+        if (location?.long)
+            setLongitude(location?.long);
+
+        if (location?.distance)
+            setDistance(location?.distance);
+
+        if (location?.title)
+            setLocationTitle(location?.title);
     }, [location]);
 
     useEffect(() => {
@@ -183,13 +190,13 @@ const ProfileInfoComponent: React.FC<Props> = ({
                     <div className='w-3/4 flex flex-row justify-center items-center gap-2 py-1'>
                         <i className='p-1 fa-solid fa-shield' />
                         {!editMode ?
-                            <p className='text-xs w-full'>{profile.privateAccess === 1 ? 'private' : 'public'}</p>
+                            <p className='text-xs w-full'>{profile.privateAccess === true ? 'private' : 'public'}</p>
                             :
                             <>
                                 <select
                                     className='w-full p-2 text-xs border border-main-col rounded-md bg-transparent'
-                                    value={privateAccess}
-                                    onChange={(e) => setPrivateAccess(parseInt(e.target.value))}
+                                    value={privateAccess ? 1 : 0}
+                                    onChange={(e) => setPrivateAccess(Boolean(e.target.value))}
                                 >
                                     <option value={0}>public</option>
                                     <option value={1}>private</option>
@@ -199,8 +206,8 @@ const ProfileInfoComponent: React.FC<Props> = ({
                     </div>
 
                     {!editMode && <Link
-                    // target='_blank'
-                    to='/profile/offers'>
+                        // target='_blank'
+                        to='/profile/offers'>
                         <br />
                         <div className='hover:bg-secondary-bg hover:scale-105'>
                             <i className="fas fa-external-link p-2 text-highlight-cl" />

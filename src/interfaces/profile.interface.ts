@@ -8,8 +8,7 @@ export interface IProfile {
   location?: ILocation;
   bio?: string;
   website?: string;
-  privateAccess: number; // 0 - public, 1 - private
-  equipment?: IEquipment[];
+  privateAccess: boolean; // 0 - public, 1 - private
   url?: string;
   favoriteCamera?: IEquipment;
   favoriteLens?: IEquipment;

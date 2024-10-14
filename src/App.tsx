@@ -28,7 +28,7 @@ function App() {
         <div className="app-container">
           {/* nav bar */}
           <HeaderComponent />
-          <main className='h-full pt-12 md:pt-16 w-full flex z-30 absolute overflow-x-hidden'>
+          <main className='h-full pt-12 md:pt-16 w-full flex z-30 absolute'>
             <div className='w-full max-w-screen-2xl mx-auto transition-all ease-in-out delay-75'>
               <Routes>
                 <Route

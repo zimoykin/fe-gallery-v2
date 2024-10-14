@@ -9,7 +9,6 @@ import { AuthClient } from '../networking';
 import { IRegister } from '../interfaces/register.interface';
 
 const RegisterPage: React.FC = () => {
-
     const navigate = useNavigate();
     const { locale } = useLocale();
     const {
