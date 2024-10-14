@@ -7,7 +7,6 @@ import { AuthClient } from '../networking';
 import { IRegister } from '../interfaces/register.interface';
 
 const RecoveryPage: React.FC = () => {
-
     const navigate = useNavigate();
     const { locale } = useLocale();
     const {
