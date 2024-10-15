@@ -44,7 +44,7 @@ export class ApiClient {
         console.error(error);
         throw error.message ?? "an error";
       });
-    if (response?.status !== 200) {
+    if (response?.status !== 200 && response?.status !== 201) {
       console.error(response?.statusText ?? "post error");
       throw new Error(response.statusText ?? "post error");
     } else {
