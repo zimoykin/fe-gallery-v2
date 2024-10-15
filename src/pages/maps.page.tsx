@@ -84,6 +84,7 @@ const MapsPage: React.FC = () => {
                         filteredProfiles={filteredProfiles}
                         hoveredProfile={hoverProfile}
                         selectedProfile={selectedProfile}
+                        radius={radius}
                         onDragstart={() => {
                             setSelectedProfile(null);
                         }}
