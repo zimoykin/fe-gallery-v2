@@ -1,4 +1,4 @@
-import { Map, AdvancedMarker, ColorScheme } from "@vis.gl/react-google-maps";
+import { Map, AdvancedMarker, ColorScheme, MapMouseEvent } from "@vis.gl/react-google-maps";
 import React, { Fragment, useEffect, useState } from "react";
 import Avatar from "../components/avatar/avatar-component";
 import { Circle } from "./circle.component";
@@ -11,43 +11,44 @@ interface Props {
     filteredProfiles: IProfile[];
     selectedProfile: IProfile | null;
     radius: number;
+    userLocation: { lat: number; lng: number; } | null;
     onDragstart: () => void;
+    userLocationChanged: (lat: number, lng: number) => void;
 }
 
-const MapComponent: React.FC<Props> = ({ radius, hoveredProfile, filteredProfiles, selectedProfile, onDragstart }) => {
+const MapComponent: React.FC<Props> = ({
+    radius, hoveredProfile, filteredProfiles, selectedProfile, userLocation,
+    onDragstart,
+    userLocationChanged
+}) => {
 
     const { theme } = useTheme();
-    const [center, setCenter] = useState<{ lat: number; lng: number; } | null>(null);
-    const [centerOfMap, setCenterOfMap] = useState<{ lat: number; lng: number; } | null>(null);
+    const [center, setCenter] = useState<{ lat: number; lng: number; } | null>(userLocation);
+    const [centerOfMap, setCenterOfMap] = useState<{ lat: number; lng: number; } | null>(userLocation);
     const [zoom, setZoom] = useState<number | null>(null);
-    //
-    const [userLocation, setUserLocation] = useState<{ lat: number; lng: number; } | null>(null);
+
+    // useEffect(() => {
+    //     const earthRadiusInKm = 6371;
+    //     const circumferenceInKm = 2 * Math.PI * earthRadiusInKm;
+    //     const pixelsPerKm = 256 / circumferenceInKm;
+    //     const circleDiameterInPixels = radius * 2 * pixelsPerKm;
+    //     const zoomLevel = Math.log2(256 / circleDiameterInPixels);
+
+    //     setZoom(
+    //         (1 + Math.floor(zoomLevel * 100) / 100)
+    //     );
+
+    // }, [radius]);
 
     useEffect(() => {
-        const earthRadiusInKm = 6371;
-        const circumferenceInKm = 2 * Math.PI * earthRadiusInKm;
-        const pixelsPerKm = 256 / circumferenceInKm;
-        const circleDiameterInPixels = radius * 2 * pixelsPerKm;
-        const zoomLevel = Math.log2(256 / circleDiameterInPixels);
-
-        setZoom(
-            (1 + Math.floor(zoomLevel * 100) / 100)
-        );
-
-    }, [radius]);
+        setCenterOfMap(center);
+    }, [center]);
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(({ coords }) => {
-            const location = {
-                lat: coords.latitude,
-                lng: coords.longitude,
-            };
-            setUserLocation(location);
-            setCenter(location);
-            setCenterOfMap(location);
-        }, console.error);
-    }, []);
-
+        if (!centerOfMap) {
+            setCenterOfMap(userLocation);
+        }
+    }, [userLocation, setCenterOfMap, centerOfMap]);
 
     useEffect(() => {
         if (selectedProfile?.location?.lat && selectedProfile?.location?.long) {
@@ -61,20 +62,30 @@ const MapComponent: React.FC<Props> = ({ radius, hoveredProfile, filteredProfile
         }
     }, [selectedProfile]);
 
+
+    const handleClickOnMap = (e: MapMouseEvent) => {
+        if (e.detail.latLng) {
+            const coord = e.detail.latLng;
+            userLocationChanged(coord.lat, coord.lng);
+            setCenterOfMap(coord);
+        }
+    };
+
+
     return (
         <Map
             mapId={'gallery-map'}
-            defaultZoom={zoom ? zoom : 5}
+            defaultZoom={zoom ? zoom : 9}
             zoom={zoom}
-            defaultCenter={userLocation ? userLocation : { lat: 46.227638, lng: 12.567381 }}
+            defaultCenter={userLocation ? userLocation : undefined}
             center={(center?.lat && center.lng) ? { lat: center.lat, lng: center.lng } : null}
             streetViewControl={false}
+            onClick={e => handleClickOnMap(e)}
             onZoomChanged={() => {
                 setZoom(null);
             }}
             onDragstart={() => {
                 onDragstart();
-                setCenter(null);
                 setZoom(null);
             }
             }
@@ -100,12 +111,7 @@ const MapComponent: React.FC<Props> = ({ radius, hoveredProfile, filteredProfile
                                 <Avatar url={profile.url} size={(profile.id === hoveredProfile || profile.id === selectedProfile?.id) ? 'mini' : 'micro'} />
                             </div>
                             <Circle
-                                onClick={() => {
-                                    setCenter({
-                                        lat: profile.location!.lat,
-                                        lng: profile.location!.long,
-                                    });
-                                }}
+                                clickable={false}
                                 center={{
                                     lat: profile.location!.lat,
                                     lng: profile.location!.long,
@@ -118,7 +124,13 @@ const MapComponent: React.FC<Props> = ({ radius, hoveredProfile, filteredProfile
                     </Fragment>
                 ))}
 
-            <Circle center={centerOfMap} radius={radius * 1000} strokeWeight={0} fillColor={'rgba(133,123,0,0.5)'} />
+            <Circle
+                // onClick={e => handleClickOnMap(e.latLng)}
+                clickable={false}
+                center={centerOfMap}
+                radius={radius * 1000}
+                strokeWeight={0}
+                fillColor={'rgba(133,123,0,0.5)'} />
         </Map>
     );
 };

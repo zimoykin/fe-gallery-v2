@@ -19,6 +19,7 @@ import {
     onMouseOut?: (e: google.maps.MapMouseEvent) => void;
     onRadiusChanged?: (r: ReturnType<google.maps.Circle['getRadius']>) => void;
     onCenterChanged?: (p: ReturnType<google.maps.Circle['getCenter']>) => void;
+    className?: string;
   };
   
   export type CircleProps = google.maps.CircleOptions & CircleEventProps;
