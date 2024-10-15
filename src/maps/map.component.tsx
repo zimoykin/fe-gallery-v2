@@ -10,17 +10,31 @@ interface Props {
     hoveredProfile: string | null;
     filteredProfiles: IProfile[];
     selectedProfile: IProfile | null;
+    radius: number;
     onDragstart: () => void;
 }
 
-const MapComponent: React.FC<Props> = ({ hoveredProfile, filteredProfiles, selectedProfile, onDragstart }) => {
-
+const MapComponent: React.FC<Props> = ({ radius, hoveredProfile, filteredProfiles, selectedProfile, onDragstart }) => {
 
     const { theme } = useTheme();
     const [center, setCenter] = useState<{ lat: number; lng: number; } | null>(null);
+    const [centerOfMap, setCenterOfMap] = useState<{ lat: number; lng: number; } | null>(null);
+    const [zoom, setZoom] = useState<number | null>(null);
     //
     const [userLocation, setUserLocation] = useState<{ lat: number; lng: number; } | null>(null);
 
+    useEffect(() => {
+        const earthRadiusInKm = 6371;
+        const circumferenceInKm = 2 * Math.PI * earthRadiusInKm;
+        const pixelsPerKm = 256 / circumferenceInKm;
+        const circleDiameterInPixels = radius * 2 * pixelsPerKm;
+        const zoomLevel = Math.log2(256 / circleDiameterInPixels);
+
+        setZoom(
+            (1 + Math.floor(zoomLevel * 100) / 100)
+        );
+
+    }, [radius]);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(({ coords }) => {
@@ -30,6 +44,7 @@ const MapComponent: React.FC<Props> = ({ hoveredProfile, filteredProfiles, selec
             };
             setUserLocation(location);
             setCenter(location);
+            setCenterOfMap(location);
         }, console.error);
     }, []);
 
@@ -49,13 +64,18 @@ const MapComponent: React.FC<Props> = ({ hoveredProfile, filteredProfiles, selec
     return (
         <Map
             mapId={'gallery-map'}
-            defaultZoom={9}
+            defaultZoom={zoom ? zoom : 5}
+            zoom={zoom}
             defaultCenter={userLocation ? userLocation : { lat: 46.227638, lng: 12.567381 }}
             center={(center?.lat && center.lng) ? { lat: center.lat, lng: center.lng } : null}
             streetViewControl={false}
+            onZoomChanged={() => {
+                setZoom(null);
+            }}
             onDragstart={() => {
                 onDragstart();
                 setCenter(null);
+                setZoom(null);
             }
             }
             colorScheme={
@@ -97,6 +117,8 @@ const MapComponent: React.FC<Props> = ({ hoveredProfile, filteredProfiles, selec
                         </AdvancedMarker>
                     </Fragment>
                 ))}
+
+            <Circle center={centerOfMap} radius={radius * 1000} strokeWeight={0} fillColor={'rgba(133,123,0,0.5)'} />
         </Map>
     );
 };
