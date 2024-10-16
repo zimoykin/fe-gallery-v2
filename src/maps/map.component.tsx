@@ -1,4 +1,4 @@
-import { Map, AdvancedMarker, ColorScheme, MapMouseEvent } from "@vis.gl/react-google-maps";
+import { Map, AdvancedMarker, ColorScheme, MapMouseEvent, Pin } from "@vis.gl/react-google-maps";
 import React, { Fragment, useEffect, useState } from "react";
 import Avatar from "../components/avatar/avatar-component";
 import { Circle } from "./circle.component";
@@ -23,32 +23,32 @@ const MapComponent: React.FC<Props> = ({
 }) => {
 
     const { theme } = useTheme();
-    const [center, setCenter] = useState<{ lat: number; lng: number; } | null>(userLocation);
+    const [center, setCenter] = useState<{ lat: number; lng: number; } | null>();
     const [centerOfMap, setCenterOfMap] = useState<{ lat: number; lng: number; } | null>(userLocation);
     const [zoom, setZoom] = useState<number | null>(null);
 
+    // // useEffect(() => {
+    // //     const earthRadiusInKm = 6371;
+    // //     const circumferenceInKm = 2 * Math.PI * earthRadiusInKm;
+    // //     const pixelsPerKm = 256 / circumferenceInKm;
+    // //     const circleDiameterInPixels = radius * 2 * pixelsPerKm;
+    // //     const zoomLevel = Math.log2(256 / circleDiameterInPixels);
+
+    // //     setZoom(
+    // //         (1 + Math.floor(zoomLevel * 100) / 100)
+    // //     );
+
+    // // }, [radius]);
+
     // useEffect(() => {
-    //     const earthRadiusInKm = 6371;
-    //     const circumferenceInKm = 2 * Math.PI * earthRadiusInKm;
-    //     const pixelsPerKm = 256 / circumferenceInKm;
-    //     const circleDiameterInPixels = radius * 2 * pixelsPerKm;
-    //     const zoomLevel = Math.log2(256 / circleDiameterInPixels);
-
-    //     setZoom(
-    //         (1 + Math.floor(zoomLevel * 100) / 100)
-    //     );
-
-    // }, [radius]);
+    //     setCenterOfMap(center);
+    // }, [center]);
 
     useEffect(() => {
-        setCenterOfMap(center);
-    }, [center]);
-
-    useEffect(() => {
-        if (!centerOfMap) {
+        if (userLocation && !centerOfMap) {
             setCenterOfMap(userLocation);
         }
-    }, [userLocation, setCenterOfMap, centerOfMap]);
+    }, [userLocation, setCenterOfMap, setCenter, center, centerOfMap]);
 
     useEffect(() => {
         if (selectedProfile?.location?.lat && selectedProfile?.location?.long) {
@@ -68,6 +68,7 @@ const MapComponent: React.FC<Props> = ({
             const coord = e.detail.latLng;
             userLocationChanged(coord.lat, coord.lng);
             setCenterOfMap(coord);
+            setCenter(coord);
         }
     };
 
@@ -77,16 +78,17 @@ const MapComponent: React.FC<Props> = ({
             mapId={'gallery-map'}
             defaultZoom={zoom ? zoom : 9}
             zoom={zoom}
-            defaultCenter={userLocation ? userLocation : undefined}
-            center={(center?.lat && center.lng) ? { lat: center.lat, lng: center.lng } : null}
+            defaultCenter={userLocation ? userLocation : { lat: 52.373, lng: 9.735 }}
+            center={center}
             streetViewControl={false}
             onClick={e => handleClickOnMap(e)}
             onZoomChanged={() => {
                 setZoom(null);
             }}
             onDragstart={() => {
-                onDragstart();
+                setCenter(null);
                 setZoom(null);
+                onDragstart();
             }
             }
             colorScheme={
@@ -124,13 +126,18 @@ const MapComponent: React.FC<Props> = ({
                     </Fragment>
                 ))}
 
-            <Circle
-                // onClick={e => handleClickOnMap(e.latLng)}
+            <AdvancedMarker
                 clickable={false}
-                center={centerOfMap}
-                radius={radius * 1000}
-                strokeWeight={0}
-                fillColor={'rgba(133,123,0,0.5)'} />
+                position={centerOfMap}
+            >
+                <Pin />
+                <Circle
+                    clickable={false}
+                    center={centerOfMap}
+                    radius={radius * 1000}
+                    strokeWeight={0}
+                    fillColor={'rgba(133,123,0,0.5)'} />
+            </AdvancedMarker>
         </Map>
     );
 };

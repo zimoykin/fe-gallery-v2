@@ -24,9 +24,7 @@ const ProfileOffersPage: React.FC = () => {
 
     const [offers, setOffers] = useState<IOffer[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-
     const [category, setCategory] = useState<string[]>([]);
-
     const { profile } = useSelector((state: RootState) => state.profile);
 
     useEffect(() => {
