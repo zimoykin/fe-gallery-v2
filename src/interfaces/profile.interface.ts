@@ -13,4 +13,6 @@ export interface IProfile {
   favoriteCamera?: IEquipment;
   favoriteLens?: IEquipment;
   email: string;
+  categories: string[];
+  distance?: number;
 }

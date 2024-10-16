@@ -4,7 +4,6 @@ import Avatar from '../components/avatar/avatar-component';
 
 interface Props {
     filteredProfiles: IProfile[];
-
     setHoverProfile: (profileId: string | null) => void;
     setSelectedProfile: (profile: IProfile | null) => void;
     updateProfile: () => void;
@@ -13,12 +12,12 @@ interface Props {
 const ProfilesMapSearchComponent: React.FC<Props> = ({ filteredProfiles, setHoverProfile, setSelectedProfile }) => {
 
     return (
-        <div className="w-full overflow-scroll no-scrollbar">
+        <div className="w-full flex md:flex-col flex-row overflow-auto">
             {filteredProfiles.map((profile, i) => (
                 <div
                     onMouseEnter={() => setHoverProfile(profile.id)}
                     onMouseLeave={() => setHoverProfile(null)}
-                    key={profile.id ?? i} className='w-full p-1 flex md:flex-col flex-row '>
+                    key={profile.id ?? i} className='w-full p-1 flex md:flex-col flex-row'>
                     <div
                         onClick={() => {
                             setSelectedProfile(profile);
@@ -37,6 +36,9 @@ const ProfilesMapSearchComponent: React.FC<Props> = ({ filteredProfiles, setHove
                                     <span className='text-xxs'>{profile.location?.title}</span>
                                 </div>
                                 <span className='text-xxs'>{`possible trip ${profile.location?.distance} km`}</span>
+                                {profile.distance && <span className='text-xxs'>
+                                   distance {Math.floor(profile.distance)} km
+                                </span>}
                             </div>
                         </div>
                     </div>

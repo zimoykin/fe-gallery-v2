@@ -6,6 +6,7 @@ import { storeProfile } from '../../features/profile/profile-slice';
 import CameraSpinner from '../camera-spinner/camera-spinner.component';
 import { ILocation } from '../../interfaces/location.interface';
 import { Link } from 'react-router-dom';
+import CategorySelect from '../category-select.component';
 
 
 interface Props {
@@ -35,11 +36,11 @@ const ProfileInfoComponent: React.FC<Props> = ({
     const [latitude, setLatitude] = useState<number>(profile?.location?.lat ?? 46.227638);
     const [longitude, setLongitude] = useState<number>(profile?.location?.long ?? 12.567381);
     const [distance, setDistance] = useState<number>(profile?.location?.distance ?? 25);
-
+    const [category, setCategory] = useState<string[]>(profile?.categories ?? []);
 
     const [email, setEmail] = useState<string>(profile?.email ?? '');
     const [website, setWebsite] = useState<string>(profile?.website ?? '');
-    const [privateAccess, setPrivateAccess] = useState<boolean>(profile?.privateAccess ?? false);
+    const [privateAccess, setPrivateAccess] = useState<string>(profile?.privateAccess === true ? 'private' : 'public');
 
     useEffect(() => {
         if (location?.lat)
@@ -67,7 +68,8 @@ const ProfileInfoComponent: React.FC<Props> = ({
                 setLongitude(res.location?.long ?? 0);
                 setEmail(res.email ?? '');
                 setWebsite(res.website ?? '');
-                setPrivateAccess(res.privateAccess ?? 0);
+                setPrivateAccess(res.privateAccess === true ? 'private' : 'public');
+                setCategory(res.categories ?? []);
             })
             .catch((error) => {
                 console.error(error);
@@ -80,18 +82,19 @@ const ProfileInfoComponent: React.FC<Props> = ({
 
     const handleSaveClick = () => {
         setIsLoadingProfile(true);
-        ApiClient.put<string>('/profiles', {
+        ApiClient.put<string, IProfile>('/profiles', {
             ...profile,
             name,
             location: {
                 distance: distance,
                 lat: latitude,
                 long: longitude,
-                title: locationTitle
+                title: locationTitle,
             } as ILocation,
             email,
             website,
-            privateAccess
+            categories: category,
+            privateAccess: privateAccess === 'private' ? true : false,
         }).then(() => {
             onSave();
         }).catch((error) => {
@@ -195,13 +198,31 @@ const ProfileInfoComponent: React.FC<Props> = ({
                             <>
                                 <select
                                     className='w-full p-2 text-xs border border-main-col rounded-md bg-transparent'
-                                    value={privateAccess ? 1 : 0}
-                                    onChange={(e) => setPrivateAccess(Boolean(e.target.value))}
+                                    value={privateAccess}
+                                    onChange={(e) => setPrivateAccess(e.target.value)}
                                 >
-                                    <option value={0}>public</option>
-                                    <option value={1}>private</option>
+                                    <option value={'public'}>public</option>
+                                    <option value={'private'}>private</option>
                                 </select>
                             </>
+                        }
+                    </div>
+
+                    <div
+                        className='w-3/4 flex flex-row justify-center items-center gap-2 py-1'>
+                        {editMode ?
+                            <CategorySelect />
+                            :
+
+                            <div className='w-full flex flex-col justify-start items-start gap-2 py-1 border-t border-b border-main-col'>
+                                {category?.map((category, index) => (
+                                    <div>
+                                        <i className='p-1 fas fa-tag' />
+                                        <span key={index} className='text-xs'>  {category} </span>
+                                    </div>
+                                ))}
+                            </div>
+
                         }
                     </div>
 
