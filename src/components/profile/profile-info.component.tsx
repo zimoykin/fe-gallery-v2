@@ -6,7 +6,7 @@ import { storeProfile } from '../../features/profile/profile-slice';
 import CameraSpinner from '../camera-spinner/camera-spinner.component';
 import { ILocation } from '../../interfaces/location.interface';
 import { Link } from 'react-router-dom';
-import CategorySelect from '../category-select.component';
+import CategoriesComponent from './categories.component';
 
 
 interface Props {
@@ -36,11 +36,12 @@ const ProfileInfoComponent: React.FC<Props> = ({
     const [latitude, setLatitude] = useState<number>(profile?.location?.lat ?? 46.227638);
     const [longitude, setLongitude] = useState<number>(profile?.location?.long ?? 12.567381);
     const [distance, setDistance] = useState<number>(profile?.location?.distance ?? 25);
-    const [category, setCategory] = useState<string[]>(profile?.categories ?? []);
 
     const [email, setEmail] = useState<string>(profile?.email ?? '');
     const [website, setWebsite] = useState<string>(profile?.website ?? '');
     const [privateAccess, setPrivateAccess] = useState<string>(profile?.privateAccess === true ? 'private' : 'public');
+
+    const [categories, setCategories] = useState<string[]>(profile?.categories ?? []);
 
     useEffect(() => {
         if (location?.lat)
@@ -69,7 +70,7 @@ const ProfileInfoComponent: React.FC<Props> = ({
                 setEmail(res.email ?? '');
                 setWebsite(res.website ?? '');
                 setPrivateAccess(res.privateAccess === true ? 'private' : 'public');
-                setCategory(res.categories ?? []);
+                setCategories(res.categories ?? []);
             })
             .catch((error) => {
                 console.error(error);
@@ -93,7 +94,7 @@ const ProfileInfoComponent: React.FC<Props> = ({
             } as ILocation,
             email,
             website,
-            categories: category,
+            categories: categories,
             privateAccess: privateAccess === 'private' ? true : false,
         }).then(() => {
             onSave();
@@ -103,6 +104,10 @@ const ProfileInfoComponent: React.FC<Props> = ({
             setIsLoadingProfile(false);
             onSave();
         });
+    };
+
+    const handleCategoriesChange = (categories: string[]) => {
+        setCategories(categories);
     };
 
     return (
@@ -211,14 +216,17 @@ const ProfileInfoComponent: React.FC<Props> = ({
                     <div
                         className='w-3/4 flex flex-row justify-center items-center gap-2 py-1'>
                         {editMode ?
-                            <CategorySelect />
+                            <CategoriesComponent
+                                selectedCategoriesChanged={handleCategoriesChange}
+                                selectedCategories={categories ?? []}
+                            />
                             :
 
                             <div className='w-full flex flex-col justify-start items-start gap-2 py-1 border-t border-b border-main-col'>
-                                {category?.map((category, index) => (
-                                    <div>
+                                {categories?.map((category, index) => (
+                                    <div key={index}>
                                         <i className='p-1 fas fa-tag' />
-                                        <span key={index} className='text-xs'>  {category} </span>
+                                        <span className='text-xs'>  {category} </span>
                                     </div>
                                 ))}
                             </div>

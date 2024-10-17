@@ -3,7 +3,7 @@ import { IProfile } from '../interfaces/profile.interface';
 import { ApiClient } from '../networking';
 import MapComponent from '../maps/map.component';
 import ProfilesMapSearchComponent from '../maps/profiles.component';
-import CategorySelect from '../components/category-select.component';
+import CategorySelect from '../maps/category-select.component';
 import { useSearchParams } from 'react-router-dom';
 
 const MapsPage: React.FC = () => {
@@ -20,20 +20,10 @@ const MapsPage: React.FC = () => {
 
     const [params, setParams] = useSearchParams();
 
-    useEffect(() => {
-        navigator.geolocation.getCurrentPosition(({ coords }) => {
-            const location = {
-                lat: coords.latitude,
-                lng: coords.longitude,
-            };
-            setUserLocation(location);
-        }, console.error);
-    }, []);
-
 
     useEffect(() => {
         const fetchProfiles = async () => {
-            const selectedCategory = params.get('categories')?.split(',') ?? [];
+            const selectedCategory = params.get('categories')?.split(',')?.filter((pred) => pred !== '') ?? [];
             try {
                 const res = await ApiClient.post<IProfile[]>('/public/profiles/geo-search', {
                     radius,

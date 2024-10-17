@@ -1,50 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { ApiClient } from '../networking';
-import { useSearchParams } from 'react-router-dom';
+import { ApiClient } from '../../networking';
 
-const CategorySelect: React.FC = () => {
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+interface Props {
+    selectedCategories: string[];
+    selectedCategoriesChanged: (categories: string[]) => void;
+}
+const CategoriesComponent: React.FC<Props> = ({
+    selectedCategories: preSelectedCategories,
+    selectedCategoriesChanged
+}) => {
+
+    const [selectedCategories, setSelectedCategories] = useState<string[]>(preSelectedCategories ?? []);
+    const [categories, setCategories] = useState<string[]>([]);
     const [isOpen, setIsOpen] = useState(false);
-    const [category, setCategory] = useState<string[]>([]);
-
-    const [params, setParams] = useSearchParams();
 
     useEffect(() => {
         ApiClient.get<string[]>('/settings/offer-categories')
             .then((res) => {
-                setCategory(res);
-                const categories = params.get('categories');
-                if (categories) {
-                    setSelectedCategories(categories.split(',').filter(pred => res.includes(pred)));
-                }
+                setCategories(res);
             })
             .catch(console.error);
-    }, [params]);
+    }, []);
+
 
     const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
 
-        setSelectedCategories((prevSelected) =>
-            prevSelected.includes(value)
-                ? prevSelected.filter((category) => category !== value)
-                : [...prevSelected, value]
-        );
+        const selected = selectedCategories.includes(value)
+            ? selectedCategories.filter((category) => category !== value)
+            : [...selectedCategories, value];
 
-        let cats = params.get('categories')?.split(',') ?? [];
-        if (cats.includes(value)) {
-            cats = cats.filter(pred => pred !== value);
-        } else {
-            cats.push(value);
-        }
-        
-        params.set('categories', cats.join(','));
-        setParams(params);
+        setSelectedCategories(selected);
+        selectedCategoriesChanged(selected);
     };
 
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
+
 
     return (
         <div className="relative w-full min-w-36">
@@ -62,7 +56,7 @@ const CategorySelect: React.FC = () => {
 
             {isOpen && (
                 <div className="absolute z-50 mt-2 w-full bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto no-scrollbar">
-                    {category.map((categoryItem: string, index) => (
+                    {categories.map((categoryItem: string, index) => (
                         <label
                             key={index}
                             className="block p-2 cursor-pointer
@@ -85,4 +79,4 @@ const CategorySelect: React.FC = () => {
     );
 };
 
-export default CategorySelect;
+export default CategoriesComponent;

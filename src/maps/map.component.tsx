@@ -40,9 +40,19 @@ const MapComponent: React.FC<Props> = ({
 
     // // }, [radius]);
 
-    // useEffect(() => {
-    //     setCenterOfMap(center);
-    // }, [center]);
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(({ coords }) => {
+            const location = {
+                lat: coords.latitude,
+                lng: coords.longitude,
+            };
+            setCenter(location);
+            userLocationChanged(location.lat, location.lng);
+
+        }, console.error);
+    }, [userLocationChanged]);
+
 
     useEffect(() => {
         if (userLocation && !centerOfMap) {
@@ -60,7 +70,7 @@ const MapComponent: React.FC<Props> = ({
         else {
             setCenter(null);
         }
-    }, [selectedProfile]);
+    }, [selectedProfile, setCenter]);
 
 
     const handleClickOnMap = (e: MapMouseEvent) => {
