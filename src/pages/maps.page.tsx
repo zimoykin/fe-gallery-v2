@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IProfile } from '../interfaces/profile.interface';
 import { ApiClient } from '../networking';
 import MapComponent from '../maps/map.component';
@@ -70,6 +70,9 @@ const MapsPage: React.FC = () => {
         }
     }, [params]);
 
+    const userLocationChanged = useCallback((lat: number, lng: number) => {
+        setUserLocation({ lat, lng });
+    }, []);
 
     const updateProfile = async () => {
         setFilteredProfiles(() => profiles.filter(profile => {
@@ -138,9 +141,7 @@ const MapsPage: React.FC = () => {
                         onDragstart={() => {
                             setSelectedProfile(null);
                         }}
-                        userLocationChanged={(lat, lng) => {
-                            setUserLocation({ lat, lng });
-                        }}
+                        userLocationChanged={userLocationChanged}
                     />
                 </div>
             </div>
