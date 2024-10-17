@@ -1,6 +1,6 @@
 import React from 'react';
 import { IProfile } from '../interfaces/profile.interface';
-import Avatar from '../components/avatar/avatar-component';
+import ProfileCardComponent from './profile-card.component';
 
 interface Props {
     filteredProfiles: IProfile[];
@@ -14,35 +14,12 @@ const ProfilesMapSearchComponent: React.FC<Props> = ({ filteredProfiles, setHove
     return (
         <div className="w-full flex md:flex-col flex-row overflow-auto">
             {filteredProfiles.map((profile, i) => (
-                <div
-                    onMouseEnter={() => setHoverProfile(profile.id)}
-                    onMouseLeave={() => setHoverProfile(null)}
-                    key={profile.id ?? i} className='w-full p-1 flex md:flex-col flex-row'>
-                    <div
-                        onClick={() => {
-                            setSelectedProfile(profile);
-                        }}
-                        className='bg-secondary-bg w-full flex flex-col shadow-md rounded-md p-1
-                            hover:scale-105 hover:cursor-pointer hover:bg-slate-400
-                            '>
-                        <div className='flex md:flex-row flex-col w-full'>
-                            <div className='flex md:flex-row flex-col w-full justify-center items-center'>
-                                <Avatar url={profile.url} size={'mini'} />
-                            </div>
-                            <div className='md:text-end w-full text-center flex flex-col justify-center items-center'>
-                                <span className='text-xxs md:text-sm text-center'>{profile.name}</span>
-                                <div className='flex w-full md:justify-end justify-center items-center gap-1'>
-                                    <span className='text-xxs'> 📍 </span>
-                                    <span className='text-xxs'>{profile.location?.title}</span>
-                                </div>
-                                <span className='text-xxs'>{`possible trip ${profile.location?.distance} km`}</span>
-                                {profile.distance && <span className='text-xxs'>
-                                   distance {Math.floor(profile.distance)} km
-                                </span>}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ProfileCardComponent
+                    profile={profile}
+                    setHoverProfile={setHoverProfile}
+                    setSelectedProfile={setSelectedProfile}
+                    key={profile.id ?? i}
+                />
             ))}
         </div>
 
