@@ -84,16 +84,11 @@ const ContentGalleryComponent: React.FC<Props> = ({ profileId }) => {
 
     const handleLikeClick = (photoId: string) => {
         if (photoId) {
-            setIsLoadingImages(true);
+            // setIsLoadingImages(true);
             ApiClient.post<string>(`/likes/${photoId}`)
-                .then((res) => {
-                    console.log(res);
-                })
+                .then()
                 .catch((error) => {
                     console.error(error);
-                })
-                .finally(() => {
-                    setIsLoadingImages(false);
                 });
         }
     };
