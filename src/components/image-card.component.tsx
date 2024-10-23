@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IPhotoWithImageFile } from '../interfaces/photo.interface';
+import { IPhoto, IPhotoWithImageFile } from '../interfaces/photo.interface';
 import { ApiClient } from '../networking';
 import CameraSpinner from './camera-spinner/camera-spinner.component';
 import { IEquipment } from '../interfaces/eqiupment.interface';
@@ -28,7 +28,7 @@ const ImageCardComponent: React.FC<Props> = ({
     const [editMode, setEditMode] = useState<boolean>(image._id ? false : true);
 
     const [id, setId] = useState<string | undefined>(image._id);
-    const [likes] = useState<number>(image.likes ?? 0);
+    const [likes, setLikes] = useState<number>(image.likes ?? 0);
     const [url] = useState<string>(image.previewUrl ?? '');
     const [location, setLocation] = useState<string>(image.location?.title ?? '');
     const [camera, setCamera] = useState<string>(image.camera ?? '');
@@ -82,6 +82,15 @@ const ImageCardComponent: React.FC<Props> = ({
                 })
                 .catch(console.error)
                 .finally(() => setIsLoading(false));
+        }
+    };
+
+    const handleRefreshLikesCount = async () => {
+        if (id && !id.startsWith('new-')) {
+            const res = await ApiClient.get<IPhoto>(`public/photos/${image.profileId}/${image.folderId}/${image._id}`);
+            if (res) {
+                setLikes(res.likes ?? 0);
+            }
         }
     };
 
@@ -237,6 +246,7 @@ const ImageCardComponent: React.FC<Props> = ({
                             p-1">
                     <i className="p-1 hover:scale-125 fas fa-star text-yellow-500"
                         onClick={() => {
+                            console.log('handleRefreshLikesCount', id);
                             if (onFavoriteClick && id) {
                                 onFavoriteClick(id);
                             }
@@ -249,6 +259,9 @@ const ImageCardComponent: React.FC<Props> = ({
                     onClick={() => {
                         if (onLikeClick && id) {
                             onLikeClick(id);
+                            setTimeout(() => {
+                                handleRefreshLikesCount();
+                            }, 2000);
                         }
                     }}
                 >

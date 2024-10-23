@@ -61,8 +61,6 @@ const ImageGalleryComponent: React.FC<Props> = ({ images, equipments, onLikeClic
                     />
                 </div>
             </div>}
-
-
         </div >
     );
 
