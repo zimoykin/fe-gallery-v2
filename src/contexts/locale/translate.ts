@@ -71,6 +71,7 @@ export const translate: Record<string, Record<string, string>> = {
     decline: "Abbrechen",
     cookiePolicy: "Cookie-Einwidung",
     map: "Karte",
+    nearYou: "Angebote in Ihrer Nähe",
   },
   en: {
     home: "Home",
@@ -141,5 +142,6 @@ export const translate: Record<string, Record<string, string>> = {
     decline: "Decline",
     cookiePolicy: "Cookie Policy",
     map: "Map",
+    nearYou: "Deals around you",
   },
 } as const;

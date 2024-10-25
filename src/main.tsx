@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { LocaleProvider } from './contexts/locale/locale.context';
 import { APIProvider } from '@vis.gl/react-google-maps';
+import { UserLocationProvider } from './contexts/location/location.context';
 
 
 createRoot(document.getElementById('root')!).render(
@@ -19,10 +20,12 @@ createRoot(document.getElementById('root')!).render(
       <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider>
           <LocaleProvider>
-            <APIProvider
-              apiKey={import.meta.env.VITE_APP_API_KEY_MAP!}>
-              <App />
-            </APIProvider>
+            <UserLocationProvider>
+              <APIProvider
+                apiKey={import.meta.env.VITE_APP_API_KEY_MAP!}>
+                <App />
+              </APIProvider>
+            </UserLocationProvider>
           </LocaleProvider>
         </ThemeProvider>
       </PersistGate>
