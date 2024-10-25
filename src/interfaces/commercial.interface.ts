@@ -1,4 +1,5 @@
 import { ILocation } from "./location.interface";
+import { IProfile } from "./profile.interface";
 
 export interface IOffer {
   id: string;
@@ -14,4 +15,6 @@ export interface IOffer {
   url?: string;
   profileId: string;
   availableUntil: number;
+
+  profile?: IProfile;
 }

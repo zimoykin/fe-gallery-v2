@@ -16,9 +16,13 @@ export class ApiClient {
     return ApiClient.#instance;
   };
 
-  static async get<T>(path: string, config?: AxiosRequestConfig) {
+  static async get<T>(
+    path: string,
+    query?: Record<string, string>,
+    config?: AxiosRequestConfig,
+  ) {
     const response = await ApiClient.init()
-      .#axiosInstance.get<T>(path, config)
+      .#axiosInstance.get<T>(path, { params: query, ...config })
       .catch((error) => {
         console.error(error);
         throw error.message ?? "an error";
