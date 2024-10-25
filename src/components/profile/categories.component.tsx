@@ -15,7 +15,7 @@ const CategoriesComponent: React.FC<Props> = ({
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
-        ApiClient.get<string[]>('/settings/offer-categories')
+        ApiClient.get<string[]>('/com/settings/categories')
             .then((res) => {
                 setCategories(res);
             })
