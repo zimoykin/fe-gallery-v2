@@ -15,8 +15,7 @@ const ForYouWidgetComponent: React.FC = () => {
     const [offers, setOffers] = useState<IOffer[]>([]);
 
     useEffect(() => {
-        console.log(location);
-        if (location) {
+        if (location?.latitude && location?.longitude) {
             setIsLoading(true);
             ApiClient.get<IOffer[]>('public/offers/coordinates', {
                 latitude: location.latitude.toString(),
