@@ -28,7 +28,7 @@ const ProfileOffersPage: React.FC = () => {
     const { profile } = useSelector((state: RootState) => state.profile);
 
     useEffect(() => {
-        ApiClient.get<IOffer[]>('/offers')
+        ApiClient.get<IOffer[]>('/com/offers')
             .then((res) => {
                 setOffers(res);
             })
@@ -38,7 +38,7 @@ const ProfileOffersPage: React.FC = () => {
             });
 
 
-        ApiClient.get<string[]>('/settings/offer-categories')
+        ApiClient.get<string[]>('/com/settings/categories')
             .then((res) => {
                 setCategory(res);
             })
@@ -60,10 +60,11 @@ const ProfileOffersPage: React.FC = () => {
 
     return (
         <div className='flex w-full h-full flex-col'>
-            <div className='w-full  grid grid-cols-2 md:grid-cols-3 gap-2'>
+            <div className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2'>
                 {isLoading ? <CameraSpinner /> :
-                    offers?.map((offer, index) => (
+                    profile && offers?.map((offer, index) => (
                         <OfferComponent
+                            profile={profile}
                             offer={offer}
                             categoryOptions={category}
                             key={offer.id ?? index}
@@ -84,7 +85,7 @@ const ProfileOffersPage: React.FC = () => {
                     hover:scale-110 hover:cursor-pointer
                     transition-all duration-300 ease-in-out del§ay-75
                     '>
-                        <p className='text-white text-shadow-sm'>Add new</p>                        
+                        <p className='text-white text-shadow-sm'>Add new</p>
                         <i
                             onClick={handleAddOffer}
                             className='fas fa-plus border-2 p-2 text-white text-shadow-sm' />

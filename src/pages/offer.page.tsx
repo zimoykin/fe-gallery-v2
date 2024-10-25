@@ -113,7 +113,7 @@ const OfferPage: React.FC = () => {
                         <div>
                             <i className='p-1 fa-solid fa-location-dot' />
                             <span>
-                                {offer?.location}
+                                {offer?.location?.title}
                             </span>
                         </div>
                         <div>
@@ -131,7 +131,7 @@ const OfferPage: React.FC = () => {
                         <div>
 
                             <i className='p-1 fas fa-coins' />
-                            {(offer?.category === 'hotel' || offer?.category === 'trip')
+                            {(offer?.categories?.includes('hotel') || offer?.categories?.includes('trip'))
                                 ? <span> {only} <span className='font-extrabold text-xl'>{offer?.price}</span> {eurPerPerson}</span>
                                 : <span> <b>{offer?.price}</b>Eur</span>
                             }

@@ -2,15 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { ApiClient } from '../networking';
 import { useSearchParams } from 'react-router-dom';
 
-const CategorySelect: React.FC = () => {
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+interface Props {
+    preselectedCategories?: string[];
+    onSelectCategories?: (sel: string[]) => void;
+    setAsParams?: boolean;
+}
+
+const CategorySelect: React.FC<Props> = ({ onSelectCategories, setAsParams = true, preselectedCategories = [] }) => {
+    const [selectedCategories, setSelectedCategories] = useState<string[]>(preselectedCategories);
     const [isOpen, setIsOpen] = useState(false);
     const [category, setCategory] = useState<string[]>([]);
 
     const [params, setParams] = useSearchParams();
 
     useEffect(() => {
-        ApiClient.get<string[]>('/settings/offer-categories')
+        ApiClient.get<string[]>('/com/settings/categories')
             .then((res) => {
                 setCategory(res);
                 const categories = params.get('categories');
@@ -30,13 +36,21 @@ const CategorySelect: React.FC = () => {
                 : [...prevSelected, value]
         );
 
+        if (onSelectCategories) {
+            onSelectCategories(selectedCategories);
+        }
+
+        if (!setAsParams) {
+            return;
+        }
+
         let cats = params.get('categories')?.split(',') ?? [];
         if (cats.includes(value)) {
             cats = cats.filter(pred => pred !== value);
         } else {
             cats.push(value);
         }
-        
+
         params.set('categories', cats.join(','));
         setParams(params);
     };
