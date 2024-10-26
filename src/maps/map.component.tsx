@@ -4,6 +4,7 @@ import Avatar from "../components/avatar/avatar-component";
 import { Circle } from "./circle.component";
 import { useTheme } from "../contexts/theme/theme-context";
 import { IProfile } from "../interfaces/profile.interface";
+import { useUserLocation } from "../contexts/location/location.context";
 
 
 interface Props {
@@ -22,9 +23,17 @@ const MapComponent: React.FC<Props> = ({
     userLocationChanged
 }) => {
 
+    const { location } = useUserLocation();
     const { theme } = useTheme();
-    const [center, setCenter] = useState<{ lat: number; lng: number; } | null>();
-    const [centerOfMap, setCenterOfMap] = useState<{ lat: number; lng: number; } | null>(userLocation);
+
+    const [center, setCenter] = useState<{ lat: number; lng: number; } | null>({
+        lat: location?.latitude ?? 0,
+        lng: location?.longitude ?? 0
+    });
+    const [centerOfMap, setCenterOfMap] = useState<{ lat: number; lng: number; } | null>({
+        lat: location?.latitude ?? 0,
+        lng: location?.longitude ?? 0
+    });
     const [zoom, setZoom] = useState<number | null>(null);
 
     // // useEffect(() => {
@@ -42,16 +51,10 @@ const MapComponent: React.FC<Props> = ({
 
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(({ coords }) => {
-            const location = {
-                lat: coords.latitude,
-                lng: coords.longitude,
-            };
-            setCenter(location);
-            userLocationChanged(location.lat, location.lng);
-
-        }, console.error);
-    }, [userLocationChanged]);
+        setCenter({ lat: location?.latitude ?? 0, lng: location?.longitude ?? 0 });
+        setCenterOfMap({ lat: location?.latitude ?? 0, lng: location?.longitude ?? 0 });
+        userLocationChanged(location?.latitude ?? 0, location?.longitude ?? 0);
+    }, [location?.latitude, location?.longitude, userLocationChanged]);
 
 
     useEffect(() => {

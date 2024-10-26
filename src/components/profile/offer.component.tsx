@@ -8,6 +8,7 @@ import { Circle } from '../../maps/circle.component';
 import CategorySelect from '../../maps/category-select.component';
 import { useLocale } from '../../contexts/locale';
 import { getAddressTitleByCoords, getCoordsByAddress } from '../../helpers/geo-resolver.helper';
+import { useUserLocation } from '../../contexts/location/location.context';
 
 interface Props {
     offer: IOffer;
@@ -22,6 +23,7 @@ const OfferComponent: React.FC<Props> = ({ profile, offer, onDelete }) => {
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     const { locale } = useLocale();
+    const { location } = useUserLocation();
 
     const [editMode, setEditMode] = useState<boolean>(false);
     const [id, setId] = useState<string>(offer.id);
@@ -97,12 +99,10 @@ const OfferComponent: React.FC<Props> = ({ profile, offer, onDelete }) => {
                 setLatitude(profile?.location?.lat);
                 setLongitude(profile?.location?.long);
                 setDistance(profile?.location?.distance ?? 0);
-            } else {
-                navigator.geolocation.getCurrentPosition(({ coords }) => {
-                    setLatitude(coords.latitude);
-                    setLongitude(coords.longitude);
-                    setDistance(25);
-                }, console.error);
+            } else if (location?.latitude && location?.longitude) {
+                setLatitude(location?.latitude);
+                setLongitude(location?.longitude);
+                setDistance(25);
             }
         }
     }, [
