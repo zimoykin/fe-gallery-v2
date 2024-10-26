@@ -14,13 +14,14 @@ const ImagesHomeComponent: React.FC = () => {
     }, []);
 
     return (
-        <>
-            <div className="w-full h-full columns-2 gap-4 bg-white">
-                {images.map(({ photo, profile }, index) => (
+        <div className='w-full h-full grid overflow-y-scroll no-scrollbar'>
+            {images?.length && <ImageHomeComponent photo={images[0].photo} profile={images[0].profile} />}
+            <div className="w-full h-full columns-2 gap-4">
+                {images.slice(1).map(({ photo, profile }, index) => (
                     <ImageHomeComponent key={index} photo={photo} profile={profile} />
                 ))}
             </div>
-        </>
+        </ div>
     );
 
 };
