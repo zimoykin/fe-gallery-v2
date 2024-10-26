@@ -41,7 +41,7 @@ const ImageHomeComponent: React.FC<Props> = ({ photo, profile }) => {
                 >
                     <div
                         ref={(el) => (ref.current = el)}
-                        className="relative bg-white mb-4 bg-cover bg-center break-inside-avoid h-auto
+                        className="relative bg-white bg-cover bg-center break-inside-avoid h-auto max-h-[700px]
                     hover:cursor-pointer hover:scale-103 transition-all duration-200 delay-75 ease-in-out
                     "
                         style={{ backgroundImage: `url(${photo.compressedUrl})` }}
