@@ -25,8 +25,15 @@ const MapComponent: React.FC<Props> = ({
 
     const { location } = useUserLocation();
     const { theme } = useTheme();
-    const [center, setCenter] = useState<{ lat: number; lng: number; } | null>();
-    const [centerOfMap, setCenterOfMap] = useState<{ lat: number; lng: number; } | null>(userLocation);
+
+    const [center, setCenter] = useState<{ lat: number; lng: number; } | null>({
+        lat: location?.latitude ?? 0,
+        lng: location?.longitude ?? 0
+    });
+    const [centerOfMap, setCenterOfMap] = useState<{ lat: number; lng: number; } | null>({
+        lat: location?.latitude ?? 0,
+        lng: location?.longitude ?? 0
+    });
     const [zoom, setZoom] = useState<number | null>(null);
 
     // // useEffect(() => {
@@ -45,6 +52,7 @@ const MapComponent: React.FC<Props> = ({
 
     useEffect(() => {
         setCenter({ lat: location?.latitude ?? 0, lng: location?.longitude ?? 0 });
+        setCenterOfMap({ lat: location?.latitude ?? 0, lng: location?.longitude ?? 0 });
         userLocationChanged(location?.latitude ?? 0, location?.longitude ?? 0);
     }, [location?.latitude, location?.longitude, userLocationChanged]);
 
