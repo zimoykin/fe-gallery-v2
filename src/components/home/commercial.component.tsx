@@ -81,7 +81,7 @@ const CommercialComponent: React.FC = () => {
 								</div>
 								<div>
 									<i className="p-1 fa-solid fa-location-dot" />
-									<span>{item.location}</span>
+									<span>{item?.location?.title}</span>
 								</div>
 
 								<span className="text-sm p-1">
@@ -107,7 +107,7 @@ const CommercialComponent: React.FC = () => {
 								</div>
 								<div>
 									<i className="p-1 fas fa-coins" />
-									{item.category === 'hotel' || item.category === 'trip' ? (
+									{item.categories?.includes('hotel') || item.categories?.includes('trip') ? (
 										<span>
 											{' '}
 											only{' '}
